@@ -38,7 +38,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Local Apps
     'accounts',
-
+    'articles',
+    'schedules',
+    'workspace',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -116,9 +118,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
