@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 '''
 python-decouple로 민감한 정보 숨기기
-secret key는 모두 setting.ini에 저장할 것.
+secret key는 모두 settings.ini에 저장할 것.
 '''
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'articles',
     'schedules',
+    'workspace',
 
 
     'django.contrib.admin',
@@ -138,3 +139,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
