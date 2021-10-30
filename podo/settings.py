@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 '''
 python-decouple로 민감한 정보 숨기기
-secret key는 모두 setting.ini에 저장할 것.
+secret key는 모두 settings.ini에 저장할 것.
 '''
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'articles',
     'schedules',
+    'workspace',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -85,12 +86,12 @@ WSGI_APPLICATION = 'podo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'podo',
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 
@@ -146,4 +147,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 AUTH_USER_MODEL = 'accounts.User'
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
