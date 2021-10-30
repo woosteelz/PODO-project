@@ -2,11 +2,11 @@ from django.db import models
 
 
 # Create your models here.
+
 class Board(models.Model):
     # 보드는 수정, 삭제 불가능
     # 추후에 commit=False로 게시글이 생성될 때 db에 따로 저장할 예정
     name = models.CharField(max_length=20)
-
 
 class Article(models.Model):
     # 우선순위 필드는 게시글 생성폼에서 select 태그의 option을 통해
@@ -15,6 +15,8 @@ class Article(models.Model):
     title = models.CharField(max_length=50)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    # 나머지 외래키는 아직 받지 않은 상태(이메일, 워크스페이스, 보드, 카테고리)
     # 보드를 외래키로
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
@@ -40,3 +42,4 @@ class File(models.Model):
     # media/files에 파일 저장
     file = models.FileField(upload_to="files", null=True, blank=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+
