@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'accounts',
     'articles',
     'schedules',
+    'workspace',
+
 
     'django.contrib.admin',
     'django.contrib.auth',
