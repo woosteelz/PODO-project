@@ -9,7 +9,7 @@ class Schedule(models.Model):
 
     title = models.CharField(max_length=50)
     content = models.TextField()
-    priority = models.CharField(max_length=50, default='normal')
+    priority = models.CharField(max_length=50, default='3')
     start_date = models.DateField(default=date.today)
     end_date = models.DateField(default=date.today)
     start_time = models.TimeField(default=time(0,0))

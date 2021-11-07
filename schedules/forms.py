@@ -2,9 +2,9 @@ from django import forms
 from .models import Schedule
 
 PRIORITY = [
-    ('1', 'very important'),
-    ('2', 'important'),
-    ('3', 'normal'),
+    ('1', '🔴'),
+    ('2', '🟡'),
+    ('3', '🟢'),
 ]
 
 class ScheduleForm(forms.ModelForm):

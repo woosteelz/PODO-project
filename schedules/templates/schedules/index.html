@@ -30,7 +30,7 @@
             <form class="container" action="{% url 'schedules:schedule_create' workspace_pk %}" method="POST">
               {% csrf_token %}
               <div>
-                {{ form.as_p }}
+                {{ form }}
                 <button class="btn btn-secondary" type="submit" > Submit </button>
                 <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div>
