@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
 
+    # Third-party Library
+    'django_summernote',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -148,10 +150,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT = BASE_DIR / 'media'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -187,6 +185,20 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.forms.MyCustomSignupForm',
 }
 
+SUMMERNOTE_CONFIG = {
+    'width': '100%',
+    'height': '480',
+    'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'underline']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['picture']],
+        ],
+    'lang': 'ko-KR',
+}
 ASGI_APPLICATION = "podo.asgi.application"
 CHANNEL_LAYERS = {
     'default': {
