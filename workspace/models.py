@@ -10,12 +10,11 @@ from imagekit.processors import ResizeToFill
 # Create your models here.
 class Workspace(models.Model):
     name = models.CharField(max_length=20)
-    # favorite = models.ManyToManyField('유저', symmetrical = False, related_name='favorite')
-    image = models.ImageField(default='podoboy.png')
-    image_thumbnail = ImageSpecField(
-        source='image', processors=[ResizeToFill(45, 45)])
-
+    favorite = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical = False, related_name='favorite')
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
-    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
+    workspace_id = models.ForeignKey(Workspace, on_delete=models.CASCADE)
+    image = models.ImageField(default='podoboy.png')
+    image_thumbnail = ImageSpecField(
+        source='image', processors=[ResizeToFill(45, 45)])
