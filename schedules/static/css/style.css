@@ -1,0 +1,107 @@
+h1 {
+    text-align : left;
+}
+
+.calendar{
+    width: 100vw;
+    font-size: 1rem;
+    margin : auto;
+	background: #fff;
+	color: #555;
+    text-align: left;
+}
+
+.date {
+    font-size: 1rem;
+}
+
+.calendar .month {
+    color : #222222;
+    font-weight: 800;
+}
+
+
+.calendar tr {
+	color: #333333;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.calendar td {
+    width: 1rem;
+    height: 4.5em;
+    padding: .25em .25em;
+    border: 1px solid #E5E5E5;
+    transition: background .5s;
+  }
+  
+
+.event_line {
+    height: 100%;
+    padding: 0;
+    list-style: none;
+    margin : 0;
+}
+  
+a {
+    transition: color .2s;
+}
+
+
+a:link { color: blue; text-decoration: none;}
+a:visited { color: blue; text-decoration: none;}
+a:hover { color: red; text-decoration: none;}
+
+.left {
+    float : left;
+    margin : 10px;
+}
+    
+.right {
+    float : right;
+    margin : 10px;
+}
+
+.form {
+    margin: auto;
+}
+  
+  .form input, .form select, .form textarea {
+    border-radius: 5px;
+    border: 1px solid #17a2b8;
+    outline: none;
+    background: none;
+    padding: 5px;
+    width: 100%;
+}
+
+.schedule-priority {
+    grid-area: aside;
+    list-style: none;
+}
+
+.container {
+    margin-left: 0px;
+    margin-right: 0px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 100px 1fr 100px;
+    grid-template-areas: 'left-aside header right-aside'
+                         'left-aside main right-aside';
+}
+
+.header {
+    grid-area: header;
+}
+
+.main {
+    grid-area: main;
+}
+
+.left-aside {
+    grid-area: left-aside;
+}
+
+.right-aside {
+    grid-area: right-aside;
+}

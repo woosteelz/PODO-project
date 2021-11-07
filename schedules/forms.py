@@ -1,10 +1,11 @@
 from django import forms
 from .models import Schedule
 
-
-class DateInput(forms.DateInput):
-    input_type = 'date'
-
+PRIORITY = [
+    ('1', 'very important'),
+    ('2', 'important'),
+    ('3', 'normal'),
+]
 
 class ScheduleForm(forms.ModelForm):
     title = forms.CharField(
@@ -35,11 +36,31 @@ class ScheduleForm(forms.ModelForm):
                 'required':'내용이 입력되지 않았습니다!'
                 }
             )
+
+    priority = forms.CharField(
+        label='',
+        widget=forms.RadioSelect(
+            choices=PRIORITY,
+            attrs={
+                'class': 'schedule-priority',
+            }
+        ),
+    )
             
     class Meta:
         model = Schedule
-        exclude = ('author','workspace',)
         widgets = {
-            'start_date' : DateInput(),
-            'end_date' : DateInput()
+            'start_date' : forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'end_date' : forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'start_time' : forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
+            'end_time' : forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
         }
+        exclude = ('author','workspace',)
+
+
+    def __init__(self, *args, **kwargs):
+        super(ScheduleForm, self).__init__(*args, **kwargs)
+        self.fields['start_date'].input_formats = ('%Y-%m-%d',)
+        self.fields['end_date'].input_formats = ('%Y-%m-%d',)
+        self.fields['start_time'].input_formats = ('%H-%M',)
+        self.fields['end_time'].input_formats = ('%H-%M',)
