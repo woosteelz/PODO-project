@@ -11,9 +11,9 @@ from django.core.exceptions import ValidationError
 
 
 PRIORITY = [
-        ('1', '매우 중요'),
-        ('2', '중요'),
-        ('3', '보통'),
+        ('1', '🔴'),
+        ('2', '🟡'),
+        ('3', '🟢'),
         ]
 
 class ArticleForm(forms.ModelForm):
