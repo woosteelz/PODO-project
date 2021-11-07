@@ -36,11 +36,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+
     # Local Apps
     'accounts',
     'articles',
     'schedules',
     'workspace',
+    'chat',
 
     # 3rd party
     'allauth',
@@ -182,4 +185,14 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 ACCOUNT_FORMS = {
     'signup': 'accounts.forms.MyCustomSignupForm',
+}
+
+ASGI_APPLICATION = "podo.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }

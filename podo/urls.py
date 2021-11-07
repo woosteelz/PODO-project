@@ -25,5 +25,5 @@ urlpatterns = [
     # path('articles/', include('articles.urls')),
     # path('schedules/', include('schedules.urls')),
     # path('workspaces/', include('workspaces.urls')),
+    path('chat/', include('chat.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
