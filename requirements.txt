@@ -1,10 +1,16 @@
 asgiref==3.4.1
 autopep8==1.5.7
+bleach==4.1.0
 Django==3.2.8
+django-summernote==0.8.20.0
+packaging==21.2
 Pillow==8.4.0
 psycopg2==2.9.1
 pycodestyle==2.8.0
+pyparsing==2.4.7
 python-decouple==3.5
 pytz==2021.3
+six==1.16.0
 sqlparse==0.4.2
 toml==0.10.2
+webencodings==0.5.1
