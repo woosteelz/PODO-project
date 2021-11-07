@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'workspace',
     'chat',
 
+    # Third-party Library
+    'django_summernote',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -141,20 +143,29 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT = BASE_DIR / 'media'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 AUTH_USER_MODEL = 'accounts.User'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
+SUMMERNOTE_CONFIG = {
+    'width': '100%',
+    'height': '480',
+    'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'underline']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['picture']],
+        ],
+    'lang': 'ko-KR',
+}
 ASGI_APPLICATION = "podo.asgi.application"
 CHANNEL_LAYERS = {
     'default': {
