@@ -36,11 +36,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+
     # Local Apps
     'accounts',
     'articles',
     'schedules',
     'workspace',
+    'chat',
 
     # Third-party Library
     'django_summernote',
@@ -162,4 +165,13 @@ SUMMERNOTE_CONFIG = {
             ['insert', ['picture']],
         ],
     'lang': 'ko-KR',
+}
+ASGI_APPLICATION = "podo.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }
