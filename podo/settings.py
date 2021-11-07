@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'articles',
     'schedules',
-    'workspace',
+    'workspaces',
     'chat',
 
     # 3rd party
@@ -159,7 +159,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 
 # allauth
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # development only
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # development only
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -189,14 +189,14 @@ SUMMERNOTE_CONFIG = {
     'width': '100%',
     'height': '480',
     'toolbar': [
-            ['style', ['style']],
-            ['font', ['bold', 'underline']],
-            ['fontname', ['fontname']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['picture']],
-        ],
+        ['style', ['style']],
+        ['font', ['bold', 'underline']],
+        ['fontname', ['fontname']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['picture']],
+    ],
     'lang': 'ko-KR',
 }
 ASGI_APPLICATION = "podo.asgi.application"
