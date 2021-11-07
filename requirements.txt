@@ -1,7 +1,6 @@
 aioredis==1.3.1
 asgiref==3.4.1
 autopep8==1.5.7
-<<<<<<< HEAD
 certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.7
@@ -11,12 +10,10 @@ Django==3.2.8
 django-allauth==0.45.0
 idna==3.3
 oauthlib==3.1.1
-=======
 bleach==4.1.0
 Django==3.2.8
 django-summernote==0.8.20.0
 packaging==21.2
->>>>>>> b10e65e939c2ae305b1af8ae6025b01a9513ecf4
 async-timeout==4.0.0
 attrs==21.2.0
 autobahn==21.3.1
