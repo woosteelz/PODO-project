@@ -1,0 +1,45 @@
+{% extends 'account/base.html' %}
+
+{% block style %}
+<style>
+  label {
+    color: #484848;
+    display: block;
+  }
+
+  form > p {
+    width: 60%;
+    margin: 2px;
+  }
+
+  .account_form_control {
+    background: #EFEFEF;
+    border: 0;
+    outline: 0;
+    width: 100%;
+    height: 35px;
+  }
+</style>
+{% endblock style %}
+
+{% block content %}
+<form class="d-flex flex-column align-items-center" action="{% url 'account_signup' %}" method="POST">
+  {% csrf_token %}
+  <div class="fs-2 fw-bold mb-4" style="color: #484848;">
+    회원가입
+  </div>
+  {{ form.as_p }}
+  <button type="submit" class="btn my-3 text-white" style="background-color: #915CAC; width: 60%;">회원가입</button>
+</form>
+<a href="/accounts/login">뒤로가기</a>
+{% endblock content %}
+
+{% block script %}
+<script>
+  const label = document.querySelectorAll('label')
+  label[0].innerText = '이메일'
+  label[1].innerText = '이름'
+  label[2].innerText = '비밀번호'
+  label[3].innerText = '비밀번호 확인'
+</script>
+{% endblock script %}
