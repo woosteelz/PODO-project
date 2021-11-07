@@ -12,7 +12,7 @@ class Board(models.Model):
 
 
 class Article(models.Model):
-    priority = models.CharField(max_length=10, default='보통')
+    priority = models.CharField(max_length=10, default='3')
     title = models.CharField(max_length=50)
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
