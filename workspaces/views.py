@@ -16,6 +16,7 @@ def index(request):
     }
     return render(request, 'workspaces/index.html', context)
 
+
 @login_required
 @require_http_methods(['GET', 'POST'])
 def create_workspace(request):

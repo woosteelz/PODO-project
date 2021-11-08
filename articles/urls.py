@@ -3,6 +3,7 @@ from . import views
 
 
 app_name = 'articles'
+
 urlpatterns = [
     path('<int:workspace_pk>/workspace/<int:category_pk>/category/', views.index, name='index'),
     path('<int:workspace_pk>/workspace/<int:category_pk>/category/<int:board_pk>/board/create_article/', views.create_article, name='create_article'),

@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.safestring import mark_safe
-
 from workspaces.models import Workspace
 from .models import Schedule
 from .forms import ScheduleForm
@@ -10,7 +9,7 @@ import calendar
 from django.http import JsonResponse
 
 
-def schedule_list(request, workspace_pk):
+def index(request, workspace_pk):
     today = get_date(request.GET.get('month'))
 
     prev_month_url = prev_month(today)
@@ -54,7 +53,7 @@ def next_month(day):
     return month
 
 
-def schedule_create(request, workspace_pk):
+def create_schedule(request, workspace_pk):
     workspace = get_object_or_404(Workspace, pk=workspace_pk)
     if request.method == 'POST':
       form = ScheduleForm(request.POST)
@@ -63,7 +62,7 @@ def schedule_create(request, workspace_pk):
         schedule.author = request.user
         schedule.workspace = workspace
         schedule.save()
-        return redirect('schedules:schedule_list', workspace_pk)
+        return redirect('schedules:index', workspace_pk)
     else:
       form = ScheduleForm()
     context = {
@@ -72,18 +71,18 @@ def schedule_create(request, workspace_pk):
     return render(request, 'schedules/index.html', context)
 
 
-def schedule_update(request, workspace_pk, schedule_pk):
+def update_schedule(request, workspace_pk, schedule_pk):
     schedule = get_object_or_404(Schedule, pk=schedule_pk)
     if request.user == schedule.author:
       if request.method == 'POST':
         form = ScheduleForm(request.POST, instance=schedule)
         if form.is_valid():
           form.save()
-          return redirect('schedules:schedule_list', workspace_pk)
+          return redirect('schedules:index', workspace_pk)
       else:
         form = ScheduleForm(instance=schedule)
     else:
-      return redirect('schedules:schedule_list', workspace_pk)
+      return redirect('schedules:index', workspace_pk)
     context = {
         'workspace_pk': workspace_pk,
         # 'form': form,
@@ -91,10 +90,10 @@ def schedule_update(request, workspace_pk, schedule_pk):
     return JsonResponse(context)
 
 
-def schedule_delete(request, workspace_pk, schedule_pk):
+def delete_schedule(request, workspace_pk, schedule_pk):
     schedule = get_object_or_404(Schedule, pk=schedule_pk)
     if request.user.is_authenticated:
         if request.user == schedule.user: 
             schedule.delete()
-            return redirect('schedules:schedule_list', workspace_pk)
-    return redirect('schedules:schedule_list', workspace_pk)
+            return redirect('schedules:index', workspace_pk)
+    return redirect('schedules:index', workspace_pk)

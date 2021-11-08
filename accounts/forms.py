@@ -2,6 +2,7 @@ from django import forms
 from allauth.account.forms import SignupForm, PasswordField, LoginForm
 from allauth.account import app_settings
 
+
 class MyCustomSignupForm(SignupForm):
     username = forms.CharField(
         label='이름',
@@ -40,3 +41,4 @@ class MyCustomSignupForm(SignupForm):
                 'class': 'account_form_control'
             }
         )
+        

@@ -1,6 +1,7 @@
 from django import forms
 from .models import Schedule
 
+
 PRIORITY = [
     ('1', '🔴'),
     ('2', '🟡'),

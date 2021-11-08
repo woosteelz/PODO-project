@@ -115,7 +115,7 @@ def update_article(request, article_pk):
         'form': form,
         'article': article,
     }
-    return render(request, 'article/update_article.html', context)
+    return render(request, 'articles/update_article.html', context)
 
 
 @require_POST
