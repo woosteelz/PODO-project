@@ -29,9 +29,7 @@ class ArticleForm(forms.ModelForm):
 
     content = forms.CharField(
         label='',
-        widget=SummernoteWidget(
-            attrs={}
-        ),
+        widget=SummernoteWidget(),
     )
 
     priority = forms.CharField(
@@ -46,7 +44,7 @@ class ArticleForm(forms.ModelForm):
 
     class Meta:
         model = Article
-        fields = ('priority', 'title', 'content', 'priority',)
+        fields = ('title', 'content', 'priority',)
 
 
 class CommentForm(forms.ModelForm):

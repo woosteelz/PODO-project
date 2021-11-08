@@ -108,7 +108,7 @@
 })
   </script>
 </head>
-<style>
+{% comment %} <style>
 .main_body {
     display: flex;
     justify-content: center;
@@ -233,12 +233,12 @@ img { display: block; margin: 0px auto; }
       </div>
       </div>  
           {% comment %} <input class="form-control" style="width: 200px" type="search" placeholder="Search" aria-label="Search"> {% endcomment %}
-        <div class="nav_icon">
-        <a href="" ><span class="material-icons-outlined text-white">#</span></a>
+        {% comment %} <div class="nav_icon">
+        <a href="" ><span class="material-icons-outlined text-white">#</span></a> {% endcomment %}
         {% comment %} <a href="{% url 'workspace:create_workspace' %}"><span class="material-icons-outlined text-white">Workspace_create</span></a> {% endcomment %}
         
         
-      </div>
+      {% comment %} </div>
     </div>
   </nav>
   <ul style="position: fixed;">
@@ -253,16 +253,16 @@ img { display: block; margin: 0px auto; }
           </li>
           {% endif %}
         {% endfor %}
-      </div>
+      </div> {% endcomment %}
     <!-- 이미지 안나와서 죽는줄 ?? -> 트렐로에적기 -->
 
    
 
 
-</ul>
+{% comment %} </ul> {% endcomment %}
  
    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {% comment %} <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -283,7 +283,7 @@ img { display: block; margin: 0px auto; }
           </div>
         </div>
       </div>
-    </div>
+    </div> {% endcomment %}
   {% block content %}
   {% endblock content %}
 

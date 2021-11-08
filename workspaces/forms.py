@@ -6,4 +6,4 @@ class WorkspaceForm(forms.ModelForm):
 
     class Meta:
         model = Workspace
-        fields = ('image', 'name',)
+        fields = ('name',)

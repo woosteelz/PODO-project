@@ -1,6 +1,6 @@
 from django.db import models 
 from django.conf import settings
-from workspace.models import Workspace, Category
+from workspaces.models import Workspace, Category
 
 
 # Create your models here.
