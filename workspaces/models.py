@@ -11,10 +11,10 @@ from imagekit.processors import ResizeToFill
 class Workspace(models.Model):
     name = models.CharField(max_length=20)
     favorite = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical = False, related_name='favorite')
-
-class Category(models.Model):
-    name = models.CharField(max_length=20)
-    workspace_id = models.ForeignKey(Workspace, on_delete=models.CASCADE)
     image = models.ImageField(default='podoboy.png')
     image_thumbnail = ImageSpecField(
         source='image', processors=[ResizeToFill(45, 45)])
+        
+class Category(models.Model):
+    name = models.CharField(max_length=20)
+    workspace_id = models.ForeignKey(Workspace, on_delete=models.CASCADE)
