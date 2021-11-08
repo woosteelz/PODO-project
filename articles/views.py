@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm, CommentForm
-from workspace.models import Workspace, Category
+from workspaces.models import Workspace, Category
 from .models import Board, Article, Comment, Image, File
 # 아직 데코레이터는 완벽하게 첨가하지 않음!!
 
@@ -49,9 +49,11 @@ def create_article(request, workspace_pk, category_pk, board_pk):
     workspace = get_object_or_404(Workspace, pk=workspace_pk)
     category = get_object_or_404(Category, pk=category_pk)
     board = get_object_or_404(Board, pk=board_pk)
+    print(request.POST)
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
+            print('통과함')
             article = form.save(commit=False)
             article.user = request.user
             article.workspace = workspace
@@ -67,6 +69,8 @@ def create_article(request, workspace_pk, category_pk, board_pk):
             for image in image_list:
                 image = Image.objects.create(image=image, article_id=article.pk)
             return redirect('articles:index', workspace.pk, category.pk)
+    print('통과못함')
+    print(form.errors)
     return redirect('articles:index', workspace.pk, category.pk)
 
 
@@ -111,7 +115,7 @@ def update_article(request, article_pk):
         'form': form,
         'article': article,
     }
-    return render(request, 'article/update_article.html', context)
+    return render(request, 'articles/update_article.html', context)
 
 
 @require_POST

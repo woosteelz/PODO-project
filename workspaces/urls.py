@@ -1,8 +1,9 @@
-from django import urls
+# from django import urls
 from django.urls import path
 from . import views
 
-app_name = 'workspace'
+
+app_name = 'workspaces'
 
 urlpatterns = [
     path('', views.index, name='index'),

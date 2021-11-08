@@ -1,6 +1,6 @@
 from django.db import models 
 from django.conf import settings
-from workspace.models import Workspace, Category
+from workspaces.models import Workspace, Category
 
 
 # Create your models here.
@@ -21,6 +21,7 @@ class Article(models.Model):
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
+    favorite_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favorite_articles')
 
 
 class Comment(models.Model):

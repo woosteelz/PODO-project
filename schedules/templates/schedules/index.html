@@ -6,8 +6,8 @@
   <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  <a class="btn btn-info left" href="{% url 'schedules:schedule_list' workspace_pk %}?{{ prev_month_url }}"><span>이전 달</span> </a>
-  <a class="btn btn-info right" href="{% url 'schedules:schedule_list' workspace_pk %}?{{ next_month_url }}"><span>다음 달</span> </a>
+  <a class="btn btn-info left" href="{% url 'schedules:index' workspace_pk %}?{{ prev_month_url }}"><span>이전 달</span> </a>
+  <a class="btn btn-info right" href="{% url 'schedules:index' workspace_pk %}?{{ next_month_url }}"><span>다음 달</span> </a>
   <div>
     <h1>승승장고 포도 프로젝트 일정</h1>
   </div>
@@ -27,7 +27,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form class="container" action="{% url 'schedules:schedule_create' workspace_pk %}" method="POST">
+            <form class="container" action="{% url 'schedules:create_schedule' workspace_pk %}" method="POST">
               {% csrf_token %}
               <div>
                 {{ form }}
@@ -43,10 +43,10 @@
   <div class="container">
     <br>
     <div class="left-aside">
-      <a class="btn btn-info left" href="{% url 'schedules:schedule_list' workspace_pk %}?{{ prev_month_url }}"><span>이전 달</span> </a>
+      <a class="btn btn-info left" href="{% url 'schedules:index' workspace_pk %}?{{ prev_month_url }}"><span>이전 달</span> </a>
     </div>
     <div class="right-aside">
-      <a class="btn btn-info right" href="{% url 'schedules:schedule_list' workspace_pk %}?{{ next_month_url }}"><span>다음 달</span> </a>
+      <a class="btn btn-info right" href="{% url 'schedules:index' workspace_pk %}?{{ next_month_url }}"><span>다음 달</span> </a>
     </div>
     <div class="header">
       <b style="font-size: 20px">{{ year }}년</b>
