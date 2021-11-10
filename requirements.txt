@@ -18,8 +18,9 @@ defusedxml==0.7.1
 Django==3.2.8
 django-allauth==0.45.0
 django-appconf==1.0.5
-django-summernote==0.8.20.0
 django-imagekit==4.1.0
+django-invitations==1.9.3
+django-summernote==0.8.20.0
 hiredis==2.0.0
 hyperlink==21.0.0
 idna==3.3

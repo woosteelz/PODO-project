@@ -34,6 +34,7 @@ def create_workspace(request):
     }
     return redirect('workspaces:index')
 
+  
 @login_required
 @require_http_methods(['GET', 'POST'])
 def delete_workspace(request, workspace_pk):
@@ -71,6 +72,7 @@ def create_category(request,workspace_pk):
     category.save()
     return redirect('workspaces:index_category', workspace_pk)
 
+  
 @login_required
 @require_POST
 def delete_category(request, workspace_id, category_id):
@@ -80,6 +82,7 @@ def delete_category(request, workspace_id, category_id):
         category.delete()
     return redirect('workspaces:index')
 
+  
 @login_required
 @require_POST
 def like_category(request, workspace_pk, category_pk):
