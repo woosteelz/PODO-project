@@ -1,10 +1,6 @@
-li {
-    font-size: 0.7em;
-}
-
 .schedules_calendar {
     width: 100%;
-    font-size: 1rem;
+    /* font-size: 1rem; */
     margin : auto;
 	background: #fff;
 	color: #555;
@@ -13,18 +9,18 @@ li {
 
 .schedules_date {
     position: absolute;
-    font-size: 1rem;
-    top: 0;
-    left: 3px;
+    font-size: 1.3em;
+    top: 3px;
+    left: 5px;
     color: 333333;
 }
 
-.scheduletitles {
+.schedule_list {
     padding-left: 0px;
     margin-bottom: 0px;
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 5px;
+    left: 5px;
     list-style: none;
 }
 
@@ -35,6 +31,7 @@ li {
 
 
 .schedules_calendar tr {
+    font-size: 0.8em;
 	color: #333333;
 	font-weight: 600;
 	text-transform: uppercase;
@@ -42,11 +39,15 @@ li {
 
 .schedules_calendar td {
     position: relative;
-    width: 1rem;
-    height: 4.5em;
+    width: 8em;
+    height: 7em;
     padding: .25em .25em;
     border: 1px solid #E5E5E5;
     transition: background .5s;
+  }
+
+.schedules_calendar th {
+    font-size: 1.5em;
   }
   
 .left {
@@ -119,11 +120,6 @@ li {
     text-decoration: none;
 }
 
-.modal-body label {
-    font-weight: 600;
-    margin-left: 12px;
-}
-
 .schedules_create_modal_form {
     margin-top: 20px;
     display: grid;
@@ -163,6 +159,11 @@ li {
 .my-schedule-priority {
     grid-area: priority;
     list-style: none;
+    padding-left: 20px;
+}
+
+.my-schedule-priority label {
+    margin-right: 20px;
 }
 
 .my-schedule-start_date {
@@ -218,42 +219,49 @@ li {
 }
 
 .schedule-title-label {
+    font-weight: 600;
     margin-left: 15px;
     font-weight: bold;
     grid-area:title-label;
 }
 
 .schedule-content-label {
+    font-weight: 600;
     margin-left: 15px;
     font-weight: bold;
     grid-area:content-label;
 }
 
 .schedule-priority-label {
+    font-weight: 600;
     margin-left: 15px;
     font-weight: bold;
     grid-area:priority-label;
 }
 
 .schedule-start_date-label {
+    font-weight: 600;
     text-align: center;
     font-weight: bold;
     grid-area:start_date-label;
 }
 
 .schedule-end_date-label {
+    font-weight: 600;
     text-align: center;
     font-weight: bold;
     grid-area:end_date-label;
 }
 
 .schedule-start_time-label {
+    font-weight: 600;
     text-align: center;
     font-weight: bold;
     grid-area:start_time-label;
 }
 
 .schedule-end_time-label {
+    font-weight: 600;
     text-align: center;
     font-weight: bold;
     grid-area:end_time-label;
@@ -300,7 +308,12 @@ li {
 
 .schedule-priority-p {
     grid-area: priorityp;
+    padding-left: 30px;
     list-style: none;
+}
+
+.schedule-priority-p label {
+    margin-right: 20px;
 }
 
 
@@ -333,42 +346,49 @@ li {
 }
 
 .schedule-title-label-p {
+    font-weight: 600;
     margin-left: 25px;
     font-weight: bold;
     grid-area: title-labelp;
 }
 
 .schedule-content-label-p {
+    font-weight: 600;
     margin-left: 25px;
     font-weight: bold;
     grid-area: content-labelp;
 }
 
 .schedule-priority-label-p {
+    font-weight: 600;
     margin-left: 25px;
     font-weight: bold;
     grid-area: priority-labelp;
 }
 
 .schedule-start_date-label-p {
+    font-weight: 600;
     text-align: center;
     font-weight: bold;
     grid-area: start_date-labelp;
 }
 
 .schedule-end_date-label-p {
+    font-weight: 600;
     text-align: center;
     font-weight: bold;
     grid-area: end_date-labelp;
 }
 
 .schedule-start_time-label-p {
+    font-weight: 600;
     text-align: center;
     font-weight: bold;
     grid-area: start_time-labelp;
 }
 
 .schedule-end_time-label-p {
+    font-weight: 600;
     text-align: center;
     font-weight: bold;
     grid-area: end_time-labelp;

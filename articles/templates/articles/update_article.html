@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link href="{% static 'css/articles_css.css' %}" rel="stylesheet" type="text/css" />
+{% endblock style %}
 
 {% block content %}
   <h1>Update</h1>
   <form action="{% url 'articles:update_article' article.pk %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form }}
+    {{ article_form }}
     <label for="image" class="me-2" style="color: #484848;">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-image" viewBox="0 0 16 16">
           <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>

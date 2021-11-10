@@ -7,7 +7,7 @@
 
 {% block content %}
   <div>
-    <h1 style="text-align : left;">승승장고 포도 프로젝트 일정</h1>
+    <h1 style="text-align : left;">{{ workspace_name }} 일정</h1>
   </div>
   <hr>
   <div style="text-align: right; padding-right: 10px;">
@@ -26,7 +26,7 @@
         <div class="modal-body">
           <form class="schedules_create_modal_form container" action="{% url 'schedules:create_schedule' workspace_pk %}" method="POST">
             {% csrf_token %}
-            {{ form }}
+            {{ schedule_form }}
             <div class="schedule-title-label">일정 이름</div>
             <div class="schedule-content-label">일정 내용</div>
             <div class="schedule-priority-label">우선순위</div>
@@ -58,7 +58,7 @@
     </div>
     <div class="schedules_header">
       <b style="font-size: 20px">{{ year }}년</b>
-      <b style="font-size: 30px">{{ month }}월</b>
+      <b style="font-size: 36px">{{ month }}월</b>
     </div>
     <div class="schedules_main">
       {{ calender }}
@@ -75,7 +75,7 @@
         <div class="schedules_modal_update_form modal-body container">
           <form id="schedules_updateForm" action="" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ schedule_form.as_p }}
             <div class="schedule-title-label-p">일정 이름</div>
             <div class="schedule-content-label-p">일정 내용</div>
             <div class="schedule-priority-label-p">우선순위</div>
