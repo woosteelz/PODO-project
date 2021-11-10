@@ -8,11 +8,11 @@ from .forms import CategoryForm, WorkspaceForm
 # Create your views here.
 @login_required
 def index(request):
-    workspace = Workspace.objects.order_by('-pk')
-    form = WorkspaceForm()
+    workspaces = Workspace.objects.order_by('-pk')
+    workspace_form = WorkspaceForm()
     context = {
-        'form' : form,
-        'workspace': workspace,
+        'workspace_form' : workspace_form,
+        'workspaces': workspaces,
     }
     return render(request, 'workspaces/index.html', context)
 
@@ -21,16 +21,16 @@ def index(request):
 @require_http_methods(['GET', 'POST'])
 def create_workspace(request):
     if request.method == 'POST':
-        form = WorkspaceForm(request.POST, request.FILES)
-        if form.is_valid():
-            workspace = form.save(commit=False)
+        workspace_form = WorkspaceForm(request.POST, request.FILES)
+        if workspace_form.is_valid():
+            workspace = workspace_form.save(commit=False)
             workspace.user = request.user
             workspace.save()
             return redirect('workspaces:index')
     else:
-        form = WorkspaceForm()
+        workspace_form = WorkspaceForm()
     context = {
-        'form' : form,
+        'workspace_form' : workspace_form,
     }
     return redirect('workspaces:index')
 
@@ -45,14 +45,14 @@ def delete_workspace(request, workspace_pk):
 
 
 @login_required
-def index_category(request,workspace_pk):
-    workspace = Workspace.objects.order_by('-pk')
+def index_category(request, workspace_pk):
+    workspaces = Workspace.objects.order_by('-pk')
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
-    form = CategoryForm()
+    category_form = CategoryForm()
     category = Category.objects.all()
     context = {
-        'form' : form,
-        'workspace': workspace,
+        'category_form' : category_form ,
+        'workspaces': workspaces,
         'workspace_indivisual' : workspace_indivisual,
         'category': category,
     }
@@ -61,16 +61,16 @@ def index_category(request,workspace_pk):
 
 @login_required
 @require_http_methods(['GET', 'POST'])
-def create_category(request,workspace_pk):
-    workspace = Workspace.objects.order_by('-pk')
+def create_category(request, workspace_pk):
+    workspaces = Workspace.objects.order_by('-pk')
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
-    form = CategoryForm(request.POST)  
+    category_form = CategoryForm(request.POST)  
     
-    category = form.save(commit=False)
+    category = category_form.save(commit=False)
     category.workspace = workspace_indivisual
     category.user = request.user
     category.save()
-    return redirect('workspaces:index_category', workspace_pk)
+    return redirect('articles:index_article', workspace_indivisual.pk, category.pk)
 
   
 @login_required

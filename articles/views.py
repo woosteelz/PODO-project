@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from django.contrib.auth.decorators import login_required
+from workspaces.forms import WorkspaceForm, CategoryForm
 from .forms import ArticleForm, CommentForm
 from workspaces.models import Workspace, Category
 from .models import Board, Article, Comment, Image, File
@@ -13,7 +14,7 @@ def index_article(request, workspace_pk, category_pk):
     # 보드와 사이드 캘린더를 보여준다.
     # 보드 안에 게시글은 우선순위와 제목을 작은 카드형식으로 보여준다.
     # 보드 안의 게시글은 내부 스크롤을 통해 볼 수 있다.
-    workspace = get_object_or_404(Workspace, pk=workspace_pk)
+    workspace_b = get_object_or_404(Workspace, pk=workspace_pk)
     category = get_object_or_404(Category, pk=category_pk)
     todo_board = get_object_or_404(Board, pk=1)
     doing_board = get_object_or_404(Board, pk=2)
@@ -23,10 +24,13 @@ def index_article(request, workspace_pk, category_pk):
     doing_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=2).order_by('priority')
     issue_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=3).order_by('priority')
     completed_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=4).order_by('priority')
-    form = ArticleForm()
+    article_form = ArticleForm()
+    workspace_form = WorkspaceForm()
+    category_form = CategoryForm()
+    workspaces = Workspace.objects.order_by('-pk')
     
     context = {
-        'workspace': workspace,
+        'workspace_b': workspace_b,
         'category': category,
         'todo_board': todo_board,
         'doing_board': doing_board,
@@ -36,7 +40,10 @@ def index_article(request, workspace_pk, category_pk):
         'doing_articles': doing_articles,
         'issue_articles': issue_articles,
         'completed_articles': completed_articles,
-        'form': form,
+        'article_form': article_form,
+        'workspace_form': workspace_form,
+        'category_form': category_form,
+        'workspaces': workspaces,
     }
     return render(request, 'articles/index_article.html', context)
 
@@ -49,11 +56,10 @@ def create_article(request, workspace_pk, category_pk, board_pk):
     workspace = get_object_or_404(Workspace, pk=workspace_pk)
     category = get_object_or_404(Category, pk=category_pk)
     board = get_object_or_404(Board, pk=board_pk)
-    print(request.FILES.getlist('file'))
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            article = form.save(commit=False)
+        article_form = ArticleForm(request.POST)
+        if article_form.is_valid():
+            article =  article_form.save(commit=False)
             article.user = request.user
             article.workspace = workspace
             article.category = category
@@ -80,10 +86,16 @@ def detail_article(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     comment_form = CommentForm()
     comments = article.comment_set.all()
+    workspace_form = WorkspaceForm()
+    category_form = CategoryForm()
+    workspaces = Workspace.objects.order_by('-pk')
     context = {
         'article': article,
         'comment_form': comment_form,
         'comments': comments,
+        'workspace_form': workspace_form,
+        'category_form': category_form,
+        'workspaces': workspaces,
     }
     return render(request, 'articles/detail_article.html', context)
 
@@ -93,13 +105,13 @@ def update_article(request, article_pk):
     # 상세 페이지 안에서 게시글 수정을 클릭하면 게시글 수정 페이지를 보여준다.
     # 수정을 완료하면 다시 게시글을 상세 페이지를 보여준다.
     article = get_object_or_404(Article, pk=article_pk)
-    print(request)
-    print(request.FILES.getlist('file'))
-    print(request.FILES.getlist('image'))
+    workspace_form = WorkspaceForm()
+    category_form = CategoryForm()
+    workspaces = Workspace.objects.order_by('-pk')
     if request.method == 'POST':
-        form = ArticleForm(request.POST, instance=article)
-        if form.is_valid():
-            form.save()
+        article_form = ArticleForm(request.POST, instance=article)
+        if article_form.is_valid():
+            article_form.save()
 
             file_list = request.FILES.getlist('file')
             print(file_list)
@@ -112,10 +124,13 @@ def update_article(request, article_pk):
                 image = Image.objects.create(image=image, article_id=article.pk)
             return redirect('articles:detail_article', article.pk)
     else:
-        form = ArticleForm(instance=article)
+        article_form = ArticleForm(instance=article)
     context = {
-        'form': form,
+        'article_form': article_form,
         'article': article,
+        'workspace_form': workspace_form,
+        'category_form': category_form,
+        'workspaces': workspaces,
     }
     return render(request, 'articles/update_article.html', context)
 
