@@ -50,6 +50,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.naver',
+    'invitations',
 
     # Third-party Library
     'django_summernote',
@@ -181,9 +185,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
 
-LOGIN_REDIRECT_URL = '/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/workspaces/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 ACCOUNT_FORMS = {
     'signup': 'accounts.forms.MyCustomSignupForm',

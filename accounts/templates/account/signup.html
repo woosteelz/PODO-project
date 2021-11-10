@@ -30,15 +30,22 @@
   </div>
   {{ form.as_p }}
   <button type="submit" class="btn my-3 text-white" style="background-color: #915CAC; width: 60%;">회원가입</button>
+  <div class="container flex-row" style="padding: 0 0px; margin: 5px 0;">
+    <div class="row">
+      <div class="col-7"></div>
+      <div class="col">
+        <a href="/accounts/login" class="text-decoration-none" style="color: #484848;">뒤로가기</a>
+      </div>
+    </div>
+  </div>
 </form>
-<a href="/accounts/login">뒤로가기</a>
 {% endblock content %}
 
 {% block script %}
 <script>
   const label = document.querySelectorAll('label')
   label[0].innerText = '이메일'
-  label[1].innerText = '이름'
+  label[1].innerText = '닉네임'
   label[2].innerText = '비밀번호'
   label[3].innerText = '비밀번호 확인'
 </script>

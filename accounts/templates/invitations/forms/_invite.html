@@ -1,0 +1,31 @@
+{% extends 'invitations/base.html' %}
+
+{% block content %}
+<div class="fs-2 fw-bold mb-4" style="color: #484848;">
+    이메일로 초대하기
+</div>
+<div>
+  초대할 팀원의 이메일을 입력하세요
+</div>
+
+<form id="invite-form" method="POST" action="{% url 'invitations:send-invite' %}">
+  {% csrf_token %}
+  <div>
+    {{ form.email.label }}
+  </div>
+  <div class="form-group">
+      <input type="text" name="email" id="id_email" value="{{ form.email.value }}" class="form-control validate-email">
+  </div>
+  <div class="form-group">
+    {{ form.email.errors }}
+    {% if form.email.errors %}
+      {% for error in form.email.errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endfor %}
+    {% else %}
+      {{ success_message }}
+    {% endif %}
+  </div>
+  <button type="submit" class="btn mt-3 mb-1 text-white" style="background-color: #915CAC; width: 100%; height: 45px;">초대하기</button>
+</form>  
+{% endblock content %}

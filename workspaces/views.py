@@ -24,7 +24,7 @@ def create_workspace(request):
         form = WorkspaceForm(request.POST, request.FILES)
         if form.is_valid():
             workspace = form.save()
-            # workspace.user = request.user
+            workspace.user = request.user
             workspace.save()
             return redirect('workspaces:index')
     else:
@@ -32,4 +32,4 @@ def create_workspace(request):
     context = {
         'form' : form,
     }
-    return redirect('workspaces:index')
+    return render(request, 'workspaces/index.html', context)
