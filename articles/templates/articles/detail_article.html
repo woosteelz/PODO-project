@@ -14,8 +14,7 @@
     </div>
 
     <div class="detail-title">
-      {{ article.title }}
-      {{ article.user }}
+      <h2>제목: {{ article.title }}</h2>
     </div>
 
     <div class="detail-content">
@@ -23,27 +22,36 @@
     </div>
 
     <div class="detail-updated_at">
-      {{ article.updated_at }}
+      <p>작성자: {{ article.user }}</p>
+      <p>최종 작성시간: {{ article.updated_at }}</p>
     </div>
 
     <div class="detail-priority">
+      {% if article.priority == '1'%}
+
+      {% endif %}
+        '🔴'
+        '🟡'
+        '🟢'
       {{ article.priority }}
     </div>
 
     <div class="detail-images">
       {% for image in article.image_set.all %}
         <a href="/media/{{ image.image }}">{{ image.image }}</a>
+        <br>
       {% endfor %}
     </div>
 
     <div class="detail-files">
       {% for file in article.file_set.all %}
         <a href="/media/{{ file.file }}">{{ file.file }}</a>
+        <br>
       {% endfor %}
     </div>
 
     <div class="detail-btn_update">
-      <button>update</button>
+      <a href="{% url 'articles:update_article' article.pk %}">수정</a>
     </div>
 
     <div class="detail-btn_delete">

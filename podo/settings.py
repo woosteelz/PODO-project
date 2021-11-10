@@ -207,7 +207,12 @@ SUMMERNOTE_CONFIG = {
         ['insert', ['picture']],
     ],
     'lang': 'ko-KR',
+    'iframe': False,
+    'summernote': {
+      'dialogsInBody': True,
+    },
 }
+
 ASGI_APPLICATION = "podo.asgi.application"
 CHANNEL_LAYERS = {
     'default': {

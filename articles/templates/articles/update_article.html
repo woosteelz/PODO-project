@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Update</h1>
+  <form action="{% url 'articles:update_article' article.pk %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <label for="image" class="me-2" style="color: #484848;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-image" viewBox="0 0 16 16">
+          <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+          <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5V14zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4z"/>
+        </svg>
+    </label>
+    <input type="file" name="image" id="image" multiple>
+
+    <label for="file" class="me-2" style="color: #484848;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+        <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z"/>
+        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+      </svg>
+    </label>
+    <input type="file" name="file" id="file" multiple>
+    <button type="submit">수정</button>
+  </form>
+
+  {% for image in article.image_set.all %}
+    <a href="/media/{{ image.image }}">{{ image.image }}</a>
+    <form action="{% url 'articles:delete_image' article.pk image.pk %}" method="POST" >
+      {% csrf_token %}
+      <button>delete</button>
+    </form>
+    <br>
+  {% endfor %}
+
+  {% for file in article.file_set.all %}
+    <a href="/media/{{ file.file }}">{{ file.file }}</a>
+    <form action="{% url 'articles:delete_file' article.pk file.pk %}" method="POST">
+      {% csrf_token %}
+      <button>delete</button>
+    </form>
+    <br>
+  {% endfor %}
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock %}
