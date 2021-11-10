@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,7 +80,7 @@
         padding: 0;
         width: 5%;
         background-color: #543654;
-        position: fixed;
+        position: absolute;
         height: 100%;
         overflow: auto;
       }
@@ -137,7 +138,6 @@
   </style>
 </head>
 <body>
-  {% load static %}
     <nav class="flex_item navbar navbar-expand-lg navbar-light border-bottom" style="width: 100%;height: 50px; position: fixed;" >
       <div class="flex_item">
         <a class="nav_PODO" style="color:white; font-Bold" >podo</a>
@@ -153,18 +153,40 @@
         <span class="material-icons">search</span>  
         <span class="material-icons">notifications_none</span>  
         <span class="material-icons">star_outline</span>  
-        <span class="material-icons">account_box</span> 
+        <span class="dropstart">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="material-icons">account_box</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <div class="d-flex flex-column align-items-center">
+              <img src="{% static 'profile.svg' %}" alt="프로필 이미지">
+              <div>
+                이메일
+              </div>
+              <div>
+                닉네임
+              </div>
+              <div class="d-flex">
+                <a href="/accounts/update/">개인정보 변경</a>
+                {% comment %} <form action="{% url 'accounts:logout' %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="로그아웃">
+                </form> {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </span>
         
         
         
       </div>
     </div>
   </nav>
-  <ul class="workspaces_ul" style="position: fixed; dsiplay: inline;">
+  <ul class="workspaces_ul" style="display: inline-block;">
     <div class="d-flex justify-content-between align-items-center flex-column" style="height: 90% ">
       <div class="mb-auto p-2 bd-highlight">
         <li class="workspaces_li"><a class="active" href="#"></a></li>
-        {% for work in workspace %}  
+        {% for work in workspaces %}  
           <li class="workspaces_li">
           {% if work.image %}
           <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
@@ -173,9 +195,7 @@
           {% endif %}
         {% endfor %}
       </div>
-    <!-- 이미지 안나와서 죽는줄 ?? -> 트렐로에적기 -->
-
-</ul>
+  </ul>
  
    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
