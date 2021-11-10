@@ -1,5 +1,7 @@
 from django import forms
-from allauth.account.forms import SignupForm, PasswordField, LoginForm
+from django.contrib.auth.forms import UserChangeForm
+from allauth.account.forms import SignupForm, PasswordField
+from django.contrib.auth import get_user_model
 from allauth.account import app_settings
 
 
@@ -42,3 +44,10 @@ class MyCustomSignupForm(SignupForm):
             }
         )
         
+
+class CustomUserChangeForm(UserChangeForm):
+    password = None
+
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'image',)

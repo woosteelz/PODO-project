@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+      .main_body {
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+      }
+  
+      .left_body {
+          margin-right: 100px;
+          width: 500px;
+  
+          display: flex;
+          flex-direction: column;
+      }
+  
+      .right_body {
+          
+          width: 300px;
+          height: 1000px;
+          left: 72%;
+          position: fixed
+      }
+  
+      .feed_box {
+          background-color: white;
+          width: 480px;
+          margin: 10px;
+          min-height: auto;
+      }
+  
+      .feed_img{
+          width: 100%;
+          object-fit: contain;
+      }
+  
+  
+      .profile_box {
+          width: 40px;
+          height: 40px;
+          border-radius: 70%;
+          overflow: hidden;
+      }
+  
+      .profile_img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+      }
+  
+      .flex_item {
+        justify-content: space-between;
+        background-color : #310B31;
+      }
+  
+      .nav_PODO {
+        margin-left: 20px;
+        text-decoration : none;
+        font-weight : bold;
+      }
+  
+      .nav_icon {
+        margin-right: 20px;
+        text-decoration : none;
+        color : white;
+      }
+  
+      ul {
+        display: inline-block ;
+        list-style-type: none;
+        margin: 0;
+        margin-top : 49px;
+        padding: 0;
+        width: 5%;
+        background-color: #543654;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+      }
+  
+      .create_workspace {
+        margin-top: 100px;
+        margin-left: 100px;
+      }
+  
+      li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+      }
+  
+      li a.active {
+        color: white;
+      }
+  
+      li a:hover:not(.active) {
+        background-color: #000000;
+        color: white;
+      }
+  
+      .modal { 
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        display: none; 
+        background-color: rgba(0, 0, 0, 0.4); }
+  
+      .margin_create_workspace {
+        margin-left : 300px;
+        color : white;
+      }
+      .margin_category {
+        margin-left :96px;
+        background-color : #808080;
+        text-align : center;
+        justify-content : center;
+        width: 10%;
+      }
+      img { display: block; margin: 0px auto; }
+  
+      .jb {
+        border-radius: 15px 15px;
+      }
+  
+      .icons {
+        text-decoration : none;
+      }
+  </style>
+</head>
+<body>
+  {% load static %}
+    <nav class="flex_item navbar navbar-expand-lg navbar-light border-bottom" style="width: 100%;height: 50px; position: fixed;" >
+      <div class="flex_item">
+        <a class="nav_PODO" style="color:white; font-Bold" >podo</a>
+        <!-- Button trigger modal -->
+       
+        <button type="button" class="btn mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#exampleModal">
+          + 새로운 워크스페이스
+        </button>
+       
+      </div>
+      </div>  
+        <div class="nav_icon">
+        <span class="material-icons">search</span>  
+        <span class="material-icons">notifications_none</span>  
+        <span class="material-icons">star_outline</span>  
+        <span class="material-icons">account_box</span> 
+        
+        
+        
+      </div>
+    </div>
+  </nav>
+  <ul style="position: fixed; dsiplay: inline;">
+    <div class="d-flex justify-content-between align-items-center flex-column" style="height: 90% ">
+      <div class="mb-auto p-2 bd-highlight">
+        <li><a class="active" href="#"></a></li>
+        {% for work in workspace %}  
+          <li>
+          {% if work.image %}
+          <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
+          <a href=" {% url 'workspaces:delete_workspace' work.pk %} ">삭제하기</a>
+          </li>
+          {% endif %}
+        {% endfor %}
+      </div>
+    <!-- 이미지 안나와서 죽는줄 ?? -> 트렐로에적기 -->
+
+</ul>
+ 
+   <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Workspace 만들기</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action=" {% url "workspaces:create_workspace" %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-primary">만들기</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+          
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

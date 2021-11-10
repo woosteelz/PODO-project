@@ -19,8 +19,8 @@
 </head>
 <body>
   {% load static %}
-  <section class="d-flex container-fluid p-0">
-    <div class="row">
+  <section class="d-flex container-fluid p-0" style="width: 100vw;">
+    <div class="row" style="width: 100vw;">
       <img class="col-6 p-0" src="{% static '포도 로그인1.png' %}" alt="이미지" style="height: 100vh;">
       <div class="col-6 p-0 flex-grow d-flex justify-content-center align-items-center">
         <div class="card d-flex flex-column justify-content-center" style="width: 28rem; height: 45rem;">
@@ -29,6 +29,8 @@
         </div>
       </div>
     </div>
+    <a style="position: fixed; color:white; text-decoration : none; font-weight : bold; font-size: 20px; bottom: 10px; left: 25vw; transform: translate(-50%, 0);" >podo</a>
+    <a style="position: fixed; color:black; text-decoration : none; font-weight : bold; font-size: 20px; bottom: 10px; right: 25vw; transform: translate(50%, 0);" >podo</a>
     <img style="position: fixed; bottom: 0px; right: 30px;" src="{% static '마스코트.png' %}" alt="이미지">
   </section>
 

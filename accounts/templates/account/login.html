@@ -49,16 +49,21 @@
     </div>
     <button type="submit" class="btn mt-3 mb-1 text-white" style="background-color: #915CAC; width: 100%; height: 45px;">로그인</button>
   </div>
-    <div>
-      {{ form.remember.errors }}
-      {{ form.remember }} 아이디 저장
+    <div class="container flex-row" style="padding: 0 17px; margin: 5px 0;">
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col">
+          {{ form.remember.errors }}
+          {{ form.remember }} 아이디 저장
+        </div>
+      </div>
     </div>
 </form>
 <div class="d-flex flex-column align-items-center">
   <div class="my-2">
     <a class="button text-decoration-none" href="{% url 'account_reset_password' %}" style="color: #484848;">비밀번호를 잊어버리셨나요?</a>
   </div>
-  <div class="my-2">
+  <div class="my-1">
     <a class="text-decoration-none" href="{{ signup_url }}" style="color: #484848;">계정이 없으시나요?</a>
   </div>
 </div>
@@ -68,13 +73,17 @@
 {% get_providers as socialaccount_providers %}
 
 <ul class="d-flex justify-content-evenly social_providers_list mt-4 mx-5 px-3">
-  {% for provider in socialaccount_providers %}
-    <a href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
-      <img src="{% static 'kakao.png' %}" alt="카카오">
-    </a>
+  <a href="{% provider_login_url 'kakao' %}">
+    <img src="{% static 'kakao.png' %}" alt="카카오">
+  </a>
+  <a href="{% provider_login_url 'github' %}">
     <img src="{% static 'github.png' %}" alt="깃허브">
+  </a>
+  <a href="{% provider_login_url 'google' %}">
     <img src="{% static 'google.png' %}" alt="구글">
+  </a>
+  <a href="{% provider_login_url 'naver' %}">
     <img src="{% static 'naver.png' %}" alt="네이버">
-  {% endfor %}
+  </a>
 </ul>
 {% endblock content %}

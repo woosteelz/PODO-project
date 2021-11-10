@@ -9,7 +9,7 @@ from .models import Board, Article, Comment, Image, File
 
 # Create your views here.
 @require_safe
-def index(request, workspace_pk, category_pk):
+def index_article(request, workspace_pk, category_pk):
     # 보드와 사이드 캘린더를 보여준다.
     # 보드 안에 게시글은 우선순위와 제목을 작은 카드형식으로 보여준다.
     # 보드 안의 게시글은 내부 스크롤을 통해 볼 수 있다.
@@ -19,10 +19,10 @@ def index(request, workspace_pk, category_pk):
     doing_board = get_object_or_404(Board, pk=2)
     issue_board = get_object_or_404(Board, pk=3)
     completed_board = get_object_or_404(Board, pk=4)
-    todo_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=1)
-    doing_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=2)
-    issue_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=3)
-    completed_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=4)
+    todo_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=1).order_by('priority')
+    doing_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=2).order_by('priority')
+    issue_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=3).order_by('priority')
+    completed_articles = Article.objects.filter(workspace_id=workspace_pk, category_id=category_pk, board_id=4).order_by('priority')
     form = ArticleForm()
     
     context = {
@@ -38,7 +38,7 @@ def index(request, workspace_pk, category_pk):
         'completed_articles': completed_articles,
         'form': form,
     }
-    return render(request, 'articles/index.html', context)
+    return render(request, 'articles/index_article.html', context)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -49,11 +49,10 @@ def create_article(request, workspace_pk, category_pk, board_pk):
     workspace = get_object_or_404(Workspace, pk=workspace_pk)
     category = get_object_or_404(Category, pk=category_pk)
     board = get_object_or_404(Board, pk=board_pk)
-    print(request.POST)
+    print(request.FILES.getlist('file'))
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
-            print('통과함')
             article = form.save(commit=False)
             article.user = request.user
             article.workspace = workspace
@@ -68,10 +67,8 @@ def create_article(request, workspace_pk, category_pk, board_pk):
             image_list = request.FILES.getlist('image')
             for image in image_list:
                 image = Image.objects.create(image=image, article_id=article.pk)
-            return redirect('articles:index', workspace.pk, category.pk)
-    print('통과못함')
-    print(form.errors)
-    return redirect('articles:index', workspace.pk, category.pk)
+            return redirect('articles:index_article', workspace.pk, category.pk)
+    return redirect('articles:index_article', workspace.pk, category.pk)
 
 
 @require_safe
@@ -96,16 +93,21 @@ def update_article(request, article_pk):
     # 상세 페이지 안에서 게시글 수정을 클릭하면 게시글 수정 페이지를 보여준다.
     # 수정을 완료하면 다시 게시글을 상세 페이지를 보여준다.
     article = get_object_or_404(Article, pk=article_pk)
+    print(request)
+    print(request.FILES.getlist('file'))
+    print(request.FILES.getlist('image'))
     if request.method == 'POST':
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
             form.save()
 
             file_list = request.FILES.getlist('file')
+            print(file_list)
             for file in file_list:
                 file = File.objects.create(file=file, article_id=article.pk)
 
             image_list = request.FILES.getlist('image')
+            print(image_list)
             for image in image_list:
                 image = Image.objects.create(image=image, article_id=article.pk)
             return redirect('articles:detail_article', article.pk)
@@ -126,7 +128,7 @@ def delete_article(request, article_pk):
     workspace = article.workspace
     category = article.category
     article.delete()
-    return redirect('articles:index', workspace.pk, category.pk)
+    return redirect('articles:index_article', workspace.pk, category.pk)
 
 
 @require_POST
@@ -157,3 +159,19 @@ def delete_comment(request, article_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.delete()
     return redirect('articles:detail_article', article.pk)
+
+
+@require_POST
+def delete_image(request, article_pk, image_pk):
+    article = get_object_or_404(Article, pk=article_pk)
+    image = get_object_or_404(Image, pk=image_pk)
+    image.delete()
+    return redirect('articles:update_article', article.pk)
+
+
+@require_POST
+def delete_file(request, article_pk, file_pk):
+    article = get_object_or_404(Article, pk=article_pk)
+    file = get_object_or_404(File, pk=file_pk)
+    file.delete()
+    return redirect('articles:update_article', article.pk)
