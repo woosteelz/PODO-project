@@ -83,7 +83,7 @@
         position: absolute;
         height: 100%;
         overflow: auto;
-      }
+      } {% endcomment %}
   
       .create_workspace {
         margin-top: 100px;
@@ -106,7 +106,7 @@
         color: white;
       }
   
-      .modall { 
+      .workspaces_modal { 
         position: absolute; 
         top: 0; 
         left: 0; 
@@ -142,11 +142,11 @@
       <div class="flex_item">
         <a class="nav_PODO" style="color:white; font-Bold" >podo</a>
         <!-- Button trigger modal -->
-       
+        
         <button type="button" class="btn mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#exampleModal">
           + 새로운 워크스페이스
         </button>
-       
+        
       </div>
       </div>  
         <div class="nav_icon">
@@ -168,10 +168,10 @@
               </div>
               <div class="d-flex">
                 <a href="/accounts/update/">개인정보 변경</a>
-                {% comment %} <form action="{% url 'accounts:logout' %}" method="POST">
+                <form action="{% url 'accounts:logout' %}" method="POST">
                 {% csrf_token %}
                 <input type="submit" value="로그아웃">
-                </form> {% endcomment %}
+                </form>
               </div>
             </div>
           </div>
@@ -198,7 +198,7 @@
   </ul>
  
    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade workspaces_modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
