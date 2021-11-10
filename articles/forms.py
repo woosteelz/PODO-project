@@ -1,13 +1,6 @@
 from django import forms
 from .models import Article, Comment
 from django_summernote.widgets import SummernoteWidget
-from django.core.exceptions import ValidationError
-
-
-# def file_size(value):
-#     limit = 2 * 1024 * 1024
-#     if value.size > limit:
-#         raise ValidationError('File too large. Size should not exceed 2 MiB.')
 
 
 PRIORITY = [
@@ -27,11 +20,6 @@ class ArticleForm(forms.ModelForm):
         ),
     )
 
-    content = forms.CharField(
-        label='',
-        widget=SummernoteWidget(),
-    )
-
     priority = forms.CharField(
         label='',
         widget=forms.RadioSelect(
@@ -45,6 +33,9 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ('title', 'content', 'priority',)
+        widgets = {
+            'content': SummernoteWidget(),
+        }
 
 
 class CommentForm(forms.ModelForm):

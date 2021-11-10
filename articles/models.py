@@ -14,7 +14,7 @@ class Board(models.Model):
 class Article(models.Model):
     priority = models.CharField(max_length=10, default='3')
     title = models.CharField(max_length=50)
-    content = models.TextField(blank=True, null=True)
+    content = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
