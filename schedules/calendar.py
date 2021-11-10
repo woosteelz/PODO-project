@@ -12,27 +12,37 @@ class Calendar(calendar.HTMLCalendar):
 
 	# '일'을 td 태그로 변환
 	def formatday(self, day, schedules):
-		schedules_per_day = schedules.filter(start_date__day=day)
+		schedules_per_day = schedules.filter(start_date__day__lte=day, end_date__day__gte=day)
 		d = ''
 		for schedule in schedules_per_day:
 			schedule_pk = schedule.pk
 			workspace_pk = schedule.workspace.pk
+			schedule_title = schedule.title
+			schedule_content = schedule.content
+			schedule_priority = schedule.priority
+			schedule_start_date = schedule.start_date.strftime('%Y-%m-%d')
+			schedule_end_date = schedule.end_date.strftime('%Y-%m-%d')
+			if type(schedule.start_time) != type(None):
+				schedule_start_time = schedule.start_time.strftime('%H:%M:%S')
+			else:
+				schedule_start_time = 0
+
+			if type(schedule.end_time) != type(None):
+				schedule_end_time = schedule.end_time.strftime('%H:%M:%S')
+			else:
+				schedule_end_time = 0
+
 			d += (
-				f"<li><button' type='button' class=' btn btn-link' data-bs-toggle='modal' data-bs-target='#exampleModal'>{schedule.title}</button></li>"
-				f"<div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>"
-				f"<div class='modal-dialog modal-lg modal-dialog-centered'>"
-				f"<div class='modal-content'>"
-				f"<div class='modal-body'>"
-				f"<form id='scheduleForm' class='container' action='/schedules/workspace/{schedule.workspace.pk}/schedule/{schedule.pk}/update' {schedule.title}' method='POST'>"
-				f"{{% csrf_token %}}"
-				f"{{{{ form.as_p }}}}"
-				f"<button class='btn btn-secondary' type='submit' > Submit </button>"
-				f"<button class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>"
-				f"</form></div></div>/div></div>"
+				f"<li type='button' data-schedule-id='{schedule_pk}' data-workspace-id='{workspace_pk}' data-schedule-title='{schedule_title}' data-schedule-content = '{schedule_content}'"
+				f"data-schedule-priority='{schedule_priority}' data-schedule-start-date='{schedule_start_date}' data-schedule-end-date='{schedule_end_date}'"
+				f"data-schedule-start-time='{schedule_start_time}' data-schedule-end-time='{schedule_end_time}'"
+				f"data-toggle='modal' data-target='#updateModal'>{schedule.title}</li>"
 			)
 				
 		if day != 0:
-			return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
+			if day < 10 :
+				return f"<td><span class='schedules_date'>0{day}</span><ul class='scheduletitles'> {d} </ul></td>"
+			return f"<td><span class='schedules_date'>{day}</span><ul class='scheduletitles'> {d} </ul></td>"
 		return '<td></td>'
 
 	
@@ -49,8 +59,8 @@ class Calendar(calendar.HTMLCalendar):
 	def formatmonth(self, withyear=True):
 		schedules = Schedule.objects.filter(start_date__year=self.year, start_date__month=self.month)
 
-		cal = f'<table class="calendar">\n'
-		#cal += f'<tr><th colspan="7" class="month">{self.year}년 {self.month}월</th></tr>\n'
+		cal = f'<table class="schedules_calendar">\n'
+		#cal += f'<tr><th colspan="7" class="schedules_date">{self.year}년 {self.month}월</th></tr>\n'
 		cal += f'{self.formatweekheader()}\n'
 		for week in self.monthdays2calendar(self.year, self.month):
 			cal += f'{self.formatweek(week, schedules)}\n'

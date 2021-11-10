@@ -2,8 +2,12 @@ h1 {
     text-align : left;
 }
 
-.calendar{
-    width: 100vw;
+li {
+    font-size: 0.7em;
+}
+
+.schedules_calendar {
+    width: 100%;
     font-size: 1rem;
     margin : auto;
 	background: #fff;
@@ -11,23 +15,37 @@ h1 {
     text-align: left;
 }
 
-.date {
+.schedules_date {
+    position: absolute;
     font-size: 1rem;
+    top: 0;
+    left: 3px;
+    color: 333333;
 }
 
-.calendar .month {
+.scheduletitles {
+    padding-left: 0px;
+    margin-bottom: 0px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    list-style: none;
+}
+
+.schedules_calendar .schedules_month {
     color : #222222;
     font-weight: 800;
 }
 
 
-.calendar tr {
+.schedules_calendar tr {
 	color: #333333;
-	font-weight: 700;
+	font-weight: 600;
 	text-transform: uppercase;
 }
 
-.calendar td {
+.schedules_calendar td {
+    position: relative;
     width: 1rem;
     height: 4.5em;
     padding: .25em .25em;
@@ -35,23 +53,6 @@ h1 {
     transition: background .5s;
   }
   
-
-.event_line {
-    height: 100%;
-    padding: 0;
-    list-style: none;
-    margin : 0;
-}
-  
-a {
-    transition: color .2s;
-}
-
-
-a:link { color: blue; text-decoration: none;}
-a:visited { color: blue; text-decoration: none;}
-a:hover { color: red; text-decoration: none;}
-
 .left {
     float : left;
     margin : 10px;
@@ -62,46 +63,343 @@ a:hover { color: red; text-decoration: none;}
     margin : 10px;
 }
 
-.form {
-    margin: auto;
-}
-  
-  .form input, .form select, .form textarea {
-    border-radius: 5px;
-    border: 1px solid #17a2b8;
-    outline: none;
-    background: none;
-    padding: 5px;
-    width: 100%;
-}
-
 .schedule-priority {
     grid-area: aside;
     list-style: none;
 }
 
-.container {
+.schedules_container_main {
     margin-left: 0px;
     margin-right: 0px;
     display: grid;
-    grid-gap: 10px;
+    grid-gap: 20px;
     grid-template-columns: 100px 1fr 100px;
-    grid-template-areas: 'left-aside header right-aside'
+    grid-template-areas: 'left-header header right-header'
                          'left-aside main right-aside';
 }
 
-.header {
+.schedules_header {
     grid-area: header;
 }
 
-.main {
+.schedules_main {
     grid-area: main;
 }
 
-.left-aside {
+.schedules_left-aside {
     grid-area: left-aside;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
 }
 
-.right-aside {
+.schedules_right-aside {
     grid-area: right-aside;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+.schedules_left-arrow:hover {
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.2s;
+    transform: translateX(-2px);
+  }
+
+.schedules_right-arrow:hover {
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.2s;
+    transform: translateX(2px);
+}
+
+#createBtn {
+    font-weight:700; 
+    font-size:20px;
+    color:#333333;
+    text-decoration: none;
+}
+
+.modal-body label {
+    font-weight: 600;
+    margin-left: 12px;
+}
+
+.schedules_create_modal_form {
+    margin-top: 20px;
+    display: grid;
+    /* grid-template-columns: 50% 50%; */
+    grid-gap: 10px;
+    grid-template-areas: 'title-label title-label'
+                         'title title'
+                         'content-label content-label'
+                         'content content'
+                         'priority-label priority-label'
+                         'priority priority'
+                         'start_date-label end_date-label'
+                         'start-date end-date'
+                         'start_time-label end_time-label'
+                         'start-time end-time'
+                         'button button';
+}
+
+.my-schedule-title {
+    grid-area: title;
+    width: 95%;
+    padding: 6px 8px;
+    border-radius: 5px;
+    margin: 0 10px 20px 10px;
+    border: 2px solid #E5E5E5;
+}
+
+.my-schedule-content {
+    grid-area: content;
+    width: 95%;
+    padding: 6px 8px;
+    border-radius: 5px;
+    margin: 0 10px 20px 10px;
+    border: 2px solid #E5E5E5;
+}
+
+.my-schedule-priority {
+    grid-area: priority;
+    list-style: none;
+}
+
+.my-schedule-start_date {
+    grid-area: start-date;
+    margin: 0px 0px 10px 20px;
+    width: 80%;
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 2px solid #E5E5E5;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.my-schedule-end_date {
+    grid-area: end-date;
+    margin: 0px 0px 10px 20px;
+    width: 80%;
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 2px solid #E5E5E5;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.my-schedule-start_time {
+    grid-area: start-time;
+    margin: 0px 0px 10px 30px;
+    width: 70%;
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 2px solid #E5E5E5;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.my-schedule-end_time {
+    grid-area: end-time;
+    margin: 0px 0px 10px 30px;
+    width: 70%;
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 2px solid #E5E5E5;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.schedules_create_modal_btn {
+    grid-area: button;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.schedule-title-label {
+    margin-left: 15px;
+    font-weight: bold;
+    grid-area:title-label;
+}
+
+.schedule-content-label {
+    margin-left: 15px;
+    font-weight: bold;
+    grid-area:content-label;
+}
+
+.schedule-priority-label {
+    margin-left: 15px;
+    font-weight: bold;
+    grid-area:priority-label;
+}
+
+.schedule-start_date-label {
+    text-align: center;
+    font-weight: bold;
+    grid-area:start_date-label;
+}
+
+.schedule-end_date-label {
+    text-align: center;
+    font-weight: bold;
+    grid-area:end_date-label;
+}
+
+.schedule-start_time-label {
+    text-align: center;
+    font-weight: bold;
+    grid-area:start_time-label;
+}
+
+.schedule-end_time-label {
+    text-align: center;
+    font-weight: bold;
+    grid-area:end_time-label;
+}
+
+.schedules_create_modal_form ul li {
+    float: left;
+}
+
+
+.schedules_modal_update_form {
+    padding-bottom: 0px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 10px;
+    grid-template-areas: 'title-labelp title-labelp'
+                         'titlep titlep'
+                         'content-labelp content-labelp'
+                         'contentp contentp'
+                         'priority-labelp priority-labelp'
+                         'priorityp priorityp'
+                         'start_date-labelp end_date-labelp'
+                         'start_datep end_datep'
+                         'start_time-labelp end_time-labelp'
+                         'start_timep end_timep'
+                         'button1 button2';
+}
+
+
+.schedule-title-p {
+    padding-left: 10px;
+    padding-right: 15px;
+    margin-bottom: 0px;
+    grid-area: titlep;
+}
+
+.schedule-content-p {
+    padding-left: 10px;
+    padding-right: 15px;
+    margin-bottom: 0px;
+    grid-area: contentp;
+}
+
+.schedule-priority-p {
+    grid-area: priorityp;
+    list-style: none;
+}
+
+
+.schedule-start_date-p {
+    padding-left: 10px;
+    padding-right: 15px;
+    margin-bottom: 0px;
+    grid-area: start_datep;
+}
+
+.schedule-end_date-p {
+    padding-left: 10px;
+    padding-right: 15px;
+    grid-area: end_datep;
+    margin-bottom: 0px;
+}
+
+.schedule-start_time-p {
+    padding-left: 10px;
+    padding-right: 10px;
+    grid-area: start_timep;
+    margin-bottom: 0px;
+}
+
+.schedule-end_time-p {
+    padding-left: 10px;
+    padding-right: 10px;
+    grid-area: end_timep;
+    margin-bottom: 0px;
+}
+
+.schedule-title-label-p {
+    margin-left: 25px;
+    font-weight: bold;
+    grid-area: title-labelp;
+}
+
+.schedule-content-label-p {
+    margin-left: 25px;
+    font-weight: bold;
+    grid-area: content-labelp;
+}
+
+.schedule-priority-label-p {
+    margin-left: 25px;
+    font-weight: bold;
+    grid-area: priority-labelp;
+}
+
+.schedule-start_date-label-p {
+    text-align: center;
+    font-weight: bold;
+    grid-area: start_date-labelp;
+}
+
+.schedule-end_date-label-p {
+    text-align: center;
+    font-weight: bold;
+    grid-area: end_date-labelp;
+}
+
+.schedule-start_time-label-p {
+    text-align: center;
+    font-weight: bold;
+    grid-area: start_time-labelp;
+}
+
+.schedule-end_time-label-p {
+    text-align: center;
+    font-weight: bold;
+    grid-area: end_time-labelp;
+}
+
+.schedules_update_modal_Btn1 {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 30px;
+    grid-area: button1;
+}
+
+.schedules_update_modal_Btn2 {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 30px;
+    grid-area: button2;
+}
+
+#schedules_deleteForm {
+    height: 0px;
+}
+
+.schedules_updateForm {
+    height: 0px;
+}
+
+.schedules_modal_update_form ul li {
+    float: left;
 }

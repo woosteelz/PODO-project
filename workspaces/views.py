@@ -23,7 +23,8 @@ def create_workspace(request):
     if request.method == 'POST':
         form = WorkspaceForm(request.POST, request.FILES)
         if form.is_valid():
-            workspace = form.save()
+            workspace = form.save(commit=False)
+            workspace.user = request.user
             # workspace.user = request.user
             workspace.save()
             return redirect('workspaces:index')

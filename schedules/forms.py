@@ -10,58 +10,82 @@ PRIORITY = [
 
 class ScheduleForm(forms.ModelForm):
     title = forms.CharField(
-        label='일정 제목',
-        widget=forms.TextInput(
-            attrs={
-                'class':'my-shedule-title',
-                'placeholder': '일정 제목을 입력해주세요.',
-                'maxlength': 50,
-                }
-                ),
-            error_messages={
-                'required': '일정 제목이 입력되지 않았습니다.'
-                }
-            )
-    
-    content = forms.CharField(
-        label='일정 내용',
+        label='',
         widget=forms.Textarea(
             attrs={
-                'class':'my-schedule_content',
-                'placeholder': '내용을 입력해주세요.',
+                'class':'my-schedule-title',
+                'maxlength': 50,
+                'rows': 1,
+                }
+                ),
+        error_messages={
+            'required': '일정 제목이 입력되지 않았습니다.'
+            }
+        )
+    
+    content = forms.CharField(
+        label='',
+        widget=forms.Textarea(
+            attrs={
+                'class':'my-schedule-content',
                 'rows': 5,
-                'cols': 50,
                 }
             ),
-            error_messages={
-                'required':'내용이 입력되지 않았습니다!'
-                }
-            )
+        error_messages={
+            'required':'내용이 입력되지 않았습니다!'
+            }
+        )
 
     priority = forms.CharField(
         label='',
         widget=forms.RadioSelect(
             choices=PRIORITY,
             attrs={
-                'class': 'schedule-priority',
-            }
-        ),
-    )
+                'class': 'my-schedule-priority',
+                }
+            )
+        )
+
+    start_date = forms.DateField(
+        label='',
+        widget=forms.DateInput(
+            attrs={'type': 'date','class': 'my-schedule-start_date'}, 
+            format='%Y-%m-%d'
+            )
+        )
+
+    end_date = forms.DateField(
+        label='',
+        widget=forms.DateInput(
+            attrs={'type': 'date','class': 'my-schedule-end_date'}, 
+            format='%Y-%m-%d'
+            )
+        )
+    start_time = forms.TimeField(
+        label='',
+        widget=forms.TimeInput(
+            attrs={'type': 'time', 'class': 'my-schedule-start_time'},
+            format='%p %I:%M'
+            ),
+        required=False
+        )
+
+    end_time = forms.TimeField(
+        label='',
+        widget=forms.TimeInput(
+            attrs={'type': 'time', 'class': 'my-schedule-end_time'},
+            format='%p %I:%M'
+            ),
+        required=False
+        )
+
             
     class Meta:
         model = Schedule
-        widgets = {
-            'start_date' : forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
-            'end_date' : forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
-            'start_time' : forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
-            'end_time' : forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
-        }
-        exclude = ('author','workspace',)
+        exclude = ('author','workspace','favorite_users')
 
 
     def __init__(self, *args, **kwargs):
         super(ScheduleForm, self).__init__(*args, **kwargs)
         self.fields['start_date'].input_formats = ('%Y-%m-%d',)
         self.fields['end_date'].input_formats = ('%Y-%m-%d',)
-        self.fields['start_time'].input_formats = ('%H-%M',)
-        self.fields['end_time'].input_formats = ('%H-%M',)
