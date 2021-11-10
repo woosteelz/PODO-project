@@ -21,7 +21,7 @@
 <ul class="margin_category">
 {% for category in workspace_indivisual.category_set.all %}
   <li>
-      <a class="mt-2">{{ category.name }}</a>
+      <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
   </li>
 {% empty %}
 {% endfor %}
@@ -43,7 +43,7 @@
           <div class="modal-body">
             <form action=" {% url 'workspaces:create_category' workspace_indivisual.pk %}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
-              {{ form }}
+              {{ category_form }}
               <button type="submit" class="btn btn-primary">만들기</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </form>

@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link href="{% static 'css/articles_css.css' %}" rel="stylesheet" type="text/css" />
+{% endblock style %}
 
 {% block content %}
   
@@ -106,9 +111,9 @@
                 게시글
               </span>
             </div>
-            <form data-workspace-pk={{workspace.pk}} data-category-pk={{category.pk}} class="container-form dropzone" action="{% url 'articles:create_article' workspace.pk category.pk todo_board.pk %}" method="POST" enctype="multipart/form-data">
+            <form data-workspace-pk={{workspace_b.pk}} data-category-pk={{category.pk}} class="container-form dropzone" action="{% url 'articles:create_article' workspace_b.pk category.pk todo_board.pk %}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
-              {{ form }}
+              {{ article_form }}
   
               <div class="article-image d-flex justify-content-center">
                 <label for="image" class="me-2" style="color: #484848;">

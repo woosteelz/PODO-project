@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link href="{% static 'css/articles_css.css' %}" rel="stylesheet" type="text/css" />
+{% endblock style %}
 
 {% block content %}
   <div class="container-detail">

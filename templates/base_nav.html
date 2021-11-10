@@ -79,7 +79,7 @@
         padding: 0;
         width: 5%;
         background-color: #543654;
-        position: fixed;
+        position: absolute;
         height: 100%;
         overflow: auto;
       }
@@ -153,18 +153,40 @@
         <span class="material-icons">search</span>  
         <span class="material-icons">notifications_none</span>  
         <span class="material-icons">star_outline</span>  
-        <span class="material-icons">account_box</span> 
+        <span class="dropstart">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="material-icons">account_box</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <div class="d-flex flex-column align-items-center">
+              <img src="{% static 'profile.svg' %}" alt="프로필 이미지">
+              <div>
+                이메일
+              </div>
+              <div>
+                닉네임
+              </div>
+              <div class="d-flex">
+                <a href="/accounts/update/">개인정보 변경</a>
+                {% comment %} <form action="{% url 'accounts:logout' %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="로그아웃">
+                </form> {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </span>
         
         
         
       </div>
     </div>
   </nav>
-  <ul style="position: fixed; dsiplay: inline;">
+  <ul style="display: inline-block;">
     <div class="d-flex justify-content-between align-items-center flex-column" style="height: 90% ">
       <div class="mb-auto p-2 bd-highlight">
         <li><a class="active" href="#"></a></li>
-        {% for work in workspace %}  
+        {% for work in workspaces %}  
           <li>
           {% if work.image %}
           <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
@@ -188,7 +210,7 @@
           <div class="modal-body">
             <form action=" {% url "workspaces:create_workspace" %}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
-              {{ form.as_p }}
+              {{ workspace_form.as_p }}
               <button type="submit" class="btn btn-primary">만들기</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </form>
