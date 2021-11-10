@@ -13,7 +13,7 @@ def index_article(request, workspace_pk, category_pk):
     # 보드와 사이드 캘린더를 보여준다.
     # 보드 안에 게시글은 우선순위와 제목을 작은 카드형식으로 보여준다.
     # 보드 안의 게시글은 내부 스크롤을 통해 볼 수 있다.
-    workspace = get_object_or_404(Workspace, pk=workspace_pk)
+    workspace_b = get_object_or_404(Workspace, pk=workspace_pk)
     category = get_object_or_404(Category, pk=category_pk)
     todo_board = get_object_or_404(Board, pk=1)
     doing_board = get_object_or_404(Board, pk=2)
@@ -26,7 +26,7 @@ def index_article(request, workspace_pk, category_pk):
     form = ArticleForm()
     
     context = {
-        'workspace': workspace,
+        'workspace_b': workspace_b,
         'category': category,
         'todo_board': todo_board,
         'doing_board': doing_board,

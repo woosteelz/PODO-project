@@ -28,7 +28,7 @@ class ScheduleForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class':'my-schedule-content',
-                'rows': 5,
+                'rows': 3,
                 }
             ),
         error_messages={
