@@ -18,10 +18,10 @@
 
 
 {% block content %}
-<ul class="margin_category">
+<ul class="workspaces_ul margin_category">
 {% for category in workspace_indivisual.category_set.all %}
-  <li>
-      <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
+  <li class="workspaces_li">
+    <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
   </li>
 {% empty %}
 {% endfor %}

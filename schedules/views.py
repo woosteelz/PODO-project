@@ -7,9 +7,11 @@ from .calendar import Calendar
 import datetime
 import calendar
 from django.http import JsonResponse
+from workspaces.forms import WorkspaceForm
 
 
 def index(request, workspace_pk):
+    workspace = get_object_or_404(Workspace, pk=workspace_pk)
     today = get_date(request.GET.get('month'))
 
     prev_month_url = prev_month(today)
@@ -18,15 +20,20 @@ def index(request, workspace_pk):
     calendar = Calendar(today.year, today.month)
     # calendar.setfirstweekday(calendar.SUNDAY)
     html_calendar = calendar.formatmonth(withyear=True)
-    form = ScheduleForm()
+    schedule_form = ScheduleForm()
+    workspace_form = WorkspaceForm()
+    workspaces = Workspace.objects.order_by('-pk')
     context = {
       'calender': mark_safe(html_calendar),
       'prev_month_url': prev_month_url,
       'next_month_url': next_month_url,
       'workspace_pk': workspace_pk,
+      'workspace_name': workspace.name,
       'year': today.year,
       'month': today.month,
-      'form': form,
+      'schedule_form': schedule_form,
+      'workspace_form': workspace_form,
+      'workspaces': workspaces,
     }
     return render(request, 'schedules/index.html', context)
 

@@ -6,6 +6,7 @@ class Calendar(calendar.HTMLCalendar):
 	cssclasses = ["월", "화", "수", "목", "금", "토", "일"]
 
 	def __init__(self, year=None, month=None):
+		self.firstweekday = 6  # 왜 안바뀌지?!!!! sun = 6, mon = 0
 		self.year = year
 		self.month = month
 		super(Calendar, self).__init__()
@@ -31,18 +32,26 @@ class Calendar(calendar.HTMLCalendar):
 				schedule_end_time = schedule.end_time.strftime('%H:%M:%S')
 			else:
 				schedule_end_time = 0
+			print(schedule_priority)
+
+			if schedule_priority == '1':
+				new_schedule_title = '🔴' + schedule_title
+			elif schedule_priority == '2':
+				new_schedule_title = '🟡' + schedule_title
+			else:
+				new_schedule_title = '🟢' + schedule_title
 
 			d += (
 				f"<li type='button' data-schedule-id='{schedule_pk}' data-workspace-id='{workspace_pk}' data-schedule-title='{schedule_title}' data-schedule-content = '{schedule_content}'"
 				f"data-schedule-priority='{schedule_priority}' data-schedule-start-date='{schedule_start_date}' data-schedule-end-date='{schedule_end_date}'"
 				f"data-schedule-start-time='{schedule_start_time}' data-schedule-end-time='{schedule_end_time}'"
-				f"data-toggle='modal' data-target='#updateModal'>{schedule.title}</li>"
+				f"data-toggle='modal' data-target='#updateModal'>{new_schedule_title}</li>"
 			)
 				
 		if day != 0:
 			if day < 10 :
-				return f"<td><span class='schedules_date'>0{day}</span><ul class='scheduletitles'> {d} </ul></td>"
-			return f"<td><span class='schedules_date'>{day}</span><ul class='scheduletitles'> {d} </ul></td>"
+				return f"<td><span class='schedules_date'>0{day}</span><ul class='schedule_list'> {d} </ul></td>"
+			return f"<td><span class='schedules_date'>{day}</span><ul class='schedule_list'> {d} </ul></td>"
 		return '<td></td>'
 
 	

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +72,7 @@
         color : white;
       }
   
-      ul {
+      .workspaces_ul {
         display: inline-block ;
         list-style-type: none;
         margin: 0;
@@ -89,23 +90,23 @@
         margin-left: 100px;
       }
   
-      li a {
+      .workspaces_li a {
         display: block;
         color: #000;
         padding: 8px 16px;
         text-decoration: none;
       }
   
-      li a.active {
+      .workspaces_li a.active {
         color: white;
       }
   
-      li a:hover:not(.active) {
+      .workspaces_li a:hover:not(.active) {
         background-color: #000000;
         color: white;
       }
   
-      .modal { 
+      .modall { 
         position: absolute; 
         top: 0; 
         left: 0; 
@@ -137,7 +138,6 @@
   </style>
 </head>
 <body>
-  {% load static %}
     <nav class="flex_item navbar navbar-expand-lg navbar-light border-bottom" style="width: 100%;height: 50px; position: fixed;" >
       <div class="flex_item">
         <a class="nav_PODO" style="color:white; font-Bold" >podo</a>
@@ -182,12 +182,12 @@
       </div>
     </div>
   </nav>
-  <ul style="display: inline-block;">
+  <ul class="workspaces_ul" style="display: inline-block;">
     <div class="d-flex justify-content-between align-items-center flex-column" style="height: 90% ">
       <div class="mb-auto p-2 bd-highlight">
-        <li><a class="active" href="#"></a></li>
+        <li class="workspaces_li"><a class="active" href="#"></a></li>
         {% for work in workspaces %}  
-          <li>
+          <li class="workspaces_li">
           {% if work.image %}
           <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
           <a href=" {% url 'workspaces:delete_workspace' work.pk %} ">삭제하기</a>
@@ -195,9 +195,7 @@
           {% endif %}
         {% endfor %}
       </div>
-    <!-- 이미지 안나와서 죽는줄 ?? -> 트렐로에적기 -->
-
-</ul>
+  </ul>
  
    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
