@@ -11,8 +11,10 @@ class Workspace(models.Model):
     image = models.ImageField(default='podoboy.png')
     image_thumbnail = ImageSpecField(
         source='image', processors=[ResizeToFill(45, 45)])
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
         
         
 class Category(models.Model):
     name = models.CharField(max_length=20)
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
