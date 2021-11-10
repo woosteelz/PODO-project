@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import logout
+from django.contrib.auth import logout as auth_logout
+from django.views.decorators.http import require_POST
 from .forms import CustomUserChangeForm
 
 
@@ -21,5 +22,11 @@ def update(request):
 def delete(request):
     if request.user.is_authenticated:
         request.user.delete()
-        logout(request)
+        auth_logout(request)
+    return redirect('/accounts/login/')
+
+
+@require_POST
+def logout(request):
+    auth_logout(request)
     return redirect('/accounts/login/')

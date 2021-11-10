@@ -167,7 +167,17 @@ AUTH_USER_MODEL = 'accounts.User'
 
 
 # allauth
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # development only
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com' # 메일 호스트 서버
+
+EMAIL_PORT = '587' # gmail과 통신하는 포트
+
+EMAIL_HOST_USER = config('EMAIL_ID') # 발신할 이메일
+
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD') # 발신할 메일의 비밀번호
+
+EMAIL_USE_TLS = True # TLS 보안 방법
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
