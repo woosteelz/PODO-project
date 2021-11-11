@@ -1,223 +1,215 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+{% block style %}
   <style>
-      .main_body {
-      display: flex;
-      justify-content: center;
-      padding-top: 50px;
-      }
-  
-      .left_body {
-          margin-right: 100px;
-          width: 500px;
-  
-          display: flex;
-          flex-direction: column;
-      }
-  
-      .right_body {
-          
-          width: 300px;
-          height: 1000px;
-          left: 72%;
-          position: fixed
-      }
-  
-      .feed_box {
-          background-color: white;
-          width: 480px;
-          margin: 10px;
-          min-height: auto;
-      }
-  
-      .feed_img{
-          width: 100%;
-          object-fit: contain;
-      }
-  
-  
-      .profile_box {
-          width: 40px;
-          height: 40px;
-          border-radius: 70%;
-          overflow: hidden;
-      }
-  
-      .profile_img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-      }
-  
-      .flex_item {
-        justify-content: space-between;
-        background-color : #310B31;
-      }
-  
-      .nav_PODO {
-        margin-left: 20px;
-        text-decoration : none;
-        font-weight : bold;
-      }
-  
-      .nav_icon {
-        margin-right: 20px;
-        text-decoration : none;
-        color : white;
-      }
-  
-      .workspaces_ul {
-        display: inline-block ;
-        list-style-type: none;
-        margin: 0;
-        margin-top : 49px;
-        padding: 0;
-        width: 5%;
-        background-color: #543654;
-        position: absolute;
+    .main_body {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    }
+
+    .left_body {
+        margin-right: 100px;
+        width: 500px;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .right_body {
+        
+        width: 300px;
+        height: 1000px;
+        left: 72%;
+        position: fixed
+    }
+
+    .feed_box {
+        background-color: white;
+        width: 480px;
+        margin: 10px;
+        min-height: auto;
+    }
+
+    .feed_img{
+        width: 100%;
+        object-fit: contain;
+    }
+
+
+    .profile_box {
+        width: 40px;
+        height: 40px;
+        border-radius: 70%;
+        overflow: hidden;
+    }
+
+    .profile_img {
+        width: 100%;
         height: 100%;
-        overflow: auto;
-      } {% endcomment %}
-  
-      .create_workspace {
-        margin-top: 100px;
-        margin-left: 100px;
-      }
-  
-      .workspaces_li a {
-        display: block;
-        color: #000;
-        padding: 8px 16px;
-        text-decoration: none;
-      }
-  
-      .workspaces_li a.active {
-        color: white;
-      }
-  
-      .workspaces_li a:hover:not(.active) {
-        background-color: #000000;
-        color: white;
-      }
-  
-      .workspaces_modal { 
-        position: absolute; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        display: none; 
-        background-color: rgba(0, 0, 0, 0.4); }
-  
-      .margin_create_workspace {
-        margin-left : 300px;
-        color : white;
-      }
-      .margin_category {
-        margin-left :96px;
-        background-color : #808080;
-        text-align : center;
-        justify-content : center;
-        width: 10%;
-      }
-      img { display: block; margin: 0px auto; }
-  
-      .jb {
-        border-radius: 15px 15px;
-      }
-  
-      .icons {
-        text-decoration : none;
-      }
+        object-fit: cover;
+    }
+
+    .flex_item {
+      justify-content: space-between;
+      background-color : #310B31;
+    }
+
+    .nav_PODO {
+      margin-left: 20px;
+      text-decoration : none;
+      font-weight : bold;
+    }
+
+    .nav_icon {
+      margin-right: 20px;
+      text-decoration : none;
+      color : white;
+    }
+
+    .workspaces_ul {
+      display: inline-block ;
+      list-style-type: none;
+      padding: 0;
+      margin-top: -1px;
+      width: 5%;
+      background-color: #543654;
+      position: absolute;
+      height: 95.5%;
+      overflow: auto;
+    }
+
+    .create_workspace {
+      margin-top: 100px;
+      margin-left: 100px;
+    }
+
+    .workspaces_li a {
+      display: block;
+      color: #000;
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+
+    .workspaces_li a.active {
+      color: white;
+    }
+
+    .workspaces_li a:hover:not(.active) {
+      background-color: #000000;
+      color: white;
+    }
+
+    .workspaces_modal { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      display: none; 
+      background-color: rgba(0, 0, 0, 0.4); }
+
+    .margin_create_workspace {
+      margin-left : 300px;
+      color : white;
+    }
+    .margin_category {
+      margin-left :96px;
+      background-color : #808080;
+      text-align : center;
+      justify-content : center;
+      width: 10%;
+    }
+    img { display: block; margin: 0px auto; }
+
+    .jb {
+      border-radius: 15px 15px;
+    }
+
+    .icons {
+      text-decoration : none;
+    }
   </style>
-</head>
-<body>
-    <nav class="flex_item navbar navbar-expand-lg navbar-light border-bottom" style="width: 100%;height: 50px; position: fixed;" >
-      <div class="flex_item">
-        <a class="nav_PODO" style="color:white; font-Bold" >podo</a>
-        <!-- Button trigger modal -->
-        
-        <button type="button" class="btn mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#exampleModal">
-          + 새로운 워크스페이스
-        </button>
-        
-      </div>
-      </div>  
-        <div class="nav_icon">
-        <span class="material-icons">search</span>  
-        <span class="material-icons">notifications_none</span>  
-        <span class="material-icons">star_outline</span>  
-        <span class="dropstart">
-          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="material-icons">account_box</span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <div class="d-flex flex-column align-items-center">
-              <img src="{% static 'profile.svg' %}" alt="프로필 이미지">
-              <div>
-                이메일
-              </div>
-              <div>
-                닉네임
-              </div>
-              <div class="d-flex">
-                <a href="/accounts/update/">개인정보 변경</a>
-                <form action="{% url 'accounts:logout' %}" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="로그아웃">
-                </form>
-              </div>
-            </div>
+{% endblock style %}
+  
+
+
+<nav class="flex_item navbar navbar-expand-lg navbar-light border-bottom" style="width: 100%; height: 50px;" >
+  <div class="flex_item">
+    <a class="nav_PODO" style="color:white; font-Bold" >podo</a>
+    <!-- Button trigger modal -->
+    
+    <button type="button" class="btn mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#exampleModal">
+      + 새로운 워크스페이스
+    </button>
+    
+  </div>
+  </div>  
+    <div class="nav_icon">
+    <span class="material-icons">search</span>  
+    <span class="material-icons">notifications_none</span>  
+    <span class="material-icons">star_outline</span>  
+    <span class="dropstart">
+      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="material-icons">account_box</span>
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <div class="d-flex flex-column align-items-center">
+          <img src="{% static 'profile.svg' %}" alt="프로필 이미지">
+          <div>
+            이메일
           </div>
-        </span>
-        
-        
-        
-      </div>
-    </div>
-  </nav>
-  <ul class="workspaces_ul" style="display: inline-block;">
-    <div class="d-flex justify-content-between align-items-center flex-column" style="height: 90% ">
-      <div class="mb-auto p-2 bd-highlight">
-        <li class="workspaces_li"><a class="active" href="#"></a></li>
-        {% for work in workspaces %}  
-          <li class="workspaces_li">
-          {% if work.image %}
-          <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
-          <a href=" {% url 'workspaces:delete_workspace' work.pk %} ">삭제하기</a>
-          </li>
-          {% endif %}
-        {% endfor %}
-      </div>
-  </ul>
- 
-   <!-- Modal -->
-    <div class="modal fade workspaces_modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Workspace 만들기</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div>
+            닉네임
           </div>
-          <div class="modal-body">
-            <form action=" {% url "workspaces:create_workspace" %}" method="POST" enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ workspace_form.as_p }}
-              <button type="submit" class="btn btn-primary">만들기</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          <div class="d-flex">
+            <a href="/accounts/update/">개인정보 변경</a>
+            <form action="{% url 'accounts:logout' %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="로그아웃">
             </form>
-          </div>
-          <div class="modal-footer">
-          
           </div>
         </div>
       </div>
+    </span>
+  </div>
+</nav>
+
+<div>
+  <ul class="workspaces_ul" style="display: inline-block;">
+  <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100% ">
+    <div class="mb-auto p-2 bd-highlight">
+      <li class="workspaces_li"><a class="active" href="#"></a></li>
+      {% for work in workspaces %}  
+        <li class="workspaces_li">
+        {% if work.image %}
+        <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
+        <a href=" {% url 'workspaces:delete_workspace' work.pk %} ">삭제하기</a>
+        </li>
+        {% endif %}
+      {% endfor %}
     </div>
-</body>
-</html>
+  </ul>
+</div>
+
+<!-- Modal -->
+<div class="modal fade workspaces_modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Workspace 만들기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action=" {% url "workspaces:create_workspace" %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ workspace_form.as_p }}
+          <button type="submit" class="btn btn-primary">만들기</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      
+      </div>
+    </div>
+  </div>
+</div>
