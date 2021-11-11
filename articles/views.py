@@ -1,3 +1,5 @@
+import json
+from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from django.contrib.auth.decorators import login_required
@@ -75,6 +77,18 @@ def create_article(request, workspace_pk, category_pk, board_pk):
                 image = Image.objects.create(image=image, article_id=article.pk)
             return redirect('articles:index_article', workspace.pk, category.pk)
     return redirect('articles:index_article', workspace.pk, category.pk)
+
+
+def modify_article_board(request, article_pk, board_pk):
+    article = get_object_or_404(Article, pk=article_pk)
+    to_board = get_object_or_404(Board, pk=board_pk)
+    article.board = to_board
+    article.save()
+    context = {
+        'workspace_b': article.workspace.pk,
+        'category': article.category.pk,
+    }
+    return JsonResponse(context)
 
 
 @require_safe
