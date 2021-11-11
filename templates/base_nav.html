@@ -83,7 +83,7 @@
         position: absolute;
         height: 100%;
         overflow: auto;
-      } {% endcomment %}
+      }
   
       .create_workspace {
         margin-top: 100px;
@@ -182,7 +182,7 @@
       </div>
     </div>
   </nav>
-  <ul class="workspaces_ul" style="display: inline-block;">
+  {% comment %} <ul class="workspaces_ul" style="display: inline-block;">
     <div class="d-flex justify-content-between align-items-center flex-column" style="height: 90% ">
       <div class="mb-auto p-2 bd-highlight">
         <li class="workspaces_li"><a class="active" href="#"></a></li>
@@ -195,7 +195,7 @@
           {% endif %}
         {% endfor %}
       </div>
-  </ul>
+  </ul> {% endcomment %}
  
    <!-- Modal -->
     <div class="modal fade workspaces_modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
