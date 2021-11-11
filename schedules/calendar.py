@@ -32,14 +32,16 @@ class Calendar(calendar.HTMLCalendar):
 				schedule_end_time = schedule.end_time.strftime('%H:%M:%S')
 			else:
 				schedule_end_time = 0
-			print(schedule_priority)
 
 			if schedule_priority == '1':
-				new_schedule_title = '🔴' + schedule_title
+				new_schedule_title = '🔴 ' + schedule_title
 			elif schedule_priority == '2':
-				new_schedule_title = '🟡' + schedule_title
+				new_schedule_title = '🟡 ' + schedule_title
 			else:
-				new_schedule_title = '🟢' + schedule_title
+				new_schedule_title = '🟢 ' + schedule_title
+			
+			if len(new_schedule_title) > 7:
+				new_schedule_title = new_schedule_title[:7]+'...'
 
 			d += (
 				f"<li type='button' data-schedule-id='{schedule_pk}' data-workspace-id='{workspace_pk}' data-schedule-title='{schedule_title}' data-schedule-content = '{schedule_content}'"
@@ -50,8 +52,8 @@ class Calendar(calendar.HTMLCalendar):
 				
 		if day != 0:
 			if day < 10 :
-				return f"<td><span class='schedules_date'>0{day}</span><ul class='schedule_list'> {d} </ul></td>"
-			return f"<td><span class='schedules_date'>{day}</span><ul class='schedule_list'> {d} </ul></td>"
+				return f"<td><span class='schedules_date'>0{day}</span><div><ul class='schedule_list'> {d} </ul></div></td>"
+			return f"<td><span class='schedules_date'>{day}</span><div><ul class='schedule_list'> {d} </ul></div></td>"
 		return '<td></td>'
 
 	

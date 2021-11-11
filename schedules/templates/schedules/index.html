@@ -6,16 +6,19 @@
 {% endblock style %}
 
 {% block content %}
-  <div>
-    <h1 style="text-align : left;">{{ workspace_name }} 일정</h1>
+  <br>
+  <div id="schedule_title">
+    <p style="position: absolute; z-index: 2; left: 10px; ">{{ workspace_name }} 일정</p>
+    <div id="schedule_title_deco"></div>
   </div>
-  <hr>
-  <div style="text-align: right; padding-right: 10px;">
-    <button id="createBtn" type="button" class="btn btn-link" data-toggle="modal" data-target="#createModal">
-      + 일정 추가하기
-    </button>
+  {% comment %} <div id="schedule_title_deco"></div> {% endcomment %}
+  <div id="schedules_createbtn" data-toggle="modal" data-target="#createModal">
+    + 일정 추가하기
   </div>
-  <!-- Modal -->
+  <hr style="width:100%; height: 2px;">
+
+
+  <!-- Schedule Create Modal -->
   <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -40,31 +43,33 @@
       </div>
     </div>
   </div>
+
   <div class='container schedules_container_main'>
     <br>
     <div class="schedules_left-aside">
-      <a class="schedules_left-arrow left" href="{% url 'schedules:index' workspace_pk %}?{{ prev_month_url }}">
+      <div class="schedules_left-arrow left" data-month = "{{ month }}" data-year = "{{ year }}" data-workspace-id = "{{ workspace_pk }}">
       <svg width="35" height="81" viewBox="0 0 35 81" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1.05799 43.3962C-0.174289 41.662 -0.174289 39.338 1.05799 37.6038L25.9242 2.60979C28.7454 -1.3604 35 0.635513 35 5.50598L35 75.494C35 80.3645 28.7454 82.3604 25.9242 78.3902L1.05799 43.3962Z" fill="#E3E4E6"/>
       </svg>
-      </a>
+      </div>
     </div>
     <div class="schedules_right-aside">
-      <a class="schedules_right-arrow right" href="{% url 'schedules:index' workspace_pk %}?{{ next_month_url }}">
+      <div class="schedules_right-arrow right" data-month = "{{ month }}" data-year = "{{ year }}" data-workspace-id = "{{ workspace_pk }}">
         <svg width="35" height="81" viewBox="0 0 35 81" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M33.942 37.6038C35.1743 39.338 35.1743 41.662 33.942 43.3962L9.07579 78.3902C6.25463 82.3604 0 80.3645 0 75.494L0 5.50599C0 0.635521 6.25463 -1.36041 9.07579 2.60979L33.942 37.6038Z" fill="#E3E4E6"/>
         </svg>
-      </a>
+      </div>
     </div>
     <div class="schedules_header">
-      <b style="font-size: 20px">{{ year }}년</b>
-      <b style="font-size: 36px">{{ month }}월</b>
+      <b class="schedule_now_year" style="font-size: 20px">{{ year }}년</b>
+      <b class="schedule_now_month" style="font-size: 36px">{{ month }}월</b>
     </div>
     <div class="schedules_main">
-      {{ calender }}
+      {{ calendar }}
     </div>
   </div>
-   <!-- Modal -->
+  
+  <!-- Schedule Update Modal -->
   <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -101,53 +106,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-    $('#updateModal').on('show.bs.modal', function (event) {
-      var button = event.relatedTarget
-      const schedule_pk = button.dataset.scheduleId
-      const workspace_pk = button.dataset.workspaceId
-      const schedule_title = button.dataset.scheduleTitle
-      const schedule_content= button.dataset.scheduleContent
-      const schedule_priority = button.dataset.schedulePriority
-      const schedule_start_date = button.dataset.scheduleStartDate
-      const schedule_end_date = button.dataset.scheduleEndDate
-      const schedule_start_time = button.dataset.scheduleStartTime
-      const schedule_end_time = button.dataset.scheduleEndTime
-
-      const radioId = `id_priority_${schedule_priority - 1}`
-      document.querySelector(`#updateModal #${radioId}`).checked=true
-
-      var modal = $(this)
-      modal.find('.my-schedule-title').val(schedule_title)
-      modal.find('.my-schedule-content').val(schedule_content)
-      modal.find('.my-schedule-start_date').val(schedule_start_date)
-      modal.find('.my-schedule-end_date').val(schedule_end_date)
-      modal.find('.my-schedule-start_time').val(schedule_start_time)
-      modal.find('.my-schedule-end_time').val(schedule_end_time)
-
-      const updateForm = document.querySelector('#schedules_updateForm')
-      updateForm.action = `/schedules/workspace/${workspace_pk}/schedule/${schedule_pk}/update/`
-      console.log(updateForm)
-
-      const deleteForm = document.querySelector('#schedules_deleteForm')
-      deleteForm.action = `/schedules/workspace/${workspace_pk}/schedule/${schedule_pk}/delete/`
-      console.log(deleteForm)
-
-
-      const updatemodalP = document.querySelectorAll('#updateModal p')
-      const priorityp = document.querySelector('#updateModal ul')
-
-
-      updatemodalP[0].setAttribute('class','schedule-title-p')
-      updatemodalP[1].setAttribute('class','schedule-content-p')
-      updatemodalP[4].setAttribute('class','schedule-start_date-p')
-      updatemodalP[5].setAttribute('class','schedule-end_date-p')
-      updatemodalP[6].setAttribute('class','schedule-start_time-p')
-      updatemodalP[7].setAttribute('class','schedule-end_time-p')
-      priorityp.setAttribute('class','schedule-priority-p')
-
-    })
-  </script>
+  <script src="{% static 'js/script.js' %}" defer></script>
 {% endblock script %}
 </body>
 </html>
