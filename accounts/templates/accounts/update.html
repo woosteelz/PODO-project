@@ -46,9 +46,13 @@
       </div>
       <button type="submit" class="btn my-4 text-white" style="background-color: #915CAC; width: 100%; height: 45px;">변경</button>
     </form>
-
     <!-- Button trigger modal -->
-    <div class="d-flex justify-content-end" style="width: 100%; margin-top: 45px;">
+    <div class="d-flex justify-content-evenly" style="width: 100%; margin-top: 30px;">
+      <button type="button" class="btn my-3" style="background-color: #915CAC; width: 30%; margin-left: 20px;">
+        <a href="{% url 'accounts:password_change' %}" class="text-decoration-none text-white">
+          비밀번호 변경
+        </a>
+      </button>
       <button type="button" class="btn my-3 text-white" style="background-color: #DB5D83; width: 30%; margin-right: 20px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
         회원탈퇴
       </button>
