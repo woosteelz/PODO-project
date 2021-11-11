@@ -90,3 +90,8 @@
 .detail-btn_delete{
   grid-area: btn_delete;
 }
+
+.board-status {
+  height: 400px;
+  border: 1px solid black;
+}

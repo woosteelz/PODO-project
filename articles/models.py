@@ -4,7 +4,6 @@ from workspaces.models import Workspace, Category
 
 
 # Create your models here.
-
 class Board(models.Model):
     # 보드는 수정, 삭제 불가능
     # 추후에 commit=False로 게시글이 생성될 때 db에 따로 저장할 예정

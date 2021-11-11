@@ -7,97 +7,73 @@
 
 {% block content %}
   
+  {% comment %} 보드 {% endcomment %}
   <h1>Index</h1>
-  <div>
-    {{ todo_board.name }}
+
+    <div data-board-pk={{todo_board.pk}} class="board-status">
+      <h2>{{ todo_board.name }}</h2>
       <a data-board-pk={{todo_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
         </svg>
       </a>
-
       <br>
-      <div style="padding: 15px; overflow:auto; width:500px; height:150px; border: 1px solid black; border-radius: 5px;">
-        {% for article in todo_articles %}
-          <div style="border: 1px solid black; border-radius: 5px; padding: 3px; margin-bottom: 5px;">
-            <a href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">
-              {% if article.title|length > 10 %}
-                {% if article.priority == '1' %}
-                  🔴 {{ article.title | slice:":10" }} ...
-                {% elif article.priority == '2' %}
-                  🟡 {{ article.title | slice:":10" }} ...
-                {% elif article.priority == '3' %}
-                  🟢 {{ article.title | slice:":10" }} ...
-                {% endif %}
-              {% else %}
-                {% if article.priority == '1' %}
-                  🔴 {{ article.title | slice:":10" }}
-                {% elif article.priority == '2' %}
-                  🟡 {{ article.title | slice:":10" }}}
-                {% elif article.priority == '3' %}
-                  🟢 {{ article.title | slice:":10" }}
-                {% endif %}
-              {% endif %}
-            </a>
-          </div>
-        {% endfor %}
-      </div>
+      {% for article in todo_articles %}
+      <a data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
+      <br>
+      {% endfor %}
     </div>
 
     <hr>
     
-    <div>
-      {{ doing_board.name }}
+    <div data-board-pk={{doing_board.pk}} class="board-status">
+      <h2>{{ doing_board.name }}</h2>
       <a data-board-pk={{doing_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
         </svg>
       </a>
-      
-      <br>
       <br>
       {% for article in doing_articles %}
-      <a href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
+      <a data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
       <br>
       {% endfor %}
     </div>
     
     <hr>
     
-    <div>
-      {{ issue_board.name }}
+    <div data-board-pk={{issue_board.pk}} class="board-status">
+      <h2>{{ issue_board.name }}</h2>
       <a data-board-pk={{issue_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
         </svg>
       </a>
-      
-      <br>
       <br>
       {% for article in issue_articles %}
-      <a href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
+      <a data-article-pk={{article.pk}} class="article" data-board-pk={{issue_board.pk}} href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
       <br>
       {% endfor %}
     </div>
     
     <hr>
     
-    <div>
-      {{ completed_board.name }}
+    <div data-board-pk={{completed_board.pk}} class="board-status">
+      <h2>{{ completed_board.name }}</h2>
       <a data-board-pk={{completed_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
         </svg>
       </a>
-    
-      <br>
       <br>
       {% for article in completed_articles %}
-      <a href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
+      <a data-article-pk={{article.pk}} class="article" data-board-pk={{completed_board.pk}} href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
       <br>
       {% endfor %}
     </div>
     
+
+  {% comment %} 모달 {% endcomment %}
    <div class="modal fade" id="board">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -151,25 +127,5 @@
 {% endblock %}
 
 {% block script %}
-  <script>
-    const myBtn = document.querySelectorAll('.myBtn')
-    console.log(myBtn)
-    myBtn.forEach((btn) => {
-      btn.addEventListener('click', (e)=> {
-        const boardPk = btn.dataset.boardPk
-        console.log(boardPk)
-
-        const form = document.querySelector('.container-form')
-        form.addEventListener('submit', (e) => {
-          e.preventDefault()
-
-          const workspacePk = e.target.dataset.workspacePk
-          const categoryPk = e.target.dataset.categoryPk
-          e.target.action = `/articles/${workspacePk}/workspace/${categoryPk}/category/${boardPk}/board/create_article/`
-          e.target.submit()
-        })
-      })
-    })
-
-  </script>
+  <script src="{% static 'js/articles_js.js' %}" type="text/javascript"></script>
 {% endblock %} 
