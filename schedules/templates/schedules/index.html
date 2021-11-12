@@ -6,98 +6,115 @@
 {% endblock style %}
 
 {% block content %}
-  <br>
-  <div id="schedule_title">
-    <p style="position: absolute; z-index: 2; left: 10px; ">{{ workspace_name }} 일정</p>
-  <div id="schedule_title_deco"></div>
-  </div>
-  {% comment %} <div id="schedule_title_deco"></div> {% endcomment %}
-  <div id="schedules_createbtn" data-toggle="modal" data-target="#createModal">
-    + 일정 추가하기
-  </div>
-  <hr style="width:100%; height: 2px;">
-
-
-  <!-- Schedule Create Modal -->
-  <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title br" style="font-weight: bold;">일정 추가</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form class="schedules_create_modal_form container" action="{% url 'schedules:create_schedule' workspace_pk %}" method="POST">
-            {% csrf_token %}
-            {{ schedule_form }}
-            <div class="schedule-title-label">일정 이름</div>
-            <div class="schedule-content-label">일정 내용</div>
-            <div class="schedule-priority-label">우선순위</div>
-            <div class="schedule-start_date-label">시작 날짜</div>
-            <div class="schedule-end_date-label">종료 날짜</div>
-            <div class="schedule-start_time-label">시작 시간</div>
-            <div class="schedule-end_time-label">종료 시간</div>
-            <button class="btn schedules_create_modal_btn" type="submit" style="background-color: rgb(145, 92, 172); color: white;"> 확인 </button>
-          </form>
-        </div>
+<!-- Schedule Create Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title br" style="font-weight: bold;">일정 추가</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="schedules_create_modal_form container" action="{% url 'schedules:create_schedule' workspace_pk %}" method="POST">
+          {% csrf_token %}
+          {{ schedule_form }}
+          <div class="schedule-title-label">일정 이름</div>
+          <div class="schedule-content-label">일정 내용</div>
+          <div class="schedule-priority-label">우선순위</div>
+          <div class="schedule-start_date-label">시작 날짜</div>
+          <div class="schedule-end_date-label">종료 날짜</div>
+          <div class="schedule-start_time-label">시작 시간</div>
+          <div class="schedule-end_time-label">종료 시간</div>
+          <button class="btn schedules_create_modal_btn" type="submit" style="background-color: rgb(145, 92, 172); color: white;"> 확인 </button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
-  <div class='container schedules_container_main'>
-    <br>
-    <div class="schedules_left-aside">
-      <div class="schedules_left-arrow left" data-month = "{{ month }}" data-year = "{{ year }}" data-workspace-id = "{{ workspace_pk }}">
+<!-- Schedule Update Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title br" style="font-weight: bold;">일정 수정</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="schedules_update_modal_form container" action="#" method="POST">
+          {% csrf_token %}
+          {{ schedule_form }}
+          <div class="schedule-title-label">일정 이름</div>
+          <div class="schedule-content-label">일정 내용</div>
+          <div class="schedule-priority-label">우선순위</div>
+          <div class="schedule-start_date-label">시작 날짜</div>
+          <div class="schedule-end_date-label">종료 날짜</div>
+          <div class="schedule-start_time-label">시작 시간</div>
+          <div class="schedule-end_time-label">종료 시간</div>
+          <button class="btn schedules_update_modal_Btn1" type="submit" style="background-color: rgb(145, 92, 172); color: white;">수정</button>
+          <button class='btn schedules_update_modal_Btn2' type='button' data-schedule-id='' data-workspace-id='' data-dismiss="modal" data-toggle="modal" data-target="#deleteModal" style="background-color: rgb(145, 92, 172); color: white;">삭제</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title br" style="font-weight: bold;">일정 삭제</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" data- aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="schedules_delete_modal_form container" action="#" method="POST">
+          {% csrf_token %}
+          <b>일정을 정말 삭제하시겠습니까?</b>
+          <br>
+          <button type="submit" class="btn" style="background-color: rgb(145, 92, 172); color: white; float: right;">삭제하기</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p style="position: absolute; font-size=5px; color: white;">Made By Yeongha</p>
+<br>
+<div id="schedule_title">
+  <p style="position: absolute; z-index: 2; left: 10px; ">{{ workspace_name }} 일정</p>
+  <div id="schedule_title_deco"></div>
+</div>
+
+<div id="schedules_createbtn" data-toggle="modal" data-target="#createModal">
+  + 일정 추가하기
+</div>
+<hr style="width:100%; height: 2px;">
+
+<div class='container schedules_container_main'>
+  <br>
+  <div class="schedules_left-aside">
+    <div style="margin-right:30px;" class="schedules_left-arrow left" data-month = "{{ month }}" data-year = "{{ year }}" data-workspace-id = "{{ workspace_pk }}">
       <svg width="35" height="81" viewBox="0 0 35 81" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1.05799 43.3962C-0.174289 41.662 -0.174289 39.338 1.05799 37.6038L25.9242 2.60979C28.7454 -1.3604 35 0.635513 35 5.50598L35 75.494C35 80.3645 28.7454 82.3604 25.9242 78.3902L1.05799 43.3962Z" fill="#E3E4E6"/>
       </svg>
-      </div>
-    </div>
-    <div class="schedules_right-aside">
-      <div class="schedules_right-arrow right" data-month = "{{ month }}" data-year = "{{ year }}" data-workspace-id = "{{ workspace_pk }}">
-        <svg width="35" height="81" viewBox="0 0 35 81" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M33.942 37.6038C35.1743 39.338 35.1743 41.662 33.942 43.3962L9.07579 78.3902C6.25463 82.3604 0 80.3645 0 75.494L0 5.50599C0 0.635521 6.25463 -1.36041 9.07579 2.60979L33.942 37.6038Z" fill="#E3E4E6"/>
-        </svg>
-      </div>
-    </div>
-    <div class="schedules_header">
-      <b class="schedule_now_year" style="font-size: 20px">{{ year }}년</b>
-      <b class="schedule_now_month" style="font-size: 36px">{{ month }}월</b>
-    </div>
-    <div class="schedules_main">
-      {{ calendar }}
     </div>
   </div>
-  
-  <!-- Schedule Update Modal -->
-  <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title br" style="font-weight: bold;">일정 수정</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="schedules_modal_update_form modal-body container">
-          <form id="schedules_updateForm" action="" method="POST">
-            {% csrf_token %}
-            {{ schedule_form.as_p }}
-            <div class="schedule-title-label-p">일정 이름</div>
-            <div class="schedule-content-label-p">일정 내용</div>
-            <div class="schedule-priority-label-p">우선순위</div>
-            <div class="schedule-start_date-label-p">시작 날짜</div>
-            <div class="schedule-end_date-label-p">종료 날짜</div>
-            <div class="schedule-start_time-label-p">시작 시간</div>
-            <div class="schedule-end_time-label-p">종료 시간</div>
-            <button class="btn schedules_update_modal_Btn1" type="submit" style="background-color: rgb(145, 92, 172); color: white;">수정</button>
-          </form>
-          <form id="schedules_deleteForm" action="" method='POST'>
-            {% csrf_token %}
-            <button class='btn schedules_update_modal_Btn2' type='submit' style="background-color: rgb(145, 92, 172); color: white;">삭제</button>
-          </from>
-        </div>
-      </div>
+  <div class="schedules_right-aside">
+    <div style="margin-left:30px;" class="schedules_right-arrow right" data-month = "{{ month }}" data-year = "{{ year }}" data-workspace-id = "{{ workspace_pk }}">
+      <svg width="35" height="81" viewBox="0 0 35 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M33.942 37.6038C35.1743 39.338 35.1743 41.662 33.942 43.3962L9.07579 78.3902C6.25463 82.3604 0 80.3645 0 75.494L0 5.50599C0 0.635521 6.25463 -1.36041 9.07579 2.60979L33.942 37.6038Z" fill="#E3E4E6"/>
+      </svg>
     </div>
   </div>
+  <div class="schedules_header">
+    <b class="schedule_now_year" style="font-size: 150%; color: #484848; ">{{ year }}년</b>
+    <b class="schedule_now_month" style="font-size: 200%; color: #484848; ">{{ month }}월</b>
+  </div>
+  <div class="schedules_main">
+    {{ calendar }}
+  </div>
+</div>
 {% endblock content %}
 
 {% block script %}
