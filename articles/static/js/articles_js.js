@@ -77,7 +77,9 @@ function dragDrop(e) {
   console.log(modifyUrl)
   axios.get(modifyUrl)
     .then(res =>{
-      console.log(res)
+      setTimeout(function(){
+        location.reload();
+      },10);
     })
     .catch(err => {
       alert(err)

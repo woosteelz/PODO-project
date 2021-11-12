@@ -1,9 +1,11 @@
 // 일정 수정 모달
+var workspace_pk = ''
+var schedule_pk = ''
 
 $('#updateModal').on('show.bs.modal', function (event) {
   var button = event.relatedTarget
-  const schedule_pk = button.dataset.scheduleId
-  const workspace_pk = button.dataset.workspaceId
+  schedule_pk = button.dataset.scheduleId
+  workspace_pk = button.dataset.workspaceId
   const schedule_title = button.dataset.scheduleTitle
   const schedule_content= button.dataset.scheduleContent
   const schedule_priority = button.dataset.schedulePriority
@@ -11,38 +13,26 @@ $('#updateModal').on('show.bs.modal', function (event) {
   const schedule_end_date = button.dataset.scheduleEndDate
   const schedule_start_time = button.dataset.scheduleStartTime
   const schedule_end_time = button.dataset.scheduleEndTime
-
   const radioId = `id_priority_${schedule_priority - 1}`
   document.querySelector(`#updateModal #${radioId}`).checked=true
 
   var modal = $(this)
-  modal.find('.my-schedule-title').val(schedule_title)
-  modal.find('.my-schedule-content').val(schedule_content)
-  modal.find('.my-schedule-start_date').val(schedule_start_date)
-  modal.find('.my-schedule-end_date').val(schedule_end_date)
-  modal.find('.my-schedule-start_time').val(schedule_start_time)
-  modal.find('.my-schedule-end_time').val(schedule_end_time)
+  modal.find('.schedules_update_modal_form .my-schedule-title').val(schedule_title)
+  modal.find('.schedules_update_modal_form .my-schedule-content').val(schedule_content)
+  modal.find('.schedules_update_modal_form .my-schedule-start_date').val(schedule_start_date)
+  modal.find('.schedules_update_modal_form .my-schedule-end_date').val(schedule_end_date)
+  modal.find('.schedules_update_modal_form .my-schedule-start_time').val(schedule_start_time)
+  modal.find('.schedules_update_modal_form .my-schedule-end_time').val(schedule_end_time)
 
-  const updateForm = document.querySelector('#schedules_updateForm')
-  updateForm.action = `/schedules/workspace/${workspace_pk}/schedule/${schedule_pk}/update/`
-
-  const deleteForm = document.querySelector('#schedules_deleteForm')
-  deleteForm.action = `/schedules/workspace/${workspace_pk}/schedule/${schedule_pk}/delete/`
-
-  const updatemodalP = document.querySelectorAll('#updateModal p')
-  const priorityp = document.querySelector('#updateModal ul')
-
-
-  updatemodalP[0].setAttribute('class','schedule-title-p')
-  updatemodalP[1].setAttribute('class','schedule-content-p')
-  updatemodalP[4].setAttribute('class','schedule-start_date-p')
-  updatemodalP[5].setAttribute('class','schedule-end_date-p')
-  updatemodalP[6].setAttribute('class','schedule-start_time-p')
-  updatemodalP[7].setAttribute('class','schedule-end_time-p')
-  priorityp.setAttribute('class','schedule-priority-p')
-
+  document.querySelector('.schedules_update_modal_form').action = `/schedules/workspace/${workspace_pk}/schedule/${schedule_pk}/update/`
 })
 
+
+// 일정 삭제 모달
+$('#deleteModal').on('show.bs.modal', function (event) {
+  console.log(workspace_pk, schedule_pk)
+  document.querySelector('.schedules_delete_modal_form').action = `/schedules/workspace/${workspace_pk}/schedule/${schedule_pk}/delete/`
+})
 
 // 이전달 달력 버튼
 
