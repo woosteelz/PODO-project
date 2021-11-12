@@ -55,6 +55,7 @@ def index_article(request, workspace_pk, category_pk):
         'workspace_form': workspace_form,
         'category_form': category_form,
         'workspaces': workspaces,
+        'workspace_name': workspace_b.name
     }
     return render(request, 'articles/index_article.html', context)
 

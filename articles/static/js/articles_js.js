@@ -79,10 +79,7 @@ function dragDrop(e) {
     .then(res =>{
       setTimeout(function(){
         location.reload();
-      },10);
-    })
-    .catch(err => {
-      alert(err)
+      }, 0);
     })
 }
 
