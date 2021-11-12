@@ -40,8 +40,6 @@ class Calendar(calendar.HTMLCalendar):
 			else:
 				new_schedule_title = '🟢 ' + schedule_title
 			
-			if len(new_schedule_title) > 7:
-				new_schedule_title = new_schedule_title[:7]+'...'
 
 			d += (
 				f"<li type='button' data-schedule-id='{schedule_pk}' data-workspace-id='{workspace_pk}' data-schedule-title='{schedule_title}' data-schedule-content = '{schedule_content}'"
@@ -54,6 +52,63 @@ class Calendar(calendar.HTMLCalendar):
 			if day < 10 :
 				return f"<td><span class='schedules_date'>0{day}</span><div><ul class='schedule_list'> {d} </ul></div></td>"
 			return f"<td><span class='schedules_date'>{day}</span><div><ul class='schedule_list'> {d} </ul></div></td>"
+		return '<td></td>'
+
+	
+	# '주'를 tr 태그로 변환
+	def formatweek(self, theweek, schedules):
+		week = ''
+		for d, weekday in theweek:
+			week += self.formatday(d, schedules)
+		return f'<tr> {week} </tr>'
+
+	
+	# '월'을 테이블 태그로 변환
+	# 각 '월'과 '연으로 스케줄 필터
+	def formatmonth(self, withyear=True):
+		schedules = Schedule.objects.filter(start_date__year=self.year, start_date__month=self.month)
+
+		cal = f'<table class="schedules_calendar">\n'
+		#cal += f'<tr><th colspan="7" class="schedules_date">{self.year}년 {self.month}월</th></tr>\n'
+		cal += f'{self.formatweekheader()}\n'
+		for week in self.monthdays2calendar(self.year, self.month):
+			cal += f'{self.formatweek(week, schedules)}\n'
+		return cal
+
+
+# 메인페이지 달력
+class MiniCalendar(calendar.HTMLCalendar):
+	cssclasses = ["월", "화", "수", "목", "금", "토", "일"]
+
+	def __init__(self, year=None, month=None):
+		self.firstweekday = 6  # 왜 안바뀌지?!!!! sun = 6, mon = 0
+		self.year = year
+		self.month = month
+		super(Calendar, self).__init__()
+
+	# '일'을 td 태그로 변환
+	def formatday(self, day, schedules):
+		schedules_per_day = schedules.filter(start_date__day__lte=day, end_date__day__gte=day)
+		d = ''
+		for schedule in schedules_per_day:
+			schedule_priority = schedule.priority
+
+			if schedule_priority == '1':
+				schedule_priority = '🔴'
+			elif schedule_priority == '2':
+				schedule_priority = '🟡'
+			else:
+				schedule_priority = '🟢'
+			
+
+			d += (
+				f"<li type='button'>{schedule_priority}</li>"
+			)
+				
+		if day != 0:
+			if day < 10 :
+				return f"<td><span class='schedules_date'>0{day}</span><ul class='schedule_list'>{d}</ul></td>"
+			return f"<td><span class='schedules_date'>{day}</span><ul class='schedule_list'>{d}</ul></td>"
 		return '<td></td>'
 
 	
