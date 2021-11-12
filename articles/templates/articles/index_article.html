@@ -6,75 +6,83 @@
 {% endblock style %}
 
 {% block content %}
-  
   {% comment %} 보드 {% endcomment %}
-  <h1>Index</h1>
+  <br>
+  <div id="board_title">
+    <p style="position: absolute; z-index: 2; left: 10px; ">{{ workspace_name }} 보드</p>
+  <div id="board_title_deco"></div>
+  </div>
 
-    <div data-board-pk={{todo_board.pk}} class="board-status">
-      <h2>{{ todo_board.name }}</h2>
-      <a data-board-pk={{todo_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-        </svg>
-      </a>
-      <br>
-      {% for article in todo_articles %}
-      <a data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
-      <br>
-      {% endfor %}
-    </div>
+  <hr style="width:100%; height: 2px;">
 
-    <hr>
-    
-    <div data-board-pk={{doing_board.pk}} class="board-status">
-      <h2>{{ doing_board.name }}</h2>
-      <a data-board-pk={{doing_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-        </svg>
-      </a>
-      <br>
-      {% for article in doing_articles %}
-      <a data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
-      <br>
-      {% endfor %}
-    </div>
-    
-    <hr>
-    
-    <div data-board-pk={{issue_board.pk}} class="board-status">
-      <h2>{{ issue_board.name }}</h2>
-      <a data-board-pk={{issue_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-        </svg>
-      </a>
-      <br>
-      {% for article in issue_articles %}
-      <a data-article-pk={{article.pk}} class="article" data-board-pk={{issue_board.pk}} href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
-      <br>
-      {% endfor %}
-    </div>
-    
-    <hr>
-    
-    <div data-board-pk={{completed_board.pk}} class="board-status">
-      <h2>{{ completed_board.name }}</h2>
-      <a data-board-pk={{completed_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-        </svg>
-      </a>
-      <br>
-      {% for article in completed_articles %}
-      <a data-article-pk={{article.pk}} class="article" data-board-pk={{completed_board.pk}} href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
-      <br>
-      {% endfor %}
-    </div>
+  <div class="board-container">
+
+      <div data-board-pk={{todo_board.pk}} class="board-status board-todo" style="background-color: #E8ECF2">
+        <p data-board-pk={{todo_board.pk}} style="font-size: 20px;">{{ todo_board.name }}<p/>
+        <a data-board-pk={{todo_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+          </svg>
+        </a>
+        <br data-board-pk={{todo_board.pk}}>
+          {% for article in todo_articles %}
+            <div data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} style="padding: 2px; background-color: #FFFFFF;">
+              <a data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
+            </div>
+          {% endfor %}
+      </div>
+      
+      <div data-board-pk={{doing_board.pk}} class="board-status board-doing" style="background-color: #E8ECF2">
+        <h2>{{ doing_board.name }}</h2>
+        <a data-board-pk={{doing_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+          </svg>
+        </a>
+        <br>
+        {% for article in doing_articles %}
+          <div data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}}>
+            <a data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
+          </div>
+        {% endfor %}
+      </div>
+      
+      <div data-board-pk={{issue_board.pk}} class="board-status board-issue" style="background-color: #DDC5FC">
+        <h2>{{ issue_board.name }}</h2>
+        <a data-board-pk={{issue_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+          </svg>
+        </a>
+        <br>
+        {% for article in issue_articles %}
+        <a data-article-pk={{article.pk}} class="article" data-board-pk={{issue_board.pk}} href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
+        <br>
+        {% endfor %}
+      </div>
+      
+      <div data-board-pk={{completed_board.pk}} class="board-status board-completed" style="background-color: #E8ECF2">
+        <h2>{{ completed_board.name }}</h2>
+        <a data-board-pk={{completed_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+          </svg>
+        </a>
+        <br>
+        {% for article in completed_articles %}
+          <a data-article-pk={{article.pk}} class="article" data-board-pk={{completed_board.pk}} href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
+          <br>
+        {% endfor %}
+      </div>
+
+      <div class="board-schedules">
+
+      </div>
+  </div>
     
 
   {% comment %} 모달 {% endcomment %}
-   <div class="modal fade" id="board">
+  <div class="modal fade" id="board">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">

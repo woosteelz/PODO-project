@@ -1,3 +1,13 @@
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* index 모달 폼 */
 .container-form {
   display: grid;
   grid-template-areas:'title title title aside'
@@ -46,6 +56,70 @@
   grid-area: button2;
 }
 
+
+/* index 보드 */
+.board-status {
+  overflow:auto;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#board_title {
+  position: relative;
+  color: #484848; 
+  font-size: 30px;
+  font-weight: 700;
+  left: 10px; 
+  top: 0px;
+  height: 30px;
+}
+
+#board_title_deco {
+  position: absolute;
+  width: 98%; 
+  height: 20px; 
+  left: 0px;
+  top: 20px;
+  background-color: #E5CAEF; 
+  z-index: 1;
+}
+
+.board-container {
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  height: 80%;
+  grid-gap: 20px;
+  grid-template-areas:'todo todo doing doing schedules schedules'
+                      'todo todo doing doing schedules schedules'
+                      'issue issue doing doing schedules schedules'
+                      'issue issue completed completed schedules schedules';
+}
+
+.board-todo {
+  grid-area: todo;
+}
+
+.board-doing {
+  grid-area: doing;
+}
+
+.board-issue {
+  grid-area: issue;
+}
+
+.board-completed {
+  grid-area: completed;
+}
+
+.board-schedules {
+  grid-area: schedules;
+  border-radius: 5px;
+  background-color: #FFC8C5;
+}
+
+
+/* article detail */
 .container-detail {
   display: grid;
   grid-template-areas: 'header header header header'
@@ -89,9 +163,4 @@
 
 .detail-btn_delete{
   grid-area: btn_delete;
-}
-
-.board-status {
-  height: 400px;
-  border: 1px solid black;
 }
