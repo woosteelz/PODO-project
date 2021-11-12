@@ -1,37 +1,26 @@
-{% extends 'base.html' %}
+{% if not workspace_indivisual.pk %}
 
-{% comment %} <ul style="position: fixed;">
-    <div class="d-flex justify-content-between align-items-center flex-column mx-4" style="height: 90% ">
-      <div class="mb-auto p-2 bd-highlight">
-        <li><a class="active" href="#"></a></li>
-        {% for cate in category %}  
-          <li>
-          {% if cate.name %}
-          <a href=" {% url 'workspaces:delete_category' workspace.pk cate.pk %} ">삭제하기</a>
-          </li>
-          {% endif %}
-        {% endfor %}
-        <a href=" {% url 'workspaces:create_category' workspace.pk %} "> 카테고리 만들기</a>
-      </div> {% endcomment %}
+{% else %}
+  <ul class="workspaces_ul margin_category">
+    {% if not workspace_indivisual.category_set.all %}
+      <br>
+      <a> 카테고리를 </a>
+      <br>
+      <a>만들어보세요!</a>
+    {% endif %}
+  {% for category in workspace_indivisual.category_set.all %}
 
+    <li class="workspaces_li">
+      <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
+    </li>
+  {% empty %}
+  {% endfor %}
 
-
-
-{% block content %}
-<ul class="workspaces_ul margin_category">
-{% for category in workspace_indivisual.category_set.all %}
-  <li class="workspaces_li">
-    <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
-  </li>
-{% empty %}
-{% endfor %}
-
-
-<button type="button" class="btn btn-primary make_create my-5" data-bs-toggle="modal" data-bs-target="#categorymodal">
-  카테고리 만들기
+  <button type="button" style="width:65%" class="btn btn-primary make_create my-5" data-bs-toggle="modal" data-bs-target="#categorymodal">
+    +
   </button>
 
-</ul>
+  </ul>
 
   <div class="modal fade" id="categorymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -40,20 +29,20 @@
             <h5 class="modal-title" id="exampleModalLabel">카테고리 만들기</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+
           <div class="modal-body">
-            <form action=" {% url 'workspaces:create_category' workspace_indivisual.pk %}" method="POST" enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ category_form }}
-              <button type="submit" class="btn btn-primary">만들기</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            </form>
+              <form action=" {% url 'workspaces:create_category' workspace_indivisual.pk %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ category_form }}
+                <button type="submit" class="btn btn-primary">만들기</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+              </form>
           </div>
+
           <div class="modal-footer">
-          
           </div>
+
         </div>
       </div>
     </div>
-{% endblock content %}
-
-
+{% endif %}

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" style="height:100%;">
+<html lang="en" style="height: 100%;">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,15 +26,16 @@
 </head>
 <body style="height:100%;">
   {% include 'base_nav.html' %}
+  {% include 'workspaces/category_index.html' %}
+  
   <div class="margin_article_div" style="height:87%; border: 1px solid #D1D1D1; border-radius: 20px; box-shadow: 2px 1px 10px 1px rgba(0,0,0,0.1);">
     <div id="content" name="content" class="base_div" style="height:100% width:100%; margin-right: 5%; margin-left: 5%;">
       {% block content %}
-      {% endblock %}
+      {% endblock content%}
     </div>
   </div>
 
   
-
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

@@ -26,7 +26,7 @@ def create_workspace(request):
             workspace = workspace_form.save(commit=False)
             workspace.user = request.user
             workspace.save()
-            return redirect('workspaces:index')
+            return redirect('workspaces:index_category', workspace.pk)
     else:
         workspace_form = WorkspaceForm()
     context = {
@@ -56,7 +56,7 @@ def index_category(request, workspace_pk):
         'workspace_indivisual' : workspace_indivisual,
         'category': category,
     }
-    return render(request, 'workspaces/category_index.html', context)
+    return render(request, 'base.html', context)
 
 
 @login_required
@@ -64,8 +64,7 @@ def index_category(request, workspace_pk):
 def create_category(request, workspace_pk):
     workspaces = Workspace.objects.order_by('-pk')
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
-    category_form = CategoryForm(request.POST)  
-    
+    category_form = CategoryForm(request.POST)
     category = category_form.save(commit=False)
     category.workspace = workspace_indivisual
     category.user = request.user

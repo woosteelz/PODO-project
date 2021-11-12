@@ -1,35 +1,39 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.safestring import mark_safe
-from workspaces.models import Workspace
+from workspaces.models import Workspace, Category
 from .models import Schedule
 from .forms import ScheduleForm
 from .calendar import Calendar
 import datetime
 import calendar
 from django.http import JsonResponse
-from workspaces.forms import WorkspaceForm
+from workspaces.forms import WorkspaceForm, CategoryForm
 
 
 def index(request, workspace_pk):
-    workspace = get_object_or_404(Workspace, pk=workspace_pk)
     today = datetime.datetime.today()
-
     calendar = Calendar(today.year, today.month)
     # calendar.setfirstweekday(calendar.SUNDAY)
     html_calendar = calendar.formatmonth(withyear=True)
     schedule_form = ScheduleForm()
     workspaces = Workspace.objects.order_by('-pk')
     workspace_form = WorkspaceForm()
-    workspaces = Workspace.objects.order_by('-pk')
+    workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
+    category_form = CategoryForm()
+    categories = Category.objects.all()
+
     context = {
       'calendar': mark_safe(html_calendar),
       'workspace_pk': workspace_pk,
-      'workspace_name': workspace.name,
+      'workspace_name': workspace_indivisual.name,
       'year': today.year,
       'month': today.month,
       'schedule_form': schedule_form,
       'workspace_form': workspace_form,
       'workspaces': workspaces,
+      'category_form' : category_form ,
+      'workspace_indivisual' : workspace_indivisual,
+      'categories': categories,
     }
     return render(request, 'schedules/index.html', context)
 

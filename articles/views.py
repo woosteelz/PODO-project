@@ -7,6 +7,8 @@ from workspaces.forms import WorkspaceForm, CategoryForm
 from .forms import ArticleForm, CommentForm
 from workspaces.models import Workspace, Category
 from .models import Board, Article, Comment, Image, File
+from schedules.calendar import MiniCalendar
+import datetime
 # 아직 데코레이터는 완벽하게 첨가하지 않음!!
 
 
@@ -30,8 +32,15 @@ def index_article(request, workspace_pk, category_pk):
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
     workspaces = Workspace.objects.order_by('-pk')
+    workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
+    
+    # 달력 부분
+    today = datetime.datetime.today()
+    #minicalendar = MiniCalendar(today.year, today.month)
     
     context = {
+        #'minicalendar': minicalendar,
+        'workspace_indivisual':workspace_indivisual,
         'workspace_b': workspace_b,
         'category': category,
         'todo_board': todo_board,
@@ -46,6 +55,7 @@ def index_article(request, workspace_pk, category_pk):
         'workspace_form': workspace_form,
         'category_form': category_form,
         'workspaces': workspaces,
+        'workspace_name': workspace_b.name
     }
     return render(request, 'articles/index_article.html', context)
 
