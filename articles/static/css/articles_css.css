@@ -1,3 +1,15 @@
+* {
+  color: #484848;
+  font-family: 'GmarketSansMedium';
+}
+
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   -ms-overflow-style: none;
 }
@@ -10,8 +22,8 @@ body {
 /* index 모달 폼 */
 .container-form {
   display: grid;
+  grid-template-columns: 38.3% 15% 38.3% 15%;
   grid-template-areas:'title title title aside'
-                      'main main main aside'
                       'main main main aside'
                       'image image file file'
                       'button1 button1 button2 button2';
@@ -23,29 +35,32 @@ body {
 
 .article-title {
   grid-area: title;
-  margin-bottom: 15pt;
+  margin-bottom: 8pt;
   border: 1px solid #A5A5A5;
+  border-radius: 5px;
+  padding-left: 10px;
 }
 
-.summernote-div{
+.summernote-div {
   grid-area: main;
 }
 
 .article-priority {
   grid-area: aside;
   list-style: none;
+  padding-left: 20px;
 }
 
 .article-image {
   grid-area: image;
-  margin-top: 10pt;
-  margin-bottom: 15pt;
+  margin-top: 12pt;
+  margin-bottom: 18pt;
 }
 
 .article-file {
   grid-area: file;
-  margin-top: 10pt;
-  margin-bottom: 15pt;
+  margin-top: 12pt;
+  margin-bottom: 18pt;
 }
 
 .article-button1 {
@@ -59,9 +74,9 @@ body {
 
 /* index 보드 */
 .board-status {
-  overflow:auto;
   border-radius: 5px;
   padding: 5px;
+  overflow: auto;
 }
 
 #board_title {
@@ -124,55 +139,100 @@ body {
 
 .board-inner-area {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
 }
 
 /* article detail */
 .container-detail {
   display: grid;
+  height: 45%;
+  row-gap: 2.3%;
+  column-gap: 1%;
+  grid-template-rows: 20% 6% 12% 40% 40% 30% 12% 40%;
+  grid-template-columns: 32.5% 16% 32.5% 16%;
   grid-template-areas: 'header header header header'
-                      'title title title updated_at'
-                      'content content content priority'
-                      'images images files files'
-                      'btn_update btn_update btn_delete btn_delete';
+                       'author priority . updated_at'
+                       'title title title title'
+                       'content content content content'
+                       'content content content content'
+                       'images images files files'
+                       'comment_form comment_form buttons buttons'
+                       'comments comments comments comments';
+
 }
 
 .detail-header {
   grid-area: header;
+  margin-top: 4px;
 }
 
 .detail-title {
   grid-area: title;
+  padding-top: 8px;
 }
 
 .detail-content {
   grid-area: content;
+  padding: 5px;
+  overflow: auto;
+  border: 1px solid #A5A5A5;
+  border-radius: 5px;
 }
 
 .detail-updated_at {
   grid-area: updated_at;
+  text-align: end;
 }
 
 .detail-priority {
   grid-area: priority;
 }
 
+.detail-author {
+  grid-area: author;
+}
+
 .detail-images {
   grid-area: images;
+  padding: 5px;
+  overflow: auto;
+  border: 1px solid #A5A5A5;
+  border-radius: 5px;
 }
 
 .detail-files {
   grid-area: files;
+  padding: 5px;
+  overflow: auto;
+  border: 1px solid #A5A5A5;
+  border-radius: 5px;
 }
 
-.detail-btn_update {
-  grid-area: btn_update;
+.detail-buttons {
+  grid-area: buttons;
+  display: flex;
+  justify-content: end;
 }
 
-.detail-btn_delete{
-  grid-area: btn_delete;
-  
+.detail-comment-form {
+  grid-area: comment_form;
 }
+
+.article-comment {
+  border: 1px solid #A5A5A5;
+  border-radius: 5px;
+  width: 80%;
+  padding: 2px;
+}
+
+.detail-comments {
+  grid-area: comments;
+  padding: 5px;
+  overflow: auto;
+  border: 1px solid #A5A5A5;
+  border-radius: 5px;
+}
+
 
 /* schedules css */
 
@@ -186,11 +246,6 @@ body {
   border: 2px solid #b9b9b9;
   border-radius: 5px;
 }
-
-/* .schedules_calendar tbody {
-  margin : 5%;
-  width: 90%;
-} */
 
 .schedules_date {
   font-size: 100%;
@@ -229,7 +284,6 @@ body {
   font-weight: 600;
   text-transform: uppercase;
 }
-
 
 .schedules_calendar td {
   width: 10%;
