@@ -9,6 +9,7 @@ from invitations.utils import get_invitation_model
 
 
 # Create your views here.
+@login_required
 def update(request):
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
@@ -62,6 +63,7 @@ def password_change(request):
     return render(request, 'accounts/password_change.html', context)
 
 
+@login_required
 @require_http_methods(['GET', 'POST'])
 def invitations_send_invite(request):
     if request.method == 'POST':
