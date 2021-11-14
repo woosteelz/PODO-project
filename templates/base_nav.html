@@ -151,13 +151,16 @@
       <a style="color:white;" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="material-icons">account_box</span>
       </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="position: absolute; left: -233px; width: 257px;">
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="position: absolute; left: -233px; width: 257px; padding: 0px;">
+        <div style="display: flex; justify-content: center; align-items: center; border-radius: 5px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; background-color: #D8E0EC; margin-bottom: 15px; color: #484848; height: 34px;">
+          프로필
+        </div>
         <div class="d-flex flex-column align-items-center">
           <div class="d-flex justify-content-center align-items-center" style="border:1px solid #9CA3AF; border-radius: 5px; width: 120px; height: 120px; margin-bottom: 5px;">
             {% if user.image %}
               <img src="{{ user.image.url }}" alt="프로필 이미지" style="height: 80%; width: 80%;">
             {% else %}
-              <img src="{% static 'profile.svg' %}" alt="프로필 이미지">
+              <img src="{% static '마스코트.png' %}" alt="프로필 이미지">
             {% endif %}
           </div>
           <div style="border-radius: 5px; background-color: #E8ECF2; width: 77%; display: flex; justify-content: center; margin: 10px; color: #484848;">
@@ -172,7 +175,7 @@
             </div>
             <form action="{% url 'accounts:logout' %}" method="POST">
               {% csrf_token %}
-              <input style="border-radius: 5px; background-color: #DB5D83; width: 80%; display: flex; justify-content: center; margin: 10px; color: white;" type="submit" value="로그아웃">
+              <input style="border: none; border-radius: 5px; background-color: #DB5D83; width: 80%; display: flex; justify-content: center; margin: 10px; color: white;" type="submit" value="로그아웃">
             </form>
           </div>
         </div>

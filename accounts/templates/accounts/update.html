@@ -39,7 +39,7 @@
         {% if user.image %}
           <img src="{{ user.image.url }}" alt="프로필 이미지" style="height: 80%; width: 80%;">
         {% else %}
-          <img src="{% static 'profile.svg' %}" alt="프로필 이미지">
+          <img src="{% static '마스코트.png' %}" alt="프로필 이미지">
         {% endif %}
       </div>
       <form action="{% url 'accounts:delete_image' %}" method="POST">
@@ -71,13 +71,13 @@
           비밀번호 변경
         </a>
       </button>
-      <button type="button" class="btn my-3 text-white" style="background-color: #DB5D83; width: 30%; margin-right: 20px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button type="button" class="btn my-3 text-white" style="background-color: #DB5D83; width: 30%; margin-right: 20px;" data-bs-toggle="modal" data-bs-target="#accountModal">
         회원탈퇴
       </button>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
@@ -86,7 +86,7 @@
           <div class="modal-footer">
             <form action="{% url 'accounts:delete' %}" method="POST">
               {% csrf_token %}
-              <button type="submit" class="btn text-white" style="background-color: #915CAC;">네</button>
+              <button type="submit" class="btn text-white" style="background-color: #DB5D83;">네</button>
             </form>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
           </div>
