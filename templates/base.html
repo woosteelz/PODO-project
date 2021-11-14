@@ -22,6 +22,9 @@
       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
       font-weight: normal;
       font-style: normal;
+      
+    .margin_article_div {
+      margin : 1.5% 1.5% 1.5% 16.5%;
     }
   </style>
   {% block style %}
@@ -35,8 +38,9 @@
 <body style="height:100%;">
   {% include 'base_nav.html' %}
   {% include 'workspaces/category_index.html' %}
-  <div style="height:87%; margin: 1.5% 1.5% 1.5% 16.5%; border: 1px solid #D1D1D1; border-radius: 20px; box-shadow: 2px 1px 10px 1px rgba(0,0,0,0.1);">
-    <div id="content" name="content" class="" style="height: 100%; margin-right: 5%; margin-left: 5%;">
+  
+  <div class="margin_article_div" style="height:87%; border: 1px solid #D1D1D1; border-radius: 20px; box-shadow: 2px 1px 10px 1px rgba(0,0,0,0.1);">
+    <div id="content" name="content" class="base_div" style="height:100% width:100%; margin-right: 5%; margin-left: 5%;">
       {% block content %}
       {% endblock content%}
     </div>
