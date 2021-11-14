@@ -1,9 +1,9 @@
-'''
-모든 연결을 허용하고 클라이언트로부터 메시지를 받은 후 동일한 클라이언트로 메세지를 전송하는 역할
-(synchronous WebSocket consumer)
-'''
 import json
+
 from channels.generic.websocket import AsyncWebsocketConsumer
+from asgiref.sync import sync_to_async
+
+from .models import Message
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -11,7 +11,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
 
-        # Join room group
+        # Join room
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
@@ -20,31 +20,42 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
-        # Leave room group
+        # Leave room
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
 
-    # Receive message from WebSocket
+    # Receive message from web socket
     async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        data = json.loads(text_data)
+        message = data['message']
+        username = data['username']
+        room = data['room']
+
+        await self.save_message(username, room, message)
 
         # Send message to room group
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'username': username
             }
         )
 
     # Receive message from room group
     async def chat_message(self, event):
         message = event['message']
+        username = event['username']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'message': message
+            'message': message,
+            'username': username
         }))
+
+    @sync_to_async
+    def save_message(self, username, room, message):
+        Message.objects.create(username=username, room=room, content=message)
