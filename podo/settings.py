@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -95,8 +96,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'podo.wsgi.application'
-
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

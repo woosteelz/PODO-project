@@ -1,6 +1,64 @@
 {% load static %}
 {% block style %}
+  <script>
+  function view(btn_value) {
+    if (btn_value == "삭제") {
+        document.hide_and_show_form.sss.value = "비활성";
+        const btnlist = document.querySelectorAll('#display_btn')
+        for ( const btn of btnlist) {
+          btn.style.display= 'block';
+        }
+    } else {
+        document.hide_and_show_form.sss.value = "삭제";
+        const btnlist = document.querySelectorAll('#display_btn')
+        for ( const btn of btnlist) {
+          btn.style.display= 'none';
+        }
+    }
+};
+  </script>
   <style>
+#sss{
+  background:#FF0044;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:37px;
+  font-size:1em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  border-radius: 5px;
+}
+#sss:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+#sss:before,#sss:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+#sss:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+#sss:hover:before,#sss:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+
+
     .main_body {
     display: flex;
     justify-content: center;
@@ -52,6 +110,7 @@
     .flex_item {
       justify-content: space-between;
       background-color : #310B31;
+      padding: 0;
     }
 
     .nav_PODO {
@@ -70,14 +129,18 @@
       display: inline-block ;
       list-style-type: none;
       padding: 0;
-      margin-top: -1px;
+  
       width: 5%;
       background-color: #543654;
       position: absolute;
-      height: 95.5%;
+      height: 100%;
       overflow: auto;
+      -ms-overflow-style: none;
     }
 
+    ::-webkit-scrollbar {
+    display: none;
+    }
     .create_workspace {
       margin-top: 100px;
       margin-left: 100px;
@@ -109,15 +172,21 @@
       background-color: rgba(0, 0, 0, 0.4); }
 
     .margin_create_workspace {
-      margin-left : 300px;
-      color : white;
+      margin-bottom : 10%;
+
     }
     .margin_category {
       margin-left :5%;
-      background-color : #808080;
+      background-color : #D8E0EC;
       text-align : center;
       justify-content : center;
       width: 10%;
+      display: inline-block ;
+      list-style-type: none;
+      padding: 0;
+      position: absolute;
+      height: 100%;
+      overflow: auto;
     }
     img { display: block; margin: 0px auto; }
 
@@ -130,16 +199,14 @@
     }
   </style>
 {% endblock style %}
-  
 
-<nav class="flex_item navbar navbar-expand-lg navbar-light border-bottom" style="width: 100%; height: 50px;" >
+
+<nav class="flex_item navbar navbar-expand-lg navbar-light " style="width: 100%; height: 50px;" >
   <div class="flex_item">
     <a class="nav_PODO" style="color:white; font-Bold" >podo</a>
     <!-- Button trigger modal -->
     
-    <button type="button" class="btn mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#exampleModal">
-      + 새로운 워크스페이스
-    </button>
+
     
   </div>
   </div>  
@@ -183,23 +250,36 @@
 
 <div class="workspaces_div">
   <ul class="workspaces_ul" style="display: inline-block;">
-  <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100% ">
+  <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%; ">
     <div class="mb-auto p-2 bd-highlight">
       <li class="workspaces_li"><a class="active" href="#"></a></li>
       {% for work in workspaces %}  
         <li class="workspaces_li">
         {% if work.image %}
         <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
-        <a href=" {% url 'workspaces:delete_workspace' work.pk %}" style="font-size: 3px;">삭제하기</a>
+        <a style ="font-size: small;text-align : center; color:white">{{ work.name | slice:":3"}}</a> 
+        <div id="display_btn" style="display: none;">
+          <a style="font-size : xx-small;" href=" {% url 'workspaces:delete_workspace' work.pk %} ">삭제하기</a>
+        </div>
         </li>
         {% endif %}
       {% endfor %}
     </div>
+  <button type="button" style="width:100%;" class="btn btn-primary mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#workspacemodal">
+    생성
+  </button>
+
+  <form id="Event" method="post" name="hide_and_show_form">
+    <input id="sss" name="hide_btn" type="button" value="삭제" onclick="view(this.value);">
+
+  </form>
+
+  
   </ul>
 </div>
 
 <!-- Modal -->
-<div class="modal fade workspaces_modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade workspaces_modal" id="workspacemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
