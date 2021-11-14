@@ -11,6 +11,23 @@
     href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
     rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <style>
+    .margin_article_div {
+      margin : 1.5% 1.5% 1.5% 16.5%;
+    }
+    * {
+    color: #484848;
+    font-family: 'GmarketSansMedium';
+    }
+
+    @font-face {
+      font-family: 'GmarketSansMedium';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
   {% block style %}
   {% endblock style %}
   <script src="https://code.jquery.com/jquery-latest.min.js">
@@ -22,7 +39,7 @@
 <body style="height:100%;">
   {% include 'base_nav.html' %}
   {% include 'workspaces/category_index.html' %}
-  <div style="height:87%; margin: 1.5% 1.5% 1.5% 16.5%; border: 1px solid #D1D1D1; border-radius: 20px; box-shadow: 2px 1px 10px 1px rgba(0,0,0,0.1);">
+  <div class="margin_article_div" style="height:87%;  border: 1px solid #D1D1D1; border-radius: 20px; box-shadow: 2px 1px 10px 1px rgba(0,0,0,0.1);">
     <div id="content" name="content" class="" style="height: 100%; margin-right: 5%; margin-left: 5%;">
       {% block content %}
       {% endblock content%}
