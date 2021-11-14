@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block style %}
-  <link href="{% static 'css/articles_css.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'css/articles_css.css' %}" rel="stylesheet" type="text/css"/>
 {% endblock style %}
 
 {% block content %}
@@ -16,70 +16,164 @@
   <hr style="width:100%; height: 2px;">
 
   <div class="board-container">
-
+      {% comment %} 진행예정 {% endcomment %}
       <div data-board-pk={{todo_board.pk}} class="board-status board-todo" style="background-color: #E8ECF2">
-        <p data-board-pk={{todo_board.pk}} style="font-size: 20px;">{{ todo_board.name }}<p/>
-        <a data-board-pk={{todo_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-          </svg>
-        </a>
-        <br data-board-pk={{todo_board.pk}}>
-          {% for article in todo_articles %}
-            <div data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} style="padding: 2px; background-color: #FFFFFF;">
-              <a data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
-            </div>
-          {% endfor %}
+        <h5 data-board-pk={{todo_board.pk}} style="font-weight: bold; text-align: center; margin-bottom: 0px">{{ todo_board.name }}<h5/>
+        <div data-board-pk={{todo_board.pk}} class="board-inner-area">
+          <div data-board-pk={{todo_board.pk}} style="width: 26%; text-align: end; margin-right: 8px;">
+            <a data-board-pk={{todo_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board" style="text-align: center; text-decoration:none; color: #FFFFFF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        {% for article in todo_articles %}
+          <div data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center">
+            <a data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848; font-size: 15px">
+              {% if article.title|length > 13 %}
+                {% if article.priority == '1' %}
+                  🔴 {{ article.title | slice:":13" }}...
+                {% elif article.priority == '2' %}
+                  🟡 {{ article.title | slice:":13" }}...
+                {% elif article.priority == '3' %}
+                  🟢 {{ article.title | slice:":13" }}...
+                {% endif %}
+              {% else %}
+                {% if article.priority == '1' %}
+                  🔴 {{ article.title | slice:":13" }}
+                {% elif article.priority == '2' %}
+                  🟡 {{ article.title | slice:":13" }}
+                {% elif article.priority == '3' %}
+                  🟢 {{ article.title | slice:":13" }}
+                {% endif %}
+              {% endif %}
+            </a>
+          </div>
+        {% endfor %}
       </div>
-      
+
+      {% comment %} 진행중 {% endcomment %}
       <div data-board-pk={{doing_board.pk}} class="board-status board-doing" style="background-color: #E8ECF2">
-        <h2>{{ doing_board.name }}</h2>
-        <a data-board-pk={{doing_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-          </svg>
-        </a>
-        <br>
+        <h5 data-board-pk={{doing_board.pk}} style="font-weight: bold; text-align: center; margin-bottom: 0px">{{ doing_board.name }}<h5/>
+        <div data-board-pk={{doing_board.pk}} class="board-inner-area">
+          <div data-board-pk={{doing_board.pk}} style="width: 26%; text-align: end; margin-right: 8px;">
+            <a data-board-pk={{doing_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board" style="text-align: center; text-decoration:none; color: #FFFFFF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
         {% for article in doing_articles %}
-          <div data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}}>
-            <a data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
+          <div data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center">
+            <a data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848; font-size: 15px">
+              {% if article.title|length > 13 %}
+                {% if article.priority == '1' %}
+                  🔴 {{ article.title | slice:":13" }}...
+                {% elif article.priority == '2' %}
+                  🟡 {{ article.title | slice:":13" }}...
+                {% elif article.priority == '3' %}
+                  🟢 {{ article.title | slice:":13" }}...
+                {% endif %}
+              {% else %}
+                {% if article.priority == '1' %}
+                  🔴 {{ article.title | slice:":13" }}
+                {% elif article.priority == '2' %}
+                  🟡 {{ article.title | slice:":13" }}
+                {% elif article.priority == '3' %}
+                  🟢 {{ article.title | slice:":13" }}
+                {% endif %}
+              {% endif %}
+            </a>
           </div>
         {% endfor %}
       </div>
       
+      {% comment %} 이슈 {% endcomment %}
       <div data-board-pk={{issue_board.pk}} class="board-status board-issue" style="background-color: #DDC5FC">
-        <h2>{{ issue_board.name }}</h2>
-        <a data-board-pk={{issue_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-          </svg>
-        </a>
-        <br>
+        <h5 data-board-pk={{issue_board.pk}} style="font-weight: bold; text-align: center; margin-bottom: 0px">{{ issue_board.name }}<h5/>
+        <div data-board-pk={{issue_board.pk}} class="board-inner-area">
+          <div data-board-pk={{issue_board.pk}} style="width: 26%; text-align: end; margin-right: 8px;">
+            <a data-board-pk={{issue_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board" style="text-align: center; text-decoration:none; color: #FFFFFF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
         {% for article in issue_articles %}
-        <a data-article-pk={{article.pk}} class="article" data-board-pk={{issue_board.pk}} href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
-        <br>
-        {% endfor %}
-      </div>
-      
-      <div data-board-pk={{completed_board.pk}} class="board-status board-completed" style="background-color: #E8ECF2">
-        <h2>{{ completed_board.name }}</h2>
-        <a data-board-pk={{completed_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-          </svg>
-        </a>
-        <br>
-        {% for article in completed_articles %}
-          <a data-article-pk={{article.pk}} class="article" data-board-pk={{completed_board.pk}} href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848;">{{ article.title }}</a>
-          <br>
+          <div data-article-pk={{article.pk}} data-board-pk={{issue_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center">
+            <a data-article-pk={{article.pk}} data-board-pk={{issue_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848; font-size: 15px">
+              {% if article.title|length > 13 %}
+                {% if article.priority == '1' %}
+                  🔴 {{ article.title | slice:":13" }}...
+                {% elif article.priority == '2' %}
+                  🟡 {{ article.title | slice:":13" }}...
+                {% elif article.priority == '3' %}
+                  🟢 {{ article.title | slice:":13" }}...
+                {% endif %}
+              {% else %}
+                {% if article.priority == '1' %}
+                  🔴 {{ article.title | slice:":13" }}
+                {% elif article.priority == '2' %}
+                  🟡 {{ article.title | slice:":13" }}
+                {% elif article.priority == '3' %}
+                  🟢 {{ article.title | slice:":13" }}
+                {% endif %}
+              {% endif %}
+            </a>
+          </div>
         {% endfor %}
       </div>
 
+      {% comment %} 완료 {% endcomment %}
+      <div data-board-pk={{completed_board.pk}} class="board-status board-completed" style="background-color: #E8ECF2">
+        <h5 data-board-pk={{completed_board.pk}} style="font-weight: bold; text-align: center; margin-bottom: 0px">{{ completed_board.name }}<h5/>
+        <div data-board-pk={{completed_board.pk}} class="board-inner-area">
+          <div data-board-pk={{completed_board.pk}} style="width: 26%; text-align: end; margin-right: 8px;">
+            <a data-board-pk={{completed_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board" style="text-align: center; text-decoration:none; color: #FFFFFF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        {% for article in completed_articles %}
+          <div data-article-pk={{article.pk}} data-board-pk={{completed_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center">
+            <a data-article-pk={{article.pk}} data-board-pk={{completed_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848; font-size: 15px">
+              {% if article.title|length > 13 %}
+                {% if article.priority == '1' %}
+                  🔴 {{ article.title | slice:":13" }}...
+                {% elif article.priority == '2' %}
+                  🟡 {{ article.title | slice:":13" }}...
+                {% elif article.priority == '3' %}
+                  🟢 {{ article.title | slice:":13" }}...
+                {% endif %}
+              {% else %}
+                {% if article.priority == '1' %}
+                  🔴 {{ article.title | slice:":13" }}
+                {% elif article.priority == '2' %}
+                  🟡 {{ article.title | slice:":13" }}
+                {% elif article.priority == '3' %}
+                  🟢 {{ article.title | slice:":13" }}
+                {% endif %}
+              {% endif %}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% comment %} 미니 스케줄 {% endcomment %}
       <div class="board-schedules">
 
       </div>
+
   </div>
-    
 
   {% comment %} 모달 {% endcomment %}
   <div class="modal fade" id="board">
@@ -91,7 +185,7 @@
                 <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                 <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
               </svg>
-              <span class="ms-3">
+              <span class="ms-3" style="color: white;">
                 게시글
               </span>
             </div>
@@ -100,7 +194,7 @@
               {{ article_form }}
   
               <div class="article-image d-flex justify-content-center">
-                <label for="image" class="me-2" style="color: #484848;">
+                <label for="image" class="ps-3 ms-5 me-2" style="color: #484848;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-image" viewBox="0 0 16 16">
                     <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
                     <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5V14zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4z"/>
