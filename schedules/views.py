@@ -8,13 +8,17 @@ import datetime
 import calendar
 from django.http import JsonResponse
 from workspaces.forms import WorkspaceForm, CategoryForm
+from django.views.decorators.http import require_http_methods, require_POST, require_safe
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
+@require_safe
 def index(request, workspace_pk):
     today = datetime.datetime.today()
     calendar = Calendar(today.year, today.month)
     # calendar.setfirstweekday(calendar.SUNDAY)
-    html_calendar = calendar.formatmonth(withyear=True)
+    html_calendar = calendar.formatmonth(workspace_pk, withyear=True)
     schedule_form = ScheduleForm()
     workspaces = Workspace.objects.order_by('-pk')
     workspace_form = WorkspaceForm()
@@ -40,12 +44,10 @@ def index(request, workspace_pk):
 
 def left_month(request, workspace_pk):
     today = get_date(request.GET.get('month'))
-
     left_year, left_month = prev_month(today)
-
     calendar = Calendar(int(left_year), int(left_month))
     # calendar.setfirstweekday(calendar.SUNDAY)
-    html_calendar = calendar.formatmonth(withyear=True)
+    html_calendar = calendar.formatmonth(workspace_pk, withyear=True)
 
     context = {
       'calendar': mark_safe(html_calendar),
@@ -63,7 +65,7 @@ def right_month(request, workspace_pk):
 
     calendar = Calendar(int(right_year), int(right_month))
     # calendar.setfirstweekday(calendar.SUNDAY)
-    html_calendar = calendar.formatmonth(withyear=True)
+    html_calendar = calendar.formatmonth(workspace_pk, withyear=True)
 
     context = {
       'calendar': mark_safe(html_calendar),
@@ -98,6 +100,8 @@ def next_month(day):
     return year, month
 
 
+@login_required
+@require_http_methods(['GET', 'POST'])
 def create_schedule(request, workspace_pk):
     workspace = get_object_or_404(Workspace, pk=workspace_pk)
     if request.method == 'POST':
@@ -107,45 +111,43 @@ def create_schedule(request, workspace_pk):
         schedule.author = request.user
         schedule.workspace = workspace
         schedule.save()
-    print('저장X')
     return redirect('schedules:index', workspace_pk)
     
 
-
+@login_required
+@require_http_methods(['GET', 'POST'])
 def update_schedule(request, workspace_pk, schedule_pk):
     schedule = get_object_or_404(Schedule, pk=schedule_pk)
-    if request.user == schedule.author:
-        if request.method == 'POST':
-            form = ScheduleForm(request.POST, instance=schedule)
-            if form.is_valid():
-                form.save()
-            return redirect('schedules:index', workspace_pk)
-        else:
-            schedule_title = schedule.title
-            schedule_content = schedule.content
-            schedule_priority = schedule.priority
-            schedule_start_date = schedule.start_date.strftime('%Y-%m-%d')
-            schedule_end_date = schedule.end_date.strftime('%Y-%m-%d')
-            schedule_start_time = schedule.start_time.strftime('%H:%M:%S')
-            schedule_end_time = schedule.end_time.strftime('%H:%M:%S')
-            context = {
-                'schedule_title': schedule_title,
-                'schedule_content': schedule_content,
-                'schedule_priority': schedule_priority,
-                'schedule_start_date': schedule_start_date,
-                'schedule_end_date': schedule_end_date,
-                'schedule_start_time': schedule_start_time,
-                'schedule_end_time': schedule_end_time,
-            }
-            return JsonResponse(context)
+    if request.method == 'POST':
+        form = ScheduleForm(request.POST, instance=schedule)
+        if form.is_valid():
+            form.save()
+        return redirect('schedules:index', workspace_pk)
+    else:
+        schedule_title = schedule.title
+        schedule_content = schedule.content
+        schedule_priority = schedule.priority
+        schedule_start_date = schedule.start_date.strftime('%Y-%m-%d')
+        schedule_end_date = schedule.end_date.strftime('%Y-%m-%d')
+        schedule_start_time = schedule.start_time.strftime('%H:%M:%S')
+        schedule_end_time = schedule.end_time.strftime('%H:%M:%S')
+        context = {
+            'schedule_title': schedule_title,
+            'schedule_content': schedule_content,
+            'schedule_priority': schedule_priority,
+            'schedule_start_date': schedule_start_date,
+            'schedule_end_date': schedule_end_date,
+            'schedule_start_time': schedule_start_time,
+            'schedule_end_time': schedule_end_time,
+        }
+        return JsonResponse(context)
 
 
-
+@require_POST
 def delete_schedule(request, workspace_pk, schedule_pk):
     schedule = get_object_or_404(Schedule, pk=schedule_pk)
     if request.user.is_authenticated:
-        if request.user == schedule.author: 
-            schedule.delete()
-            print('삭제완료')
-            return redirect('schedules:index', workspace_pk)
+        schedule.delete()
+        print('삭제완료')
+        return redirect('schedules:index', workspace_pk)
     return redirect('schedules:index', workspace_pk)

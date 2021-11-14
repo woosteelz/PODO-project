@@ -9,6 +9,7 @@ from workspaces.models import Workspace, Category
 from .models import Board, Article, Comment, Image, File
 from schedules.calendar import MiniCalendar
 import datetime
+from django.utils.safestring import mark_safe
 # 아직 데코레이터는 완벽하게 첨가하지 않음!!
 
 
@@ -33,13 +34,16 @@ def index_article(request, workspace_pk, category_pk):
     category_form = CategoryForm()
     workspaces = Workspace.objects.order_by('-pk')
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
-    
-    # 달력 부분
     today = datetime.datetime.today()
-    #minicalendar = MiniCalendar(today.year, today.month)
+
+    minicalendar = MiniCalendar(today.year, today.month)
+    html_calendar = minicalendar.formatmonth(workspace_pk, withyear=True)
+    html_coming_schedules = minicalendar.coming_schedules(workspace_pk, withyear=True)
+
     
     context = {
-        #'minicalendar': minicalendar,
+        'minicalendar': mark_safe(html_calendar),
+        'coming_schedules': mark_safe(html_coming_schedules),
         'workspace_indivisual':workspace_indivisual,
         'workspace_b': workspace_b,
         'category': category,
@@ -55,7 +59,7 @@ def index_article(request, workspace_pk, category_pk):
         'workspace_form': workspace_form,
         'category_form': category_form,
         'workspaces': workspaces,
-        'workspace_name': workspace_b.name
+        'workspace_name': workspace_b.name,
     }
     return render(request, 'articles/index_article.html', context)
 
@@ -113,6 +117,7 @@ def detail_article(request, article_pk):
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
     workspaces = Workspace.objects.order_by('-pk')
+    workspace_indivisual = get_object_or_404(Workspace, pk=article.workspace.pk)
     context = {
         'article': article,
         'comment_form': comment_form,
@@ -120,6 +125,7 @@ def detail_article(request, article_pk):
         'workspace_form': workspace_form,
         'category_form': category_form,
         'workspaces': workspaces,
+        'workspace_indivisual': workspace_indivisual,
     }
     return render(request, 'articles/detail_article.html', context)
 
@@ -132,6 +138,7 @@ def update_article(request, article_pk):
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
     workspaces = Workspace.objects.order_by('-pk')
+    workspace_indivisual = get_object_or_404(Workspace, pk=article.workspace.pk)
     if request.method == 'POST':
         article_form = ArticleForm(request.POST, instance=article)
         if article_form.is_valid():
@@ -155,6 +162,7 @@ def update_article(request, article_pk):
         'workspace_form': workspace_form,
         'category_form': category_form,
         'workspaces': workspaces,
+        'workspace_indivisual': workspace_indivisual,
     }
     return render(request, 'articles/update_article.html', context)
 

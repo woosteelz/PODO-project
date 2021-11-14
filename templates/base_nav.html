@@ -214,24 +214,32 @@
     <span class="material-icons">search</span>  
     <span class="material-icons">notifications_none</span>  
     <span class="material-icons">star_outline</span>  
-    <span class="dropstart">
-      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="dropdown">
+      <a style="color:white;" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="material-icons">account_box</span>
       </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="position: absolute; left: -233px; width: 257px;">
         <div class="d-flex flex-column align-items-center">
-          <img src="{% static 'profile.svg' %}" alt="프로필 이미지">
-          <div>
-            이메일
+          <div class="d-flex justify-content-center align-items-center" style="border:1px solid #9CA3AF; border-radius: 5px; width: 120px; height: 120px; margin-bottom: 5px;">
+            {% if user.image %}
+              <img src="{{ user.image.url }}" alt="프로필 이미지" style="height: 80%; width: 80%;">
+            {% else %}
+              <img src="{% static 'profile.svg' %}" alt="프로필 이미지">
+            {% endif %}
           </div>
-          <div>
-            닉네임
+          <div style="border-radius: 5px; background-color: #E8ECF2; width: 77%; display: flex; justify-content: center; margin: 10px; color: #484848;">
+            {{ user.email }}
+          </div>
+          <div style="border-radius: 5px; background-color: #E8ECF2; width: 77%; display: flex; justify-content: center; margin: 10px; color: #484848;">
+            {{ user.username }}
           </div>
           <div class="d-flex">
-            <a href="/accounts/update/">개인정보 변경</a>
+            <div style="border-radius: 5px; background-color: #915CAC; width: 120px; display: flex; justify-content: center; align-items: center; margin: 10px;">
+              <a style="text-decoration: none; color: white;" href="/accounts/update/">개인정보 변경</a>
+            </div>
             <form action="{% url 'accounts:logout' %}" method="POST">
-            {% csrf_token %}
-            <input type="submit" value="로그아웃">
+              {% csrf_token %}
+              <input style="border-radius: 5px; background-color: #DB5D83; width: 80%; display: flex; justify-content: center; margin: 10px; color: white;" type="submit" value="로그아웃">
             </form>
           </div>
         </div>
@@ -240,7 +248,7 @@
   </div>
 </nav>
 
-<div>
+<div class="workspaces_div">
   <ul class="workspaces_ul" style="display: inline-block;">
   <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%; ">
     <div class="mb-auto p-2 bd-highlight">

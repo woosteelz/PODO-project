@@ -8,18 +8,19 @@
 {% block content %}
   <div class="container-detail">
 
-    <div class="detail-header d-flex align-items-center fs-3 mb-3" style="background-color: #915CAC; color: #FFFFFF; border-style: none; border-radius: 5px;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-card-text ms-3" viewBox="0 0 16 16">
-        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-        <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
-      </svg>
-      <span class="ms-3">
+    <div class="detail-header d-flex align-items-center fs-3" style="background-color: #915CAC; border-style: none; border-radius: 5px;">
+      <a href="{% url 'articles:index_article' article.workspace.pk article.category.pk %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-arrow-left-circle ms-4" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+        </svg>
+      </a>
+      <span class="ms-3" style="color: #FFFFFF;">
         게시글
       </span>
     </div>
 
     <div class="detail-title">
-      <h2>제목: {{ article.title }}</h2>
+      <h5 style="margin-bottom: 0;">제목: {{ article.title }}</h5>
     </div>
 
     <div class="detail-content">
@@ -27,21 +28,27 @@
     </div>
 
     <div class="detail-updated_at">
-      <p>작성자: {{ article.user }}</p>
-      <p>최종 작성시간: {{ article.updated_at }}</p>
+      {{ article.updated_at }}
+    </div>
+
+    <div class="detail-author">
+      작성자: {{ article.user }}
     </div>
 
     <div class="detail-priority">
       {% if article.priority == '1'%}
-
+        우선순위: 🔴
+      {% elif article.priority == '2' %}
+        우선순위: 🟡
+      {% elif article.priority == '3' %}
+        우선순위: 🟢
       {% endif %}
-        '🔴'
-        '🟡'
-        '🟢'
-      {{ article.priority }}
     </div>
 
     <div class="detail-images">
+      <div>
+        <이미지>
+      </div>
       {% for image in article.image_set.all %}
         <a href="/media/{{ image.image }}">{{ image.image }}</a>
         <br>
@@ -49,43 +56,52 @@
     </div>
 
     <div class="detail-files">
+      <div>
+        <파일>
+      </div>
       {% for file in article.file_set.all %}
         <a href="/media/{{ file.file }}">{{ file.file }}</a>
         <br>
       {% endfor %}
     </div>
 
-    <div class="detail-btn_update">
-      <a href="{% url 'articles:update_article' article.pk %}">수정</a>
-    </div>
-
-    <div class="detail-btn_delete">
+    <div class="detail-buttons">
       <form action="{% url 'articles:delete_article' article.pk %}" method="POST">
         {% csrf_token %}
-        <button>삭제하기</button>
+        <button style="background-color: #666464; color: #FFFFFF; border-style: none; border-radius: 5px; width: 100px">삭제하기</button>
       </form>
+
+      <div>
+        <button style="background-color: #915CAC; color: #FFFFFF; border-style: none; border-radius: 5px; width: 100px; margin-left: 5px;">
+          <a href="{% url 'articles:update_article' article.pk %}" style="text-decoration: none; color: #FFFFFF;">
+            수정
+          </a>
+        </button>
+      </div>
+    </div>
+
+    <form class="detail-comment-form" action="{% url 'articles:create_comment' article.pk %}" method="POST">
+      {% csrf_token %}
+      {{ comment_form }}
+      <button type="submit">작성</button>
+    </form>
+
+    <div class="detail-comments">
+      <div>
+        <댓글>
+      </div>
+      {% for comment in comments %}
+        <span>{{ comment.user }} - {{ comment.content }}</span>
+        <form style="display: inline;" action="{% url 'articles:delete_comment' article.pk comment.pk %}" method="POST">
+          {% csrf_token %}
+          <input style="background-color: #666464; color: #FFFFFF; border-style: none; border-radius: 5px; width: 50px" type="submit" value="삭제">
+        </form>
+        <br>
+        <span>{{comment.updated_at}}</span>
+        <hr>
+      {% endfor %}
     </div>
 
   </div>
-    
-
-  <hr>
-
-  <form action="{% url 'articles:create_comment' article.pk %}" method="POST">
-    {% csrf_token %}
-    {{ comment_form }}
-    <input type="submit" value="작성">
-  </form>
-
-  <br>
-
-  {% for comment in comments %}
-    {{ comment.user }} - {{ comment.content }}
-    <form action="{% url 'articles:delete_comment' article.pk comment.pk %}" method="POST">
-      {% csrf_token %}
-      <button>삭제</button>
-    </form>
-    <br>
-  {% endfor %}
 
 {% endblock %}

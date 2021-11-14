@@ -4,15 +4,16 @@ var schedule_pk = ''
 
 $('#updateModal').on('show.bs.modal', function (event) {
   var button = event.relatedTarget
-  schedule_pk = button.dataset.scheduleId
-  workspace_pk = button.dataset.workspaceId
-  const schedule_title = button.dataset.scheduleTitle
-  const schedule_content= button.dataset.scheduleContent
-  const schedule_priority = button.dataset.schedulePriority
-  const schedule_start_date = button.dataset.scheduleStartDate
-  const schedule_end_date = button.dataset.scheduleEndDate
-  const schedule_start_time = button.dataset.scheduleStartTime
-  const schedule_end_time = button.dataset.scheduleEndTime
+  schedule_pk = button.dataset.bsScheduleId
+  workspace_pk = button.dataset.bsWorkspaceId
+  console.log(button.dataset)
+  const schedule_title = button.dataset.bsScheduleTitle
+  const schedule_content= button.dataset.bsScheduleContent
+  const schedule_priority = button.dataset.bsSchedulePriority
+  const schedule_start_date = button.dataset.bsScheduleStartDate
+  const schedule_end_date = button.dataset.bsScheduleEndDate
+  const schedule_start_time = button.dataset.bsScheduleStartTime
+  const schedule_end_time = button.dataset.bsScheduleEndTime
   const radioId = `id_priority_${schedule_priority - 1}`
   document.querySelector(`#updateModal #${radioId}`).checked=true
 

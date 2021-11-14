@@ -15,7 +15,7 @@ class ArticleForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'article-title',
-                'placeholder': '  제목을 입력하세요.',
+                'placeholder': '제목을 입력하세요.',
             }
         ),
     )
@@ -41,11 +41,11 @@ class ArticleForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
 
     content = forms.CharField(
-        label='댓글',
+        label='',
         widget=forms.TextInput(
             attrs={
                 'class': 'article-comment',
-                'placeholder': '  댓글을 입력하세요.',
+                'placeholder': '댓글을 입력하세요.',
             }
         ),
     )

@@ -23,9 +23,9 @@ body{ -ms-overflow-style: none; } ::-webkit-scrollbar { display: none; }
 
 #schedules_createbtn {
     position: relative;
-    width: 200px; 
-    height: 20px; 
-    font-weight:700; 
+    width: 200px;
+    height: 20px;
+    font-weight:700;
     font-size: 20px;
     color:#484848;
     text-decoration: none;
@@ -49,6 +49,7 @@ body{ -ms-overflow-style: none; } ::-webkit-scrollbar { display: none; }
     top: 3px;
     left: 5px;
     color: 333333;
+    color: #636262;
 }
 
 .schedule_list {
@@ -70,7 +71,6 @@ body{ -ms-overflow-style: none; } ::-webkit-scrollbar { display: none; }
     cursor: pointer;
     color: #777;
     transition: 0.2s;
-    transform: translateY(-2px);
 }
 
 .schedules_calendar .schedules_month {
@@ -91,10 +91,8 @@ body{ -ms-overflow-style: none; } ::-webkit-scrollbar { display: none; }
     position: relative;
     width: 10%;
     height: 10%;
-    overflow: auto;
     padding: .25em .25em;
     border: 1px solid #E5E5E5;
-    transition: background .5s;
   }
 
 .schedules_calendar td div{

@@ -2,17 +2,17 @@
 {% load static %}
 
 {% block style %}
-<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'css/schdules_css.css' %}" rel="stylesheet" type="text/css" />
 {% endblock style %}
 
 {% block content %}
 <!-- Schedule Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title br" style="font-weight: bold;">일정 추가</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form class="schedules_create_modal_form container" action="{% url 'schedules:create_schedule' workspace_pk %}" method="POST">
@@ -34,11 +34,11 @@
 
 <!-- Schedule Update Modal -->
 <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title br" style="font-weight: bold;">일정 수정</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form class="schedules_update_modal_form container" action="#" method="POST">
@@ -52,7 +52,7 @@
           <div class="schedule-start_time-label">시작 시간</div>
           <div class="schedule-end_time-label">종료 시간</div>
           <button class="btn schedules_update_modal_Btn1" type="submit" style="background-color: rgb(145, 92, 172); color: white;">수정</button>
-          <button class='btn schedules_update_modal_Btn2' type='button' data-schedule-id='' data-workspace-id='' data-dismiss="modal" data-toggle="modal" data-target="#deleteModal" style="background-color: rgb(145, 92, 172); color: white;">삭제</button>
+          <button class='btn schedules_update_modal_Btn2' type='button' data-bs-schedule-id='' data-bs-workspace-id='' data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deleteModal" style="background-color: rgb(145, 92, 172); color: white;">삭제</button>
         </form>
       </div>
     </div>
@@ -61,11 +61,11 @@
 
 <!-- Schedule Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title br" style="font-weight: bold;">일정 삭제</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" data- aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form class="schedules_delete_modal_form container" action="#" method="POST">
@@ -79,6 +79,7 @@
   </div>
 </div>
 
+<!-- main -->
 <p style="position: absolute; font-size=5px; color: white;">Made By Yeongha</p>
 <br>
 <div id="schedule_title">
@@ -86,7 +87,7 @@
   <div id="schedule_title_deco"></div>
 </div>
 
-<div id="schedules_createbtn" data-toggle="modal" data-target="#createModal">
+<div id="schedules_createbtn" data-bs-toggle="modal" data-bs-target="#createModal">
   + 일정 추가하기
 </div>
 <hr style="width:100%; height: 2px;">
@@ -118,12 +119,7 @@
 {% endblock content %}
 
 {% block script %}
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="{% static 'js/script.js' %}" defer></script>
+  <script src="{% static 'js/schedules_js.js' %}" defer></script>
 {% endblock script %}
 </body>
 </html>
