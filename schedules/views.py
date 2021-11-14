@@ -8,13 +8,16 @@ import datetime
 import calendar
 from django.http import JsonResponse
 from workspaces.forms import WorkspaceForm, CategoryForm
+from django.views.decorators.http import require_http_methods, require_POST, require_safe
+from django.contrib.auth.decorators import login_required
 
+# 데코레이터 넣기!!
 
 def index(request, workspace_pk):
     today = datetime.datetime.today()
     calendar = Calendar(today.year, today.month)
     # calendar.setfirstweekday(calendar.SUNDAY)
-    html_calendar = calendar.formatmonth(withyear=True)
+    html_calendar = calendar.formatmonth(workspace_pk, withyear=True)
     schedule_form = ScheduleForm()
     workspaces = Workspace.objects.order_by('-pk')
     workspace_form = WorkspaceForm()
@@ -40,12 +43,10 @@ def index(request, workspace_pk):
 
 def left_month(request, workspace_pk):
     today = get_date(request.GET.get('month'))
-
     left_year, left_month = prev_month(today)
-
     calendar = Calendar(int(left_year), int(left_month))
     # calendar.setfirstweekday(calendar.SUNDAY)
-    html_calendar = calendar.formatmonth(withyear=True)
+    html_calendar = calendar.formatmonth(workspace_pk, withyear=True)
 
     context = {
       'calendar': mark_safe(html_calendar),
@@ -63,7 +64,7 @@ def right_month(request, workspace_pk):
 
     calendar = Calendar(int(right_year), int(right_month))
     # calendar.setfirstweekday(calendar.SUNDAY)
-    html_calendar = calendar.formatmonth(withyear=True)
+    html_calendar = calendar.formatmonth(workspace_pk, withyear=True)
 
     context = {
       'calendar': mark_safe(html_calendar),
@@ -107,10 +108,8 @@ def create_schedule(request, workspace_pk):
         schedule.author = request.user
         schedule.workspace = workspace
         schedule.save()
-    print('저장X')
     return redirect('schedules:index', workspace_pk)
     
-
 
 def update_schedule(request, workspace_pk, schedule_pk):
     schedule = get_object_or_404(Schedule, pk=schedule_pk)
@@ -137,8 +136,13 @@ def update_schedule(request, workspace_pk, schedule_pk):
                 'schedule_start_time': schedule_start_time,
                 'schedule_end_time': schedule_end_time,
             }
+            # update_form = ScheduleForm(instance=schedule)
+            # context = {
+            #     'update_form':update_form,
+            # }
             return JsonResponse(context)
-
+            
+    return redirect('schedules:index', workspace_pk)
 
 
 def delete_schedule(request, workspace_pk, schedule_pk):
