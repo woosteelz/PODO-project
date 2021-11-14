@@ -113,6 +113,7 @@ def detail_article(request, article_pk):
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
     workspaces = Workspace.objects.order_by('-pk')
+    workspace_indivisual = get_object_or_404(Workspace, pk=article.workspace.pk)
     context = {
         'article': article,
         'comment_form': comment_form,
@@ -120,6 +121,7 @@ def detail_article(request, article_pk):
         'workspace_form': workspace_form,
         'category_form': category_form,
         'workspaces': workspaces,
+        'workspace_indivisual': workspace_indivisual,
     }
     return render(request, 'articles/detail_article.html', context)
 
@@ -132,6 +134,7 @@ def update_article(request, article_pk):
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
     workspaces = Workspace.objects.order_by('-pk')
+    workspace_indivisual = get_object_or_404(Workspace, pk=article.workspace.pk)
     if request.method == 'POST':
         article_form = ArticleForm(request.POST, instance=article)
         if article_form.is_valid():
@@ -155,6 +158,7 @@ def update_article(request, article_pk):
         'workspace_form': workspace_form,
         'category_form': category_form,
         'workspaces': workspaces,
+        'workspace_indivisual': workspace_indivisual,
     }
     return render(request, 'articles/update_article.html', context)
 

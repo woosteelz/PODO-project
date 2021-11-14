@@ -182,7 +182,7 @@
         <li class="workspaces_li">
         {% if work.image %}
         <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
-        <a href=" {% url 'workspaces:delete_workspace' work.pk %} ">삭제하기</a>
+        <a href=" {% url 'workspaces:delete_workspace' work.pk %}" style="font-size: 3px;">삭제하기</a>
         </li>
         {% endif %}
       {% endfor %}

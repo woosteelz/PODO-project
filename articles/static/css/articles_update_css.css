@@ -1,0 +1,54 @@
+* {
+  color: #484848;
+  font-family: 'GmarketSansMedium';
+}
+
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.article-update-form {
+  display: grid;
+  height: 40%;
+  grid-template-rows: 18% 60% 14%;
+  grid-template-areas: 'title title title title title'
+                       'content content content aside aside'
+                       'content content content button1 button2';
+}
+
+.article-title {
+  grid-area: title;
+  margin-bottom: 8pt;
+  border: 1px solid #A5A5A5;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.summernote-div {
+  grid-area: content;
+}
+
+.article-priority {
+  grid-area: aside;
+  list-style: none;
+  padding-left: 20px;
+}
+
+.article-button1 {
+  grid-area: button1;
+}
+
+.article-button2 {
+  grid-area: button2;
+}
