@@ -129,7 +129,7 @@ body{ -ms-overflow-style: none; } ::-webkit-scrollbar { display: none; }
 .schedules_container_main {
     overflow: auto;
     width: 100%;
-    height: 80%;
+    height: 70vh;
     margin-left: auto;
     margin-right: auto;
     display: grid;

@@ -1,4 +1,3 @@
-import json
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
@@ -10,7 +9,9 @@ from .models import Board, Article, Comment, Image, File
 from schedules.calendar import MiniCalendar
 import datetime
 from django.utils.safestring import mark_safe
+from django.contrib.auth.decorators import login_required
 # 아직 데코레이터는 완벽하게 첨가하지 않음!!
+# 게시글 만들기랑 댓글 작성 워크스페이스 멤버만 가능하도록 하는 것 아직 안 함
 
 
 # Create your views here.
@@ -32,7 +33,12 @@ def index_article(request, workspace_pk, category_pk):
     article_form = ArticleForm()
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
-    workspaces = Workspace.objects.order_by('-pk')
+    workspace = Workspace.objects.order_by('-pk')
+    workspaces = []
+    user = request.user
+    for work in workspace:
+        if user.groups.filter(name= work.name):
+            workspaces.append(work)
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
     today = datetime.datetime.today()
 
@@ -59,11 +65,12 @@ def index_article(request, workspace_pk, category_pk):
         'workspace_form': workspace_form,
         'category_form': category_form,
         'workspaces': workspaces,
-        'workspace_name': workspace_b.name,
+        'category_name': category.name,
     }
     return render(request, 'articles/index_article.html', context)
 
 
+@login_required
 @require_http_methods(['GET', 'POST'])
 def create_article(request, workspace_pk, category_pk, board_pk):
     # 각 보드의 '+' 버튼을 클릭하면 게시글 추가 오버레이를 보여준다.
@@ -112,14 +119,21 @@ def detail_article(request, article_pk):
     # 상세 페이지 안에서 게시글을 수정 및 삭제가 가능하다.
     # 상세 페이지 안에서 댓글 작성이 가능하다.
     article = get_object_or_404(Article, pk=article_pk)
+    article_form = ArticleForm(instance=article)
     comment_form = CommentForm()
     comments = article.comment_set.all()
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
-    workspaces = Workspace.objects.order_by('-pk')
+    workspace = Workspace.objects.order_by('-pk')
+    workspaces = []
+    user = request.user
+    for work in workspace:
+        if user.groups.filter(name= work.name):
+            workspaces.append(work)
     workspace_indivisual = get_object_or_404(Workspace, pk=article.workspace.pk)
     context = {
         'article': article,
+        'article_form': article_form,
         'comment_form': comment_form,
         'comments': comments,
         'workspace_form': workspace_form,
@@ -130,41 +144,27 @@ def detail_article(request, article_pk):
     return render(request, 'articles/detail_article.html', context)
 
 
+@login_required
 @require_http_methods(['GET', 'POST'])
 def update_article(request, article_pk):
     # 상세 페이지 안에서 게시글 수정을 클릭하면 게시글 수정 페이지를 보여준다.
     # 수정을 완료하면 다시 게시글을 상세 페이지를 보여준다.
     article = get_object_or_404(Article, pk=article_pk)
-    workspace_form = WorkspaceForm()
-    category_form = CategoryForm()
-    workspaces = Workspace.objects.order_by('-pk')
-    workspace_indivisual = get_object_or_404(Workspace, pk=article.workspace.pk)
-    if request.method == 'POST':
-        article_form = ArticleForm(request.POST, instance=article)
-        if article_form.is_valid():
-            article_form.save()
+    if request.user == article.user:
+        if request.method == 'POST':
+            article_form = ArticleForm(request.POST, instance=article)
+            if article_form.is_valid():
+                article_form.save()
 
-            file_list = request.FILES.getlist('file')
-            print(file_list)
-            for file in file_list:
-                file = File.objects.create(file=file, article_id=article.pk)
+                file_list = request.FILES.getlist('file')
+                for file in file_list:
+                    file = File.objects.create(file=file, article_id=article.pk)
 
-            image_list = request.FILES.getlist('image')
-            print(image_list)
-            for image in image_list:
-                image = Image.objects.create(image=image, article_id=article.pk)
-            return redirect('articles:detail_article', article.pk)
-    else:
-        article_form = ArticleForm(instance=article)
-    context = {
-        'article_form': article_form,
-        'article': article,
-        'workspace_form': workspace_form,
-        'category_form': category_form,
-        'workspaces': workspaces,
-        'workspace_indivisual': workspace_indivisual,
-    }
-    return render(request, 'articles/update_article.html', context)
+                image_list = request.FILES.getlist('image')
+                for image in image_list:
+                    image = Image.objects.create(image=image, article_id=article.pk)
+                return redirect('articles:detail_article', article.pk)
+    return redirect('articles:detail_article'. article.pk)
 
 
 @require_POST
@@ -172,13 +172,15 @@ def delete_article(request, article_pk):
     # 상세 페이지 안에서 게시글 삭제를 클릭하면 게시글을 삭제여부를 다시 한번 물어보고 삭제한다.
     # 삭제를 완료하면 index로 리다이렉트 해준다
     article = get_object_or_404(Article, pk=article_pk)
-    workspace = article.workspace
-    category = article.category
-    article.delete()
+    if request.user == article.user:
+        workspace = article.workspace
+        category = article.category
+        article.delete()
     return redirect('articles:index_article', workspace.pk, category.pk)
 
 
-@require_POST
+@login_required
+@require_http_methods(['GET', 'POST'])
 def create_comment(request, article_pk):
     # 상세 페이지 안에서 댓글을 작성한다.
     # 댓글을 작성하면, 작성자와 댓글 내용, 수정 및 삭제 버튼을 보여준다.
@@ -204,7 +206,8 @@ def delete_comment(request, article_pk, comment_pk):
     # 삭제를 완료하면, 게시글 상세 페이지를 리다이렉트 해준다.
     article = get_object_or_404(Article, pk=article_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
-    comment.delete()
+    if request.user == comment.user:
+        comment.delete()
     return redirect('articles:detail_article', article.pk)
 
 
@@ -212,13 +215,15 @@ def delete_comment(request, article_pk, comment_pk):
 def delete_image(request, article_pk, image_pk):
     article = get_object_or_404(Article, pk=article_pk)
     image = get_object_or_404(Image, pk=image_pk)
-    image.delete()
-    return redirect('articles:update_article', article.pk)
+    if request.user == article.user:
+        image.delete()
+    return redirect('articles:detail_article', article.pk)
 
 
 @require_POST
 def delete_file(request, article_pk, file_pk):
     article = get_object_or_404(Article, pk=article_pk)
     file = get_object_or_404(File, pk=file_pk)
-    file.delete()
-    return redirect('articles:update_article', article.pk)
+    if request.user == article.user:
+        file.delete()
+    return redirect('articles:detail_article', article.pk)
