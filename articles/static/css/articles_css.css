@@ -17,6 +17,24 @@ body {
     display: none;
 }
 
+.article-effect:hover {
+  transition: 0.2s;
+  transform: translateY(-2px);
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.myBtn:hover {
+  transition: 0.2s;
+  transform: translateY(-2px);
+}
+
+.image-file-effect {
+  transition: 0.2s;
+  transform: translateY(-2px);
+  cursor: pointer;
+  opacity: 0.5;
+}
 
 /* index 모달 폼 */
 .container-form {

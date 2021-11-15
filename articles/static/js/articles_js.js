@@ -93,3 +93,68 @@ all_status.forEach((status) => {
   status.addEventListener("dragleave", dragLeave)
   status.addEventListener("drop", dragDrop)
 })
+
+// 각종 삭제
+// 게시글 삭제
+const deleteArticleBtn = document.querySelector('#delete-article-btn')
+deleteArticleBtn.addEventListener('click', () => {
+  const articlePk = deleteArticleBtn.dataset.articlePk
+  console.log(articlePk)
+    const finalDeleteArticle = document.querySelector('.article_delete_modal_form')
+    finalDeleteArticle.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      e.target.action = `/articles/${articlePk}/delete_article/`
+      e.target.submit()
+    })
+})
+
+
+window.onload = function() {
+  // 댓글 삭제
+  const deleteCommentBtn = document.querySelector('#delete-comment-btn')
+  deleteCommentBtn.addEventListener('click', () => {
+    const articlePk = deleteCommentBtn.dataset.articlePk
+    const commentPk = deleteCommentBtn.dataset.commentPk
+    console.log(commentPk)
+      const finalDeleteComment = document.querySelector('.comment_delete_modal_form')
+      finalDeleteComment.addEventListener('submit', (e) => {
+        e.preventDefault()
+  
+        e.target.action = `/articles/${articlePk}/article/${commentPk}/delete_comment/`
+        e.target.submit()
+      })
+  })
+  
+  // // 이미지 삭제
+  // const deleteImageBtn = document.querySelector('#delete-image-btn')
+  // deleteImageBtn.addEventListener('click', () => {
+  //   const articlePk = deleteImageBtn.dataset.articlePk
+  //   const imagePk = deleteImageBtn.dataset.imagePk
+  //   console.log(imagePk)
+  //     const finalDeleteImage = document.querySelector('.image_delete_modal_form')
+  //     finalDeleteImage.addEventListener('submit', (e) => {
+  //       e.preventDefault()
+  
+  //       e.target.action = `/articles/${articlePk}/article/${imagePk}/delete_image/`
+  //       e.target.submit()
+  //     })
+  // })
+  
+  // // 파일 삭제
+  // const deleteFileBtn = document.querySelector('#delete-file-btn')
+  // deleteFileBtn.addEventListener('click', (e) => {
+  //   const articlePk = deleteFileBtn.dataset.articlePk
+  //   const filePk = deleteFileBtn.dataset.filePk
+  //   console.log(articlePk, filePk)
+  //   console.log(filePk)
+  //     const finalDeleteFile = document.querySelector('.file_delete_modal_form')
+  //     finalDeleteFile.addEventListener('submit', (e) => {
+  //       e.preventDefault()
+  
+  //       e.target.action = `/articles/${articlePk}/article/${filePk}/delete_file/`
+  //       e.target.submit()
+  //     })
+  // })
+}
+
