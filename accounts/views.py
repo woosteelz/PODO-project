@@ -1,10 +1,11 @@
+from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout as auth_logout, update_session_auth_hash
 from django.views.decorators.http import require_POST, require_http_methods
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserChangeForm
 from django.contrib.auth.forms import PasswordChangeForm
-
+from .models import User
 from invitations.utils import get_invitation_model
 
 
@@ -72,7 +73,23 @@ def invitations_send_invite(request):
         invite = Invitation.create(email, inviter=request.user)
         invite.send_invitation(request)
         return redirect('/workspaces/')
-    else:
-        pass
+
     context = {}
-    return render(request, 'accounts/invite.html', context)
+    return render(request, 'accounts/send_invite.html', context)
+
+
+@login_required
+def invitations_member(request, workspace_pk):
+    group = get_object_or_404(Group, name= workspace_pk)
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if User.objects.filter(email=email):
+            user = get_object_or_404(User, email=email)
+            user.groups.add(group)
+        return redirect('accounts:invitations_member', workspace_pk)
+        
+    members = group.user_set.all()
+    context = {
+        'members': members,
+    }
+    return render(request, 'accounts/member.html', context)

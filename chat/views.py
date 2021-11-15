@@ -8,8 +8,8 @@ def index(request):
     workspaces = []
     user = request.user
     for work in workspace:
-        if user.groups.filter(name=work.name):
-            workspaces.append(work)
+        if user.groups.filter(name=work.id):
+            workspaces.append(work.name)
     print(workspaces)
     context = {
         'username': user,
