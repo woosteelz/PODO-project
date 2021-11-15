@@ -229,11 +229,11 @@
               <img src="{% static '마스코트.png' %}" alt="프로필 이미지">
             {% endif %}
           </div>
-          <div style="border-radius: 5px; background-color: #E8ECF2; width: 77%; display: flex; justify-content: center; margin: 10px; color: #484848;">
-            {{ user.email }}
+          <div style="border: 1px solid #9CA3AF; border-radius: 5px; width: 77%; display: flex; align-items: center; margin: 10px; color: #484848; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            이메일: {{ user.email }}
           </div>
-          <div style="border-radius: 5px; background-color: #E8ECF2; width: 77%; display: flex; justify-content: center; margin: 10px; color: #484848;">
-            {{ user.username }}
+          <div style="border: 1px solid #9CA3AF; border-radius: 5px; width: 77%; display: flex; align-items: center; margin: 10px; color: #484848; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            닉네임: {{ user.username }}
           </div>
           <div class="d-flex">
             <div style="border-radius: 5px; background-color: #915CAC; width: 120px; display: flex; justify-content: center; align-items: center; margin: 10px;">

@@ -19,7 +19,7 @@ def index(request):
     workspaces = []
     user = request.user
     for work in workspace:
-        if user.groups.filter(name= work.name):
+        if user.groups.filter(name= work.pk):
             workspaces.append(work)
     # --------------------------------------------
     workspace_form = WorkspaceForm()
@@ -44,7 +44,7 @@ def create_workspace(request):
             user = request.user
             print(user)
             workspace.save()
-            new_group = Group.objects.create(name= workspace.name)
+            new_group = Group.objects.create(name= workspace.id)
             user.groups.add(new_group)
             return redirect('workspaces:index_category', workspace.pk)
     else:
@@ -71,13 +71,14 @@ def index_category(request, workspace_pk):
     workspace = Workspace.objects.order_by('-pk')
     workspaces = []
     user = request.user
+    print(user)
     for work in workspace:
-        if user.groups.filter(name= work.name):
+        if user.groups.filter(name= work.pk):
             workspaces.append(work)
             
     workspace_form = WorkspaceForm()
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
-    if not user.groups.filter(name= workspace_indivisual.name):
+    if not user.groups.filter(name= workspace_indivisual.pk):
         return redirect('https://www.google.com/search?q=%EC%96%B4%EB%94%9C+%EA%B0%90%ED%9E%88&oq=%EC%96%B4%EB%94%9C+%EA%B0%90%ED%9E%88&aqs=chrome..69i57j0i433i512j0i131i433i512j46i199i433i465i512j0i433i512j69i61l3.1890j0j7&sourceid=chrome&ie=UTF-8')
     category_form = CategoryForm()
     category = Category.objects.all()
