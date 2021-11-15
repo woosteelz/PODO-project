@@ -205,7 +205,7 @@ ACCOUNT_FORMS = {
 
 SUMMERNOTE_CONFIG = {
     'width': '100%',
-    'height':'300',
+    'height': '300',
     'toolbar': [
         ['style', ['style']],
         ['font', ['bold', 'underline']],

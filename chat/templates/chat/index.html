@@ -1,66 +1,87 @@
-<!DOCTYPE html>
+{% extends 'base.html' %} {% block style %}
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+/>
+<style>
+  .workspaces_div {
+    display: none;
+  }
 
-<html>
+  #margin_category {
+    display: none;
+  }
+  .margin_article_div {
+    margin: 1.5% 1.5% 1.5% 1.5%;
+  }
+</style>
+{% endblock style %} {% block content %}
 
-<head>
-  <meta charset="utf-8" />
-  <title>Chatty</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" />
-</head>
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline">
+      <div class="column is-6 is-offset-3 mb-6">
+        <section class="hero">
+          <div class="hero-body">
+            <p class="title">Podo Chatting</p>
+            <p class="subtitle">Podo Public Chatting Room</p>
+          </div>
+        </section>
+      </div>
 
-<body>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-multiline">
-        <div class="column is-6 is-offset-3 mb-6">
-          <section class="hero">
-            <div class=" hero-body">
-              <p class="title">Podo Chatting</p>
-              <p class="subtitle">
-                Podo Public Chatting Room
-              </p>
-            </div>
-          </section>
+      <div class="column is-4 is-offset-4">
+        <div class="field">
+          <label>입장할 채팅방을 선택하세요</label>
+          <br />
+          <div class="select">
+            <select id="room-name-input">
+              {% for workspace in workspaces %}
+              <option value="{{ workspace }}">{{ workspace }}</option>
+              {% endfor %}
+            </select>
+          </div>
         </div>
 
-        <div class="column is-4 is-offset-4">
-          <div class="field">
-            <label>Room name</label>
+        <div class="field">
+          <label for="username-input">아이디</label>
 
-            <div class="control">
-              <input class="input" type="text" placeholder="Room name" id="room-name-input" />
-            </div>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              placeholder="{{ username }}"
+              id="username-input"
+              disabled
+            />
           </div>
+        </div>
 
-          <div class="field">
-            <label>Username</label>
-
-            <div class="control">
-              <input class="input" type="text" placeholder="Username" id="username-input" />
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="control">
-              <a class="button is-info" id="room-name-submit">Submit</a>
-            </div>
+        <div class="field">
+          <div class="control">
+            <a class="button is-info" id="room-name-submit">채팅하기</a>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <script>
-    document.querySelector("#room-name-input").focus();
+{% endblock content %} {% block script %}
 
-    document.querySelector("#room-name-submit").onclick = function (e) {
-      var roomName = document.querySelector("#room-name-input").value;
-      var userName = document.querySelector("#username-input").value;
-      console.log(e);
+<script>
+  const user = "{{ username }}";
+  document.querySelector("#room-name-input").focus();
 
-      window.location.replace(roomName + "/?username=" + userName);
-    };
-  </script>
-</body>
+  document.querySelector("#room-name-submit").onclick = function (e) {
+    const roomName = document.querySelector("#room-name-input");
+    // console.log(roomName.value);
+    // const userName = document.querySelector("#username-input").value;
 
-</html>
+    if (roomName) {
+      window.location.replace(roomName.value + "/?username=" + user);
+    } else {
+      alert("방을 선택하세요");
+    }
+  };
+</script>
+{% endblock script %}
