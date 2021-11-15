@@ -32,7 +32,12 @@ def index_article(request, workspace_pk, category_pk):
     article_form = ArticleForm()
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
-    workspaces = Workspace.objects.order_by('-pk')
+    workspace_list = Workspace.objects.order_by('-pk')
+    workspaces = []
+    user = request.user
+    for work in workspace_list:
+        if user.groups.filter(name= work.name):
+            workspaces.append(work)
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
     today = datetime.datetime.today()
 
@@ -42,6 +47,7 @@ def index_article(request, workspace_pk, category_pk):
 
     
     context = {
+        'workspace_pk': workspace_pk,
         'minicalendar': mark_safe(html_calendar),
         'coming_schedules': mark_safe(html_coming_schedules),
         'workspace_indivisual':workspace_indivisual,

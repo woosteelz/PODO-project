@@ -33,13 +33,12 @@
 
 {% block script %}
   <script>
-    let contentIframe = document.querySelector('iframe')
-    contentIframe.removeAttribute("style")
+    $('div.note-editable').height(150);
+    {% comment %} a.height = "200%" {% endcomment %}
+    {% comment %} document.querySelector('.note-editor').style {% endcomment %}
     {% comment %} contentIframe.removeAttribute("height") {% endcomment %}
-    console.log(contentIframe)
-
-    let summerNote = document.querySelector('.summernote-div')
+    {% comment %} let summerNote = document.querySelector('.summernote-div')
     summerNote.removeAttribute("height")
-    console.log(summerNote)
+    console.log(summerNote) {% endcomment %}
   </script>
 {% endblock script %}

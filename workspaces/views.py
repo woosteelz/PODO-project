@@ -5,6 +5,9 @@ from .models import Workspace,Category
 from .forms import CategoryForm, WorkspaceForm
 from django.contrib import messages
 from django.contrib.auth.models import Group
+from articles.models import Article, Comment
+from schedules.models import Schedule
+from django.db.models import Q
 
 
 # Create your views here.
@@ -79,6 +82,7 @@ def index_category(request, workspace_pk):
     category_form = CategoryForm()
     category = Category.objects.all()
     context = {
+        'workspace_pk': workspace_pk,
         'category_form' : category_form ,
         'workspaces': workspaces,
         'workspace_indivisual' : workspace_indivisual,
@@ -123,3 +127,35 @@ def like_category(request, workspace_pk, category_pk):
     else:       
         category.like_users.add(request.user)
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def search(request, workspace_pk):
+    word = request.GET.get('word')
+    articles = Article.objects.filter(workspace_id= workspace_pk).filter(Q(title__icontains=word) | Q(content__icontains=word)).distinct()
+    # comments = Comment.objects.filter(workspace_id= workspace_pk).filter(content__icontains=word)
+    schedules = Schedule.objects.filter(workspace_id= workspace_pk).filter(Q(title__icontains=word) | Q(content__icontains=word)).distinct()
+    workspace = Workspace.objects.order_by('-pk')
+    workspaces = []
+    user = request.user
+    for work in workspace:
+        if user.groups.filter(name= work.name):
+            workspaces.append(work)
+    category_form = CategoryForm()
+    category = Category.objects.all()
+    workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
+
+    context = {
+        'articles': articles,
+        # 'comments': comments,
+        'schedules': schedules,
+        'workspace_pk': workspace_pk,
+        'workspaces': workspaces,
+        'category_form': category_form,
+        'category': category,
+        'workspace_indivisual': workspace_indivisual,
+        
+
+    }
+    return render(request, 'workspaces/search.html', context)
+
