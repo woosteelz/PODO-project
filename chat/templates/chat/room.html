@@ -1,109 +1,125 @@
-<!DOCTYPE html>
+{% extends 'base.html' %} {% block style %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" />
+<style>
+  .workspaces_div {
+    display: none;
+  }
 
-<html>
+  #margin_category {
+    display: none;
+  }
 
-<head>
-  <meta charset="utf-8" />
-  <title>Chatty</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" />
-</head>
+  .margin_article_div {
+    margin: 1.5% 1.5% 1.5% 1.5%;
+  }
+</style>
+{% endblock style %} {% block content %}
 
-<body>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-multiline">
-        <div class="column is-6 is-offset-3 mb-6">
-          <section class="hero">
-            <div class="hero-body">
-              <p class="title">Podo Chatting</p>
-              <p class="subtitle">
-                Podo Public Chatting Room
-              </p>
-            </div>
-          </section>
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline">
+      <p class="title">{{ room_name }}</p>
+
+      <div class="column is-10 is-offset-2">
+        <div class="box">
+          <div id="chat-messages" style="max-height: 300px; overflow-y: scroll">
+            {% for m in messages %}
+            <b>{{ m.username }}</b>: {{ m.content }}
+            <br />
+            {{ m.date_added }}
+            <br class="ma-1" />
+            {% endfor %}
+          </div>
         </div>
 
-        <div class="column is-6 is-offset-3">
-          <div class="box">
-            <div id="chat-messages" style="max-height: 300px; overflow-y: scroll">
-              {% for m in messages %}<b>{{ m.username }}</b>: {{ m.content }}<br />{{ m.date_added }}<br class="ma-1" />
-              {% endfor %}
-            </div>
+        <div class="field">
+          <div class="control">
+            <input class="input" type="text" placeholder="Message" id="chat-message-input" />
           </div>
-
-          <div class="field">
-            <div class="control">
-              <input class="input" type="text" placeholder="Message" id="chat-message-input" />
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="control">
-              <a class="button is-info" id="chat-message-submit">Submit</a>
-            </div>
-          </div>
-
-          <small class="has-text-grey-light">Your username: {{ username }}</small>
         </div>
+
+        <div class="field">
+          <div class="control">
+            <a class="button is-info" id="chat-message-submit">보내기</a>
+          </div>
+        </div>
+
+        <small class="has-text-grey-light">Your username: {{ username }}</small>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+{{ room_name|json_script:"json-roomname" }} {{ username|json_script:"json-username" }}
 
-  {{ room_name|json_script:"json-roomname" }} {{ username|json_script:"json-username" }}
+{% endblock content %}
+{% block script %}
+<script>
+  const today = new Date();
+  const currTime =
+    today.getFullYear() +
+    "년 " +
+    ("0" + (today.getMonth() + 1)).slice(-2) +
+    "월 " +
+    ("0" + today.getDate()).slice(-2) +
+    "일 " +
+    ("0" + today.getHours()).slice(-2) +
+    ":" +
+    ("0" + today.getMinutes()).slice(-2);
 
-  <script>
-    function scrollToBottom() {
-      let objDiv = document.getElementById("chat-messages");
-      objDiv.scrollTop = objDiv.scrollHeight;
+  function scrollToBottom() {
+    let objDiv = document.getElementById("chat-messages");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }
+
+  const roomName = JSON.parse(
+    document.getElementById("json-roomname").textContent
+  );
+  const userName = JSON.parse(
+    document.getElementById("json-username").textContent
+  );
+
+  const chatSocket = new WebSocket(
+    "ws://" + window.location.host + "/ws/" + roomName + "/"
+  );
+
+  chatSocket.onmessage = function (e) {
+    console.log("메세지 전송 완료");
+
+    const data = JSON.parse(e.data);
+
+    if (data.message) {
+      document.querySelector("#chat-messages").innerHTML +=
+        "<b>" +
+        data.username +
+        "</b>: " +
+        data.message +
+        "<br>" +
+        currTime +
+        "<br>";
+    } else {
+      console.log("빈 값은 보낼 수 없습니다..");
     }
 
     scrollToBottom();
+  };
 
-    const roomName = JSON.parse(
-      document.getElementById("json-roomname").textContent
+  chatSocket.onclose = function (e) {
+    console.log("소켓이 종료되었습니다..");
+  };
+
+  document.querySelector("#chat-message-submit").onclick = function (e) {
+    const messageInputDom = document.querySelector("#chat-message-input");
+    const message = messageInputDom.value;
+
+    chatSocket.send(
+      JSON.stringify({
+        message: message,
+        username: userName,
+        room: roomName,
+      })
     );
-    const userName = JSON.parse(
-      document.getElementById("json-username").textContent
-    );
 
-    const chatSocket = new WebSocket(
-      "ws://" + window.location.host + "/ws/" + roomName + "/"
-    );
-
-    chatSocket.onmessage = function (e) {
-      console.log("메세지 전송 완료");
-
-      const data = JSON.parse(e.data);
-
-      if (data.message) {
-        document.querySelector("#chat-messages").innerHTML +=
-          "<b>" + data.username + "</b>: " + data.message + "<br>";
-      } else {
-        console.log('빈 값은 보낼 수 없습니다..')
-      }
-
-      scrollToBottom();
-    };
-
-    chatSocket.onclose = function (e) {
-      console.log("소켓이 종료되었습니다..");
-    };
-
-    document.querySelector("#chat-message-submit").onclick = function (e) {
-      const messageInputDom = document.querySelector("#chat-message-input");
-      const message = messageInputDom.value;
-
-      chatSocket.send(
-        JSON.stringify({
-          message: message,
-          username: userName,
-          room: roomName,
-        })
-      );
-
-      messageInputDom.value = "";
-    };
-  </script>
-</body>
-
-</html>
+    messageInputDom.value = "";
+  };
+</script>
+{% endblock script %}

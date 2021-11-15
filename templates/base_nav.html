@@ -1,4 +1,5 @@
 {% load static %}
+
 <script>
 function view(btn_value) {
   if (btn_value == "삭제") {
@@ -212,7 +213,9 @@ function view(btn_value) {
   </form>
   {% endif %}
   <div class="nav_icon">
-    <span class="material-icons">search</span>
+    <a href=" {% url 'chat:index' %} " style="color:white; text-decoration:none;">
+    <span class="material-icons">chat</span>
+    </a>
     <span class="material-icons">notifications_none</span>  
     <span class="material-icons">star_outline</span>  
     <span class="dropdown">
@@ -254,7 +257,7 @@ function view(btn_value) {
 
 <div class="workspaces_div">
   <ul class="workspaces_ul" style="display: inline-block;">
-  <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%; ">
+  <div class="d-flex justify-content-between align-items-center flex-column" style="height: 99%; ">
     <div class="mb-auto p-2 bd-highlight">
       <li class="workspaces_li"><a class="active" href="#"></a></li>
       {% for work in workspaces %}  
@@ -269,13 +272,12 @@ function view(btn_value) {
         {% endif %}
       {% endfor %}
     </div>
-  <button type="button" style="width:100%;" class="btn btn-primary mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#workspacemodal">
+  <button type="button" style="width:100%; color: white; background-color: #915CAC;" class="btn  mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#workspacemodal">
     생성
   </button>
 
   <form id="Event" method="post" name="hide_and_show_form">
     <input id="sss" name="hide_btn" type="button" value="삭제" onclick="view(this.value);">
-
   </form>
 
   
@@ -299,7 +301,6 @@ function view(btn_value) {
         </form>
       </div>
       <div class="modal-footer">
-      
       </div>
     </div>
   </div>
