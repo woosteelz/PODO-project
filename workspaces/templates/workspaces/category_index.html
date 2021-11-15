@@ -1,10 +1,9 @@
 {% if not workspace_indivisual.pk %}
-  <ul class="margin_category">
+  <ul class="margin_category" id="margin_category">
   </ul>
 {% else %}
-  <ul class="workspaces_ul margin_category">
+  <ul class="workspaces_ul margin_category" id="margin_category">
     {% if not workspace_indivisual.category_set.all %}
-      <ul class="workspaces_ul margin_category"></ul>
       <br>
       <a> 카테고리를 </a>
       <br>
@@ -22,7 +21,29 @@
     +
   </button>
 
+  <button type="button" style="width:65%" class="btn btn-primary make_create my-5" data-bs-toggle="modal" data-bs-target="#invitationModal">
+    초대하기
+  </button>
   </ul>
+
+  <div class="modal fade" id="invitationModal" tabindex="-1" aria-labelledby="invitationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">초대하기</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          워크스페이스에 팀원을 초대하세요.
+        </div>
+        <div class="modal-footer">
+          <a href="{% url 'accounts:invitations_member' workspace_indivisual.pk %}" type="button" class="btn text-white" style="background-color: #915CAC;">회원 초대하기</a>
+          <a href="{% url 'accounts:invitations_send_invite' %}" type="button" class="btn text-white" style="background-color: #915CAC;">비회원 초대하기</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade" id="categorymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
