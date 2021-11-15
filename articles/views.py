@@ -37,7 +37,7 @@ def index_article(request, workspace_pk, category_pk):
     workspaces = []
     user = request.user
     for work in workspace_list:
-        if user.groups.filter(name= work.name):
+        if user.groups.filter(name= work.id):
             workspaces.append(work)
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
     today = datetime.datetime.today()

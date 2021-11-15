@@ -1,5 +1,5 @@
 {% load static %}
-{% block style %}
+
   <script>
   function view(btn_value) {
     if (btn_value == "삭제") {
@@ -19,7 +19,7 @@
   </script>
   <style>
 #sss{
-  background:#FF0044;
+  background:#DB5D83;
   color:#fff;
   border:none;
   position:relative;
@@ -55,7 +55,6 @@
   width:100%;
   transition:800ms ease all;
 }
-
 
 
 
@@ -133,7 +132,7 @@
       width: 5%;
       background-color: #543654;
       position: absolute;
-      height: 100%;
+      height: 94.8%;
       {% comment %} overflow: auto; {% endcomment %}
       -ms-overflow-style: none;
     } ::-webkit-scrollbar { display: none; }
@@ -182,9 +181,10 @@
       list-style-type: none;
       padding: 0;
       position: absolute;
-      height: 100%;
+      height: 94.882%;
       overflow: auto;
     }
+
     img { display: block; margin: 0px auto; }
 
     .jb {
@@ -199,8 +199,9 @@
       bottom: 0;
 
     }
+
   </style>
-{% endblock style %}
+
 
 
 <nav class="flex_item navbar navbar-expand-lg navbar-light " style="width: 100%; height: 50px;" >
@@ -257,7 +258,7 @@
 
 <div class="workspaces_div">
   <ul class="workspaces_ul" style="display: inline-block;">
-  <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%; ">
+  <div class="d-flex justify-content-between align-items-center flex-column" style="height: 99%; ">
     <div class="mb-auto p-2 bd-highlight">
       <li class="workspaces_li"><a class="active" href="#"></a></li>
       {% for work in workspaces %}  
@@ -272,13 +273,12 @@
         {% endif %}
       {% endfor %}
     </div>
-  <button type="button" style="width:100%;" class="btn btn-primary mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#workspacemodal">
+  <button type="button" style="width:100%; color: white; background-color: #915CAC;" class="btn  mt-auto margin_create_workspace " data-bs-toggle="modal" data-bs-target="#workspacemodal">
     생성
   </button>
 
   <form id="Event" method="post" name="hide_and_show_form">
     <input id="sss" name="hide_btn" type="button" value="삭제" onclick="view(this.value);">
-
   </form>
 
   
@@ -302,7 +302,6 @@
         </form>
       </div>
       <div class="modal-footer">
-      
       </div>
     </div>
   </div>
