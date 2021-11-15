@@ -119,6 +119,7 @@ function view(btn_value) {
     justify-content: space-between;
     background-color : #310B31;
     padding: 0;
+    align-items: center;
   }
 
   .nav_PODO {
@@ -141,7 +142,7 @@ function view(btn_value) {
     width: 5%;
     background-color: #543654;
     position: absolute;
-    height: 100%;
+    height: calc(100% - 50px);
     {% comment %} overflow: auto; {% endcomment %}
     -ms-overflow-style: none;
   } ::-webkit-scrollbar { display: none; }
@@ -190,7 +191,7 @@ function view(btn_value) {
     list-style-type: none;
     padding: 0;
     position: absolute;
-    height: 100%;
+    height: calc(100% - 50px);
     overflow: auto;
   }
 
@@ -272,13 +273,15 @@ function view(btn_value) {
         <li class="workspaces_li">
         {% if work.image %}
         <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
-        <a style ="font-size: small;text-align : center; color:white">{{ work.name | slice:":3"}}</a> 
-        <div id="display_btn" style="display: none;">
-          <form action=" {% url 'workspaces:delete_workspace' workspace_indivisual.pk %}" method="POST">
-            {% csrf_token %}
-            <button type="btn" style="color: red;" class="btn btn-sm">삭제하기</button>
-          </form>
-        </div>
+        <a style ="font-size: small;text-align : center; color:white">{{ work.name | slice:":3"}}</a>
+        {% if workspace_indivisual.pk %}
+          <div id="display_btn" style="display: none;">
+            <form action=" {% url 'workspaces:delete_workspace' workspace_indivisual.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="btn" style="color: red;" class="btn btn-sm">삭제하기</button>
+            </form>
+          </div>
+        {% endif %} 
         </li>
         {% endif %}
       {% endfor %}
