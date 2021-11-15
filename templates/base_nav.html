@@ -56,9 +56,6 @@ function view(btn_value) {
     transition:800ms ease all;
   }
 
-
-
-
   .main_body {
   display: flex;
   justify-content: center;
@@ -105,6 +102,14 @@ function view(btn_value) {
       width: 100%;
       height: 100%;
       object-fit: cover;
+   }
+
+  body {
+    -ms-overflow-style: none;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
   }
 
   .flex_item {
@@ -185,6 +190,7 @@ function view(btn_value) {
     height: 100%;
     overflow: auto;
   }
+
   img { display: block; margin: 0px auto; }
 
   .jb {
@@ -194,6 +200,7 @@ function view(btn_value) {
   .icons {
     text-decoration : none;
   }
+
   .category_delete {
     position: relative;
     bottom: 0;
@@ -208,7 +215,7 @@ function view(btn_value) {
   </div>
   {% if workspace_pk %}
   <form class="d-flex" action="{% url 'workspaces:search' workspace_pk %}" method="GET">
-    <input style="height:50%;"class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="word" value="{{word}}">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="word" value="{{word}}" style="height: 50%;">
     <button class="btn material-icons" type="submit" style="color: white;">search</button>
   </form>
   {% endif %}
@@ -234,11 +241,11 @@ function view(btn_value) {
               <img src="{% static '마스코트.png' %}" alt="프로필 이미지">
             {% endif %}
           </div>
-          <div style="border: 1px solid #9CA3AF; border-radius: 5px; width: 77%; display: flex; align-items: center; margin: 10px; color: #484848; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;>
+          <div style="border: 1px solid #9CA3AF; border-radius: 5px; width: 77%; display: flex; align-items: center; margin: 10px; padding: 2px; color: #484848; overflow: auto;">
             {{ user.email }}
           </div>
-          <div style="border: 1px solid #9CA3AF; border-radius: 5px; width: 77%; display: flex; align-items: center; margin: 10px; color: #484848; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            닉네임: {{ user.username }}
+          <div style="border: 1px solid #9CA3AF; border-radius: 5px; width: 77%; display: flex; justify-content: center; align-items: center; margin: 10px; padding: 2px; color: #484848; overflow: auto;">
+            {{ user.username }}
           </div>
           <div class="d-flex">
             <div style="border-radius: 5px; background-color: #915CAC; width: 120px; display: flex; justify-content: center; align-items: center; margin: 10px;">

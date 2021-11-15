@@ -7,10 +7,10 @@ from allauth.account import app_settings
 
 class MyCustomSignupForm(SignupForm):
     username = forms.CharField(
-        max_length=8,
+        max_length=10,
         label='이름',
         error_messages= {
-            'max_length': '(주의) 닉네임은 최대 8글자입니다.',
+            'max_length': '(주의) 닉네임은 최대 10글자입니다.',
         },
         widget=forms.TextInput(
             attrs={
@@ -52,9 +52,9 @@ class MyCustomSignupForm(SignupForm):
 class CustomUserChangeForm(UserChangeForm):
     password = None
     username = forms.CharField(
-        max_length=8,
+        max_length=10,
         error_messages= {
-            'max_length': '(주의) 닉네임은 최대 8글자입니다.',
+            'max_length': '(주의) 닉네임은 최대 10글자입니다.',
         },
     )
 
