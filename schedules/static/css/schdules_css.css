@@ -43,12 +43,20 @@ body{ -ms-overflow-style: none; } ::-webkit-scrollbar { display: none; }
     text-align: left;
 }
 
+.schedules_calendar tbody th:nth-of-type(7) { 
+    color: rgb(248, 63, 63);
+} 
+
+.schedules_calendar tbody td:nth-of-type(7) .schedules_date { 
+    color: rgb(248, 63, 63);
+} 
+
+
 .schedules_date {
     position: absolute;
     font-size: 1.3em;
     top: 3px;
     left: 5px;
-    color: 333333;
     color: #636262;
 }
 

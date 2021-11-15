@@ -33,10 +33,10 @@ def index_article(request, workspace_pk, category_pk):
     article_form = ArticleForm()
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
-    workspace = Workspace.objects.order_by('-pk')
+    workspace_list = Workspace.objects.order_by('-pk')
     workspaces = []
     user = request.user
-    for work in workspace:
+    for work in workspace_list:
         if user.groups.filter(name= work.name):
             workspaces.append(work)
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
@@ -46,8 +46,8 @@ def index_article(request, workspace_pk, category_pk):
     html_calendar = minicalendar.formatmonth(workspace_pk, withyear=True)
     html_coming_schedules = minicalendar.coming_schedules(workspace_pk, withyear=True)
 
-    
     context = {
+        'workspace_pk': workspace_pk,
         'minicalendar': mark_safe(html_calendar),
         'coming_schedules': mark_safe(html_coming_schedules),
         'workspace_indivisual':workspace_indivisual,
