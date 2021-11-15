@@ -31,10 +31,12 @@ function view(btn_value) {
     outline:none;
     border-radius: 5px;
   }
+  
   #sss:hover{
     background:#fff;
     color:#1AAB8A;
   }
+  
   #sss:before,#sss:after{
     content:'';
     position:absolute;
@@ -45,12 +47,14 @@ function view(btn_value) {
     background: #1AAB8A;
     transition:400ms ease all;
   }
+  
   #sss:after{
     right:inherit;
     top:inherit;
     left:0;
     bottom:0;
   }
+  
   #sss:hover:before,#sss:hover:after{
     width:100%;
     transition:800ms ease all;
@@ -89,8 +93,7 @@ function view(btn_value) {
       width: 100%;
       object-fit: contain;
   }
-
-
+  
   .profile_box {
       width: 40px;
       height: 40px;
@@ -204,10 +207,8 @@ function view(btn_value) {
   .category_delete {
     position: relative;
     bottom: 0;
-
   }
 </style>
-
 <nav class="flex_item navbar navbar-expand-lg navbar-light " style="width: 100%; height: 50px;" >
   <div class="flex_item">
     <a href=" {% url 'workspaces:index' %} " class="nav_PODO" style="color:white; font-Bold" >podo</a>
@@ -273,7 +274,10 @@ function view(btn_value) {
         <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
         <a style ="font-size: small;text-align : center; color:white">{{ work.name | slice:":3"}}</a> 
         <div id="display_btn" style="display: none;">
-          <a style="font-size : xx-small;" href=" {% url 'workspaces:delete_workspace' work.pk %} ">삭제하기</a>
+          <form action=" {% url 'workspaces:delete_workspace' workspace_indivisual.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="btn" style="color: red;" class="btn btn-sm">삭제하기</button>
+          </form>
         </div>
         </li>
         {% endif %}

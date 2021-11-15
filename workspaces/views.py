@@ -55,7 +55,7 @@ def create_workspace(request):
     return redirect('workspaces:index')
 
   
-@login_required
+
 @require_http_methods(['GET', 'POST'])
 def delete_workspace(request, workspace_pk):
     workspace = get_object_or_404(Workspace, pk=workspace_pk)
@@ -108,12 +108,13 @@ def create_category(request, workspace_pk):
   
 @login_required
 @require_POST
-def delete_category(request, workspace_id, category_id):
-    workspace = get_object_or_404(Workspace, pk=workspace_id)
-    category = get_object_or_404(Category, pk=category_id)
+def delete_category(request, workspace_pk, category_pk):
+    workspaces = Workspace.objects.order_by('-pk')
+    workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
+    category = get_object_or_404(Category, pk=category_pk)
     category.delete()
 
-    return redirect('workspaces:index')
+    return redirect('workspaces:index_category',workspace_indivisual.pk)
 
   
 @login_required

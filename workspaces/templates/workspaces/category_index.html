@@ -1,3 +1,65 @@
+<script>
+  function viewc(btn_valuec) {
+    if (btn_valuec == "삭제하기") {
+        document.hide_and_show_form_c.sssc.value = "비활성화";
+        const btnlistc = document.querySelectorAll('#display_btnc')
+        for ( const btnc of btnlistc) {
+          btnc.style.display= 'block';
+        }
+    } else {
+        document.hide_and_show_form_c.sssc.value = "삭제하기";
+        const btnlistc = document.querySelectorAll('#display_btnc')
+        for ( const btnc of btnlistc) {
+          btnc.style.display= 'none';
+        }
+    }
+};
+</script>
+
+
+
+<style>
+#sssc{
+  background:#DB5D83;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:37px;
+  font-size:1em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  border-radius: 5px;
+}
+#sssc:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+#sssc:before,#sss:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+#sssc:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+#sssc:hover:before,#sss:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+</style>
+
+
+
 {% if not workspace_indivisual.pk %}
   <ul class="margin_category" id="margin_category">
   </ul>
@@ -13,19 +75,25 @@
 
       <li class="workspaces_li">
         <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
-       
-      </li>
+        <div id="display_btnc" style="display: none;">
+          <form action=" {% url 'workspaces:delete_category' workspace_indivisual.pk category.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="btn" style="color: red;" class="btn btn-sm">삭제하기</button>
+          </form>
+        </li>
     {% empty %}
     {% endfor %}
     <div style="margin-top: 350%;">
-      <button type="button" style="color:white; width:65%; background-color: #915CAC;" class="btn  make_create my-2" data-bs-toggle="modal" data-bs-target="#categorymodal">
+      <button type="button" style="color:white; width:100%; background-color: #915CAC;" class="btn  make_create my-2" data-bs-toggle="modal" data-bs-target="#categorymodal">
         생성하기
       </button>
-      <button type="button" style="color:white; width:65%; background-color: #DB5D83;"class="btn  mt-auto" style="width: 65%" data-bs-toggle="modal" data-bs-target="#categorydeletemodal">
+      <!-- <button type="button" style="color:white; width:65%; background-color: #DB5D83;"class="btn  mt-auto" style="width: 65%" data-bs-toggle="modal" data-bs-target="#categorydeletemodal">
         삭제하기
-      </button>
-
-      <button type="button" style="color:white; width:65%; background-color:#915CAC;" class="btn  make_create my-2" data-bs-toggle="modal" data-bs-target="#invitationModal">
+      </button> -->
+      <form id="Event" method="post" name="hide_and_show_form_c">
+        <input id="sssc" name="hide_btn" type="button" value="삭제하기" onclick="viewc(this.value);">
+      </form>
+      <button type="button" style="color:white; width:100%; background-color:#915CAC;" class="btn  make_create my-2" data-bs-toggle="modal" data-bs-target="#invitationModal">
         초대하기
       </button>
     </div>
@@ -75,25 +143,5 @@
       </div>
     </div>
 
-    <div class="modal fade" id="categorydeletemodal" tabindex="-1" aria-labelledby="categorydeleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="categorydeleteModalLabel">카테고리 삭제하기</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
 
-          <div class="modal-body">
-              <form action=" {% url 'workspaces:delete_category' workspace_indivisual.pk  %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ category_form }}
-                <button type="submit" class="btn btn-primary">삭제하기</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-              </form>
-          </div>
-          <div class="modal-footer">
-          </div>
-        </div>
-      </div>
-    </div>
 {% endif %}
