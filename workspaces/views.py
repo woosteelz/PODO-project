@@ -5,6 +5,9 @@ from .models import Workspace,Category
 from .forms import CategoryForm, WorkspaceForm
 from django.contrib import messages
 from django.contrib.auth.models import Group
+from articles.models import Article, Comment
+from schedules.models import Schedule
+from django.db.models import Q
 
 
 # Create your views here.
@@ -16,7 +19,7 @@ def index(request):
     workspaces = []
     user = request.user
     for work in workspace:
-        if user.groups.filter(name= work.name):
+        if user.groups.filter(name= work.pk):
             workspaces.append(work)
     # --------------------------------------------
     workspace_form = WorkspaceForm()
@@ -41,7 +44,7 @@ def create_workspace(request):
             user = request.user
             print(user)
             workspace.save()
-            new_group = Group.objects.create(name= workspace.name)
+            new_group = Group.objects.create(name= workspace.id)
             user.groups.add(new_group)
             return redirect('workspaces:index_category', workspace.pk)
     else:
@@ -68,17 +71,19 @@ def index_category(request, workspace_pk):
     workspace = Workspace.objects.order_by('-pk')
     workspaces = []
     user = request.user
+    print(user)
     for work in workspace:
-        if user.groups.filter(name= work.name):
+        if user.groups.filter(name= work.pk):
             workspaces.append(work)
             
     workspace_form = WorkspaceForm()
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
-    if not user.groups.filter(name= workspace_indivisual.name):
+    if not user.groups.filter(name= workspace_indivisual.pk):
         return redirect('https://www.google.com/search?q=%EC%96%B4%EB%94%9C+%EA%B0%90%ED%9E%88&oq=%EC%96%B4%EB%94%9C+%EA%B0%90%ED%9E%88&aqs=chrome..69i57j0i433i512j0i131i433i512j46i199i433i465i512j0i433i512j69i61l3.1890j0j7&sourceid=chrome&ie=UTF-8')
     category_form = CategoryForm()
     category = Category.objects.all()
     context = {
+        'workspace_pk': workspace_pk,
         'category_form' : category_form ,
         'workspaces': workspaces,
         'workspace_indivisual' : workspace_indivisual,
@@ -123,3 +128,35 @@ def like_category(request, workspace_pk, category_pk):
     else:       
         category.like_users.add(request.user)
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def search(request, workspace_pk):
+    word = request.GET.get('word')
+    articles = Article.objects.filter(workspace_id= workspace_pk).filter(Q(title__icontains=word) | Q(content__icontains=word)).distinct()
+    # comments = Comment.objects.filter(workspace_id= workspace_pk).filter(content__icontains=word)
+    schedules = Schedule.objects.filter(workspace_id= workspace_pk).filter(Q(title__icontains=word) | Q(content__icontains=word)).distinct()
+    workspace = Workspace.objects.order_by('-pk')
+    workspaces = []
+    user = request.user
+    for work in workspace:
+        if user.groups.filter(name= work.name):
+            workspaces.append(work)
+    category_form = CategoryForm()
+    category = Category.objects.all()
+    workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
+
+    context = {
+        'articles': articles,
+        # 'comments': comments,
+        'schedules': schedules,
+        'workspace_pk': workspace_pk,
+        'workspaces': workspaces,
+        'category_form': category_form,
+        'category': category,
+        'workspace_indivisual': workspace_indivisual,
+        
+
+    }
+    return render(request, 'workspaces/search.html', context)
+

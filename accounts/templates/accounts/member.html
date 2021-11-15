@@ -10,6 +10,10 @@
     display: none;
   }
 
+  #margin_category {
+    display: none;
+  }
+
   .base_div {
     display: flex;
     justify-content: center;
@@ -40,5 +44,19 @@
       <input type="email" name="email">
       <button type="submit" class="btn mt-3 mb-1 text-white" style="background-color: #915CAC; width: 100%; height: 45px;">초대하기</button>
     </form>
+  </div>
+
+  <div class="card d-flex flex-column justify-content-start align-items-center" style="width: 15rem; height: 36rem;">
+    <div style="margin: 15px;">
+      현재 멤버 목록
+    </div>
+    <ul class="list-group list-group-flush d-flex flex-column justify-content-center align-items-center" style="width: 100%;">
+      {% for member in members %}
+        <li class="list-group-item" style="width: 100%;">
+          {{ member.username }}
+        </li>
+      {% endfor %}
+      <hr>
+    </ul>
   </div>
 {% endblock content %}

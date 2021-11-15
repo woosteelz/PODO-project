@@ -7,7 +7,11 @@ from allauth.account import app_settings
 
 class MyCustomSignupForm(SignupForm):
     username = forms.CharField(
+        max_length=8,
         label='이름',
+        error_messages= {
+            'max_length': '(주의) 닉네임은 최대 8글자입니다.',
+        },
         widget=forms.TextInput(
             attrs={
                 'class':'account_form_control',
@@ -47,6 +51,12 @@ class MyCustomSignupForm(SignupForm):
 
 class CustomUserChangeForm(UserChangeForm):
     password = None
+    username = forms.CharField(
+        max_length=8,
+        error_messages= {
+            'max_length': '(주의) 닉네임은 최대 8글자입니다.',
+        },
+    )
 
     class Meta:
         model = get_user_model()

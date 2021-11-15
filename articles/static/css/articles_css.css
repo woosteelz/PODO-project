@@ -1,5 +1,4 @@
 * {
-  color: #484848;
   font-family: 'GmarketSansMedium';
 }
 
@@ -18,6 +17,24 @@ body {
     display: none;
 }
 
+.article-effect:hover {
+  transition: 0.2s;
+  transform: translateY(-2px);
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.myBtn:hover {
+  transition: 0.2s;
+  transform: translateY(-2px);
+}
+
+.image-file-effect {
+  transition: 0.2s;
+  transform: translateY(-2px);
+  cursor: pointer;
+  opacity: 0.5;
+}
 
 /* index 모달 폼 */
 .container-form {
@@ -43,6 +60,11 @@ body {
 
 .summernote-div {
   grid-area: main;
+}
+
+.note-editable { 
+  height: 100vh; 
+  width: 90vw; 
 }
 
 .article-priority {
@@ -105,7 +127,7 @@ body {
   margin-right: auto;
   row-gap: 2%;
   column-gap: 1%;
-  height: 80%;
+  height: 74vh;
   grid-template-rows: 18% 18% 18% 18% 18%;
   grid-template-columns: 15.9% 15.9% 15.9% 15.9% 15.9% 15.9%;
   grid-template-areas:'todo todo doing doing schedules schedules'
@@ -145,7 +167,7 @@ body {
 /* article detail */
 .container-detail {
   display: grid;
-  height: 45%;
+  height: 39vh;
   row-gap: 2.3%;
   column-gap: 1%;
   grid-template-rows: 20% 6% 12% 40% 40% 30% 12% 40%;
@@ -246,6 +268,14 @@ body {
   border: 2px solid #b9b9b9;
   border-radius: 5px;
 }
+
+.schedules_calendar tbody th:nth-of-type(7) { 
+  color: rgb(250, 95, 95);
+} 
+
+.schedules_calendar tbody td:nth-of-type(7) .schedules_date { 
+  color: rgb(250, 95, 95);
+} 
 
 .schedules_date {
   font-size: 100%;

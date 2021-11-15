@@ -59,7 +59,7 @@
   {% comment %} 보드 {% endcomment %}
   <br>
   <div id="board_title">
-    <p style="position: absolute; z-index: 2; left: 10px; ">{{ workspace_name }} 보드</p>
+    <p style="position: absolute; z-index: 2; left: 10px; ">{{ category_name }} 보드</p>
   <div id="board_title_deco"></div>
   </div>
 
@@ -68,7 +68,7 @@
   <div class="board-container">
       {% comment %} 진행예정 {% endcomment %}
       <div data-board-pk={{todo_board.pk}} class="board-status board-todo" style="background-color: #E8ECF2">
-        <h5 data-board-pk={{todo_board.pk}} style="font-weight: bold; text-align: center; margin-bottom: 0px">{{ todo_board.name }}<h5/>
+        <p data-board-pk={{todo_board.pk}} style="font-size: 150%; font-weight: bold; margin: 3% 5% 0% 5%;" align="center">진행중</p>
         <div data-board-pk={{todo_board.pk}} class="board-inner-area">
           <div data-board-pk={{todo_board.pk}} style="width: 26%; text-align: end; margin-right: 8px;">
             <a data-board-pk={{todo_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board" style="text-align: center; text-decoration:none; color: #FFFFFF;">
@@ -80,7 +80,7 @@
         </div>
 
         {% for article in todo_articles %}
-          <div data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center">
+          <div data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center article-effect">
             <a data-article-pk={{article.pk}} data-board-pk={{todo_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848; font-size: 15px">
               {% if article.title|length > 13 %}
                 {% if article.priority == '1' %}
@@ -106,7 +106,7 @@
 
       {% comment %} 진행중 {% endcomment %}
       <div data-board-pk={{doing_board.pk}} class="board-status board-doing" style="background-color: #E8ECF2">
-        <h5 data-board-pk={{doing_board.pk}} style="font-weight: bold; text-align: center; margin-bottom: 0px">{{ doing_board.name }}<h5/>
+        <p data-board-pk={{doing_board.pk}} style="font-size: 150%; font-weight: bold; margin: 3% 5% 0% 5%;" align="center">진행중</p>
         <div data-board-pk={{doing_board.pk}} class="board-inner-area">
           <div data-board-pk={{doing_board.pk}} style="width: 26%; text-align: end; margin-right: 8px;">
             <a data-board-pk={{doing_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board" style="text-align: center; text-decoration:none; color: #FFFFFF;">
@@ -118,7 +118,7 @@
         </div>
 
         {% for article in doing_articles %}
-          <div data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center">
+          <div data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center article-effect">
             <a data-article-pk={{article.pk}} data-board-pk={{doing_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848; font-size: 15px">
               {% if article.title|length > 13 %}
                 {% if article.priority == '1' %}
@@ -144,7 +144,7 @@
       
       {% comment %} 이슈 {% endcomment %}
       <div data-board-pk={{issue_board.pk}} class="board-status board-issue" style="background-color: #DDC5FC">
-        <h5 data-board-pk={{issue_board.pk}} style="font-weight: bold; text-align: center; margin-bottom: 0px">{{ issue_board.name }}<h5/>
+        <p data-board-pk={{issue_board.pk}} style="font-size: 150%; font-weight: bold; margin: 3% 5% 0% 5%;" align="center">이슈</p>
         <div data-board-pk={{issue_board.pk}} class="board-inner-area">
           <div data-board-pk={{issue_board.pk}} style="width: 26%; text-align: end; margin-right: 8px;">
             <a data-board-pk={{issue_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board" style="text-align: center; text-decoration:none; color: #FFFFFF;">
@@ -156,7 +156,7 @@
         </div>
 
         {% for article in issue_articles %}
-          <div data-article-pk={{article.pk}} data-board-pk={{issue_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center">
+          <div data-article-pk={{article.pk}} data-board-pk={{issue_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center article-effect">
             <a data-article-pk={{article.pk}} data-board-pk={{issue_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848; font-size: 15px">
               {% if article.title|length > 13 %}
                 {% if article.priority == '1' %}
@@ -182,7 +182,7 @@
 
       {% comment %} 완료 {% endcomment %}
       <div data-board-pk={{completed_board.pk}} class="board-status board-completed" style="background-color: #E8ECF2">
-        <h5 data-board-pk={{completed_board.pk}} style="font-weight: bold; text-align: center; margin-bottom: 0px">{{ completed_board.name }}<h5/>
+        <p data-board-pk={{completed_board.pk}} style="font-size: 150%; font-weight: bold; margin: 3% 5% 0% 5%;" align="center">완료</p>
         <div data-board-pk={{completed_board.pk}} class="board-inner-area">
           <div data-board-pk={{completed_board.pk}} style="width: 26%; text-align: end; margin-right: 8px;">
             <a data-board-pk={{completed_board.pk}} type="button" class="myBtn" data-bs-toggle="modal" data-bs-target="#board" style="text-align: center; text-decoration:none; color: #FFFFFF;">
@@ -194,7 +194,7 @@
         </div>
 
         {% for article in completed_articles %}
-          <div data-article-pk={{article.pk}} data-board-pk={{completed_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center">
+          <div data-article-pk={{article.pk}} data-board-pk={{completed_board.pk}} style="padding: 5px; margin: 8px; background-color: #FFFFFF; border-radius: 10px; height: 25px" class="d-flex align-items-center article-effect">
             <a data-article-pk={{article.pk}} data-board-pk={{completed_board.pk}} class="article" href="{% url 'articles:detail_article' article.pk %}" style="text-decoration:none; color: #484848; font-size: 15px">
               {% if article.title|length > 13 %}
                 {% if article.priority == '1' %}
@@ -220,7 +220,7 @@
 
       {% comment %} 미니 스케줄 {% endcomment %}
       <div class="board-schedules">
-        <p style="font-size: 150%; margin: 3% 5% 0% 5%;" align="center">프로젝트 일정</p>
+        <p style="font-size: 150%; margin: 3% 5% 0% 5%; font-weight: bold;" align="center">프로젝트 일정</p>
         <a style="text-decoration: none;" href="{% url 'schedules:index' workspace_indivisual.pk %}">
           <div id="articles_calendar" class="container">
             {{ minicalendar }}
