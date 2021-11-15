@@ -37,7 +37,7 @@ def index_article(request, workspace_pk, category_pk):
     workspaces = []
     user = request.user
     for work in workspace_list:
-        if user.groups.filter(name= work.name):
+        if user.groups.filter(name=work.id):
             workspaces.append(work)
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
     today = datetime.datetime.today()
@@ -124,11 +124,11 @@ def detail_article(request, article_pk):
     comments = article.comment_set.all()
     workspace_form = WorkspaceForm()
     category_form = CategoryForm()
-    workspace = Workspace.objects.order_by('-pk')
+    workspace_list = Workspace.objects.order_by('-pk')
     workspaces = []
     user = request.user
-    for work in workspace:
-        if user.groups.filter(name= work.name):
+    for work in workspace_list:
+        if user.groups.filter(name= work.id):
             workspaces.append(work)
     workspace_indivisual = get_object_or_404(Workspace, pk=article.workspace.pk)
     context = {
@@ -172,10 +172,9 @@ def delete_article(request, article_pk):
     # 상세 페이지 안에서 게시글 삭제를 클릭하면 게시글을 삭제여부를 다시 한번 물어보고 삭제한다.
     # 삭제를 완료하면 index로 리다이렉트 해준다
     article = get_object_or_404(Article, pk=article_pk)
-    if request.user == article.user:
-        workspace = article.workspace
-        category = article.category
-        article.delete()
+    workspace = article.workspace
+    category = article.category
+    article.delete()
     return redirect('articles:index_article', workspace.pk, category.pk)
 
 
@@ -206,8 +205,7 @@ def delete_comment(request, article_pk, comment_pk):
     # 삭제를 완료하면, 게시글 상세 페이지를 리다이렉트 해준다.
     article = get_object_or_404(Article, pk=article_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
-    if request.user == comment.user:
-        comment.delete()
+    comment.delete()
     return redirect('articles:detail_article', article.pk)
 
 
