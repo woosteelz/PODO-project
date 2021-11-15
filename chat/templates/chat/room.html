@@ -16,9 +16,7 @@
           <section class="hero">
             <div class="hero-body">
               <p class="title">Podo Chatting</p>
-              <p class="subtitle">
-                Podo Public Chatting Room
-              </p>
+              <p class="subtitle">Podo Public Chatting Room</p>
             </div>
           </section>
         </div>
@@ -52,12 +50,13 @@
   {{ room_name|json_script:"json-roomname" }} {{ username|json_script:"json-username" }}
 
   <script>
+    const today = new Date();
+    const currTime = today.getFullYear() + '년 ' + ('0' + (today.getMonth() + 1)).slice(-2) + '월 ' + ('0' + today.getDate()).slice(-2) + '일 ' + ('0' + today.getHours()).slice(-2) + ':' + ('0' + today.getMinutes()).slice(-2);
+
     function scrollToBottom() {
       let objDiv = document.getElementById("chat-messages");
       objDiv.scrollTop = objDiv.scrollHeight;
     }
-
-    scrollToBottom();
 
     const roomName = JSON.parse(
       document.getElementById("json-roomname").textContent
@@ -77,9 +76,9 @@
 
       if (data.message) {
         document.querySelector("#chat-messages").innerHTML +=
-          "<b>" + data.username + "</b>: " + data.message + "<br>";
+          "<b>" + data.username + "</b>: " + data.message + "<br>" + currTime + "<br>";
       } else {
-        console.log('빈 값은 보낼 수 없습니다..')
+        console.log("빈 값은 보낼 수 없습니다..");
       }
 
       scrollToBottom();

@@ -14,11 +14,9 @@
       <div class="columns is-multiline">
         <div class="column is-6 is-offset-3 mb-6">
           <section class="hero">
-            <div class=" hero-body">
+            <div class="hero-body">
               <p class="title">Podo Chatting</p>
-              <p class="subtitle">
-                Podo Public Chatting Room
-              </p>
+              <p class="subtitle">Podo Public Chatting Room</p>
             </div>
           </section>
         </div>
@@ -56,7 +54,7 @@
     document.querySelector("#room-name-submit").onclick = function (e) {
       var roomName = document.querySelector("#room-name-input").value;
       var userName = document.querySelector("#username-input").value;
-      console.log(e);
+      console.log(roomName, userName);
 
       window.location.replace(roomName + "/?username=" + userName);
     };
