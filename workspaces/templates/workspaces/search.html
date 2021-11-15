@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+
+<link href="{% static 'css/workspaces_css.css' %}" rel="stylesheet" type="text/css" />
+{% endblock style %}
+
+{% block content %}
+<br>
+<div id="search_title">
+  <p style="position: absolute; z-index: 2; left: 10px; ">{{ workspace_indivisual.name }} 검색 목록</p>
+<div id="search_title_deco"></div>
+</div>
+<hr style="width:100%; height: 2px;">
+
+<div class="search_container">
+  <div class="article_search">
+    <p style="font-size: 150%; font-weight: 700;">게시글 검색 목록</p>
+    <div style="height:90%;">
+      {% for article in articles %}
+        <a href="{% url 'articles:detail_article' article.pk %}" style="text-decoration: none; color: #484848;">
+          <div class="article_block">
+            <p style="margin-bottom: 2px; overflow: hidden;">제목: {{ article.title }}</p>
+            <p style="margin-bottom: 2px; overflow: hidden;">내용: {{ article.content|safe }}</p>
+          </div>
+        </a>
+      {% empty %}
+        <p style="margin:5% 5%; text-decoration: none; font-size: 120%;">검색 결과가 없습니다.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="schedule_search">
+    <p style="font-size: 150%; font-weight: 700;">일정 검색 목록</p>
+    <div style="height:90%;">
+      {% for schedule in schedules %}
+        <a href="{% url 'schedules:index' workspace_pk %}?month={{ schedule.start_date.year }}-{{ schedule.start_date.month }}" style="text-decoration: none; color: #484848;">
+          <div class="schedule_block">
+            <p style="margin-bottom: 2px; overflow: hidden; text-decoration: none;">제목: {{ schedule.title }}</p>
+            <p style="margin-bottom: 2px; overflow: hidden;">내용: {{ schedule.content }}</p>
+          </div>
+        </a>
+      {% empty %}
+        <p style="margin:5% 5%; text-decoration: none; font-size: 120%;">검색 결과가 없습니다.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+

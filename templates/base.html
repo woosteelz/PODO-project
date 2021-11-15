@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <style>
     * {
-    color: #484848;
     font-family: 'GmarketSansMedium';
     }
 
@@ -31,19 +30,6 @@
   </style>
   {% block style %}
   {% endblock style %}
-  <style>
-    * {
-    color: #484848;
-    font-family: 'GmarketSansMedium';
-    }
-
-    @font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    }
-  </style>
   <script src="https://code.jquery.com/jquery-latest.min.js">
   $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
@@ -55,7 +41,7 @@
   {% include 'workspaces/category_index.html' %}
   
   <div class="margin_article_div" style="height:87%; border: 1px solid #D1D1D1; border-radius: 20px; box-shadow: 2px 1px 10px 1px rgba(0,0,0,0.1);">
-    <div id="content" name="content" class="base_div" style="height:100% width:100%; margin-right: 5%; margin-left: 5%;">
+    <div id="content" name="content" class="base_div" style="height:100%; width:89%; margin-right: 5%; margin-left: 5%;">
       {% block content %}
       {% endblock content%}
     </div>
