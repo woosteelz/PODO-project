@@ -301,4 +301,6 @@ $RECYCLE.BIN/
 # secret keys
 settings.ini
 
+migrations/
 /migrations/
+/migrations

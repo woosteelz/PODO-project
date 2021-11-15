@@ -1,9 +1,21 @@
 from django.shortcuts import render
+from workspaces.models import Workspace
 from .models import Message
 
 
 def index(request):
-    return render(request, 'chat/index.html')
+    workspace = Workspace.objects.order_by('-pk')
+    workspaces = []
+    user = request.user
+    for work in workspace:
+        if user.groups.filter(name=work.id):
+            workspaces.append(work.name)
+    print(workspaces)
+    context = {
+        'username': user,
+        'workspaces': workspaces
+    }
+    return render(request, 'chat/index.html', context)
 
 
 def room(request, room_name):

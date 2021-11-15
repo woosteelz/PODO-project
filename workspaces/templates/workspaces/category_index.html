@@ -2,31 +2,34 @@
   <ul class="margin_category" id="margin_category">
   </ul>
 {% else %}
-  <ul class="workspaces_ul margin_category" id="margin_category">
-    {% if not workspace_indivisual.category_set.all %}
-      <br>
-      <a> 카테고리를 </a>
-      <br>
-      <a>만들어보세요!</a>
-    {% endif %}
-  {% for category in workspace_indivisual.category_set.all %}
+  <ul class="margin_category" id="margin_category">
+    <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%; ">
+      {% if not workspace_indivisual.category_set.all %}
+        <br>
+        <a> 카테고리를 </a>
+        <a>만들어보세요!</a>
+      {% endif %}
+    {% for category in workspace_indivisual.category_set.all %}
 
-    <li class="workspaces_li">
-      <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
-    </li>
-  {% empty %}
-  {% endfor %}
+      <li class="workspaces_li">
+        <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
+       
+      </li>
+    {% empty %}
+    {% endfor %}
+    <div style="margin-top: 350%;">
+      <button type="button" style="color:white; width:65%; background-color: #915CAC;" class="btn  make_create my-2" data-bs-toggle="modal" data-bs-target="#categorymodal">
+        생성하기
+      </button>
+      <button type="button" style="color:white; width:65%; background-color: #DB5D83;"class="btn  mt-auto" style="width: 65%" data-bs-toggle="modal" data-bs-target="#categorydeletemodal">
+        삭제하기
+      </button>
 
-  <button type="button" style="width:65%" class="btn btn-primary make_create my-5" data-bs-toggle="modal" data-bs-target="#categorymodal">
-    +
-  </button>
-  <button class="btn btn-danger mt-auto" style="width: 65%">
-    삭제하기
-  </button>
-
-  <button type="button" style="width:65%" class="btn btn-primary make_create my-5" data-bs-toggle="modal" data-bs-target="#invitationModal">
-    초대하기
-  </button>
+      <button type="button" style="color:white; width:65%; background-color:#915CAC;" class="btn  make_create my-2" data-bs-toggle="modal" data-bs-target="#invitationModal">
+        초대하기
+      </button>
+    </div>
+    </div>
   </ul>
 
   <div class="modal fade" id="invitationModal" tabindex="-1" aria-labelledby="invitationModalLabel" aria-hidden="true">
@@ -68,6 +71,28 @@
           <div class="modal-footer">
           </div>
 
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="categorydeletemodal" tabindex="-1" aria-labelledby="categorydeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categorydeleteModalLabel">카테고리 삭제하기</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+              <form action=" {% url 'workspaces:delete_category' workspace_indivisual.pk  %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ category_form }}
+                <button type="submit" class="btn btn-primary">삭제하기</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+              </form>
+          </div>
+          <div class="modal-footer">
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,30 @@
+[
+{
+    "model": "articles.board",
+    "pk": 1,
+    "fields": {
+        "name": "진행예정"
+    }
+},
+{
+    "model": "articles.board",
+    "pk": 2,
+    "fields": {
+        "name": "진행중"
+    }
+},
+{
+    "model": "articles.board",
+    "pk": 3,
+    "fields": {
+        "name": "이슈"
+    }
+},
+{
+    "model": "articles.board",
+    "pk": 4,
+    "fields": {
+        "name": "완료"
+    }
+}
+]
