@@ -43,7 +43,7 @@ body {
   grid-template-areas:'title title title aside'
                       'main main main aside'
                       'image image file file'
-                      'button1 button1 button2 button2';
+                      '. . button1 button1';
 }
 
 .container-form label {
@@ -87,10 +87,6 @@ body {
 
 .article-button1 {
   grid-area: button1;
-}
-
-.article-button2 {
-  grid-area: button2;
 }
 
 

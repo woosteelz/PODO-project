@@ -110,21 +110,21 @@ deleteArticleBtn.addEventListener('click', () => {
 })
 
 
-window.onload = function() {
-  // 댓글 삭제
-  const deleteCommentBtn = document.querySelector('#delete-comment-btn')
-  deleteCommentBtn.addEventListener('click', () => {
-    const articlePk = deleteCommentBtn.dataset.articlePk
-    const commentPk = deleteCommentBtn.dataset.commentPk
-    console.log(commentPk)
-      const finalDeleteComment = document.querySelector('.comment_delete_modal_form')
-      finalDeleteComment.addEventListener('submit', (e) => {
-        e.preventDefault()
+// window.onload = function() {
+//   // 댓글 삭제
+//   const deleteCommentBtn = document.querySelector('#delete-comment-btn')
+//   deleteCommentBtn.addEventListener('click', () => {
+//     const articlePk = deleteCommentBtn.dataset.articlePk
+//     const commentPk = deleteCommentBtn.dataset.commentPk
+//     console.log(commentPk)
+//       const finalDeleteComment = document.querySelector('.comment_delete_modal_form')
+//       finalDeleteComment.addEventListener('submit', (e) => {
+//         e.preventDefault()
   
-        e.target.action = `/articles/${articlePk}/article/${commentPk}/delete_comment/`
-        e.target.submit()
-      })
-  })
+//         e.target.action = `/articles/${articlePk}/article/${commentPk}/delete_comment/`
+//         e.target.submit()
+//       })
+//   })
   
   // // 이미지 삭제
   // const deleteImageBtn = document.querySelector('#delete-image-btn')

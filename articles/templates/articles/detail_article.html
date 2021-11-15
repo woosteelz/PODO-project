@@ -11,20 +11,23 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-body">
-          <div class="d-flex align-items-center fs-3 mb-3" style="background-color: #915CAC; color: #FFFFFF; border-style: none; border-radius: 5px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-card-text ms-3" viewBox="0 0 16 16">
-              <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-              <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
-            </svg>
-            <span class="ms-3">
-              게시글 수정
-            </span>
+          <div class="d-flex justify-content-between fs-3 mb-3" style="background-color: #915CAC; color: #FFFFFF; border-style: none; border-radius: 5px;">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-card-text ms-3" viewBox="0 0 16 16">
+                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+              <span class="ms-3">
+                게시글 수정
+              </span>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: white;"></button>
           </div>
           <form class="container-form dropzone" action="{% url 'articles:update_article' article.pk %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ article_form }}
 
-            <div class="article-image d-flex justify-content-center">
+            <div class="article-image d-flex justify-content-center ms-5">
               <label for="image" class="me-2" style="color: #484848;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-image" viewBox="0 0 16 16">
                   <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
@@ -47,10 +50,6 @@
             <div class="article-button1 d-flex justify-content-center">
               <button type="submit" class="btn" style="background-color: #915CAC; color: #FFFFFF; border-style: none; border-radius: 5px; padding: 5 80px; width: 200px;" id="board">확인</button>
             </div>
-
-            <div class="article-button2 d-flex justify-content-center">
-              <button class="btn" style="background-color: #666464; color: #FFFFFF; border-style: none; border-radius: 5px; padding: 5 80px; width: 200px;" data-bs-dismiss="modal">취소</button>
-            </div>
           </form>
         </div>
       </div>
@@ -63,40 +62,42 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title br" style="font-weight: bold;">게시글 삭제</h5>
+        <h5 class="modal-title br" style="font-weight: bold; color: #484848;">게시글 삭제</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form class="article_delete_modal_form container" action="#" method="POST">
           {% csrf_token %}
-          <b>게시글을 정말 삭제하시겠습니까?</b>
+          <b style="color: #484848;">게시글을 정말 삭제하시겠습니까?</b>
           <br>
-          <button class="btn" type="submit" style="background-color: rgb(145, 92, 172); color: white; float: right;">삭제하기</button>
+          <button class="btn" type="submit" style="background-color: #DB5D83; color: white; float: right;">삭제하기</button>
         </form>
       </div>
     </div>
   </div>
 </div>
 
+
 {% comment %} 댓글 삭제 모달{% endcomment %}
-<div class="modal fade" id="delete-comment" tabindex="-1" role="dialog" aria-hidden="true">
+{% comment %} <div class="modal fade" id="delete-comment" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title br" style="font-weight: bold;">댓글 삭제</h5>
+        <h5 class="modal-title br" style="font-weight: bold; color: #484848;">댓글 삭제</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form class="comment_delete_modal_form container" action="#" method="POST">
           {% csrf_token %}
-          <b>댓글을 정말 삭제하시겠습니까?</b>
+          <b style="color: #484848;">댓글을 정말 삭제하시겠습니까?</b>
           <br>
-          <button type="submit" style="background-color: rgb(145, 92, 172); color: white; float: right;">삭제하기</button>
+          <button type="submit" style="background-color: #DB5D83; color: white; float: right;">삭제하기</button>
         </form>
       </div>
     </div>
   </div>
-</div>
+</div> {% endcomment %}
+
 
 {% comment %} 이미지 삭제 모달{% endcomment %}
 {% comment %} <div class="modal fade" id="delete-image" tabindex="-1" role="dialog" aria-hidden="true">
@@ -117,7 +118,6 @@
     </div>
   </div>
 </div> {% endcomment %}
-
 
 
 {% comment %} 파일 삭제 모달{% endcomment %}
@@ -141,27 +141,6 @@
 </div> {% endcomment %}
 
 
-{% comment %} 댓글 삭제 모달{% endcomment %}
-<div class="modal fade" id="delete-comment" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title br" style="font-weight: bold;">댓글 삭제</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form class="comment_delete_modal_form container" action="#" method="POST">
-          {% csrf_token %}
-          <b>댓글을 정말 삭제하시겠습니까?</b>
-          <br>
-          <button type="submit" style="background-color: rgb(145, 92, 172); color: white; float: right;">삭제하기</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 {% comment %} 게시글 상세 {% endcomment %}
   <div class="container-detail">
 
@@ -176,7 +155,7 @@
       </span>
     </div>
 
-    <div class="detail-title">
+    <div class="detail-title" style="color: #484848;">
       <h5 style="margin-bottom: 0;">제목: {{ article.title }}</h5>
     </div>
 
@@ -184,15 +163,15 @@
       {{ article.content | safe }}
     </div>
 
-    <div class="detail-updated_at">
+    <div class="detail-updated_at" style="color: #484848;">
       {{ article.updated_at }}
     </div>
 
-    <div class="detail-author">
+    <div class="detail-author" style="color: #484848;">
       작성자: {{ article.user }}
     </div>
 
-    <div class="detail-priority">
+    <div class="detail-priority" style="color: #484848;">
       {% if article.priority == '1'%}
         우선순위: 🔴
       {% elif article.priority == '2' %}
@@ -203,7 +182,7 @@
     </div>
 
     <div class="detail-images">
-      <div>
+      <div style="color: #484848;">
         <이미지>
       </div>
       {% for image in article.image_set.all %}
@@ -211,7 +190,7 @@
         {% if request.user == article.user %}
           <form style="display: inline;" action="{% url 'articles:delete_image' article.pk image.pk %}" method="POST">
             {% csrf_token %}
-            <button style="background-color: #666464; color: #FFFFFF; border-style: none; border-radius: 5px; padding: 2px; width: 40px;" type="submit">삭제</button>
+            <button style="background-color: #DB5D83; color: #FFFFFF; border-style: none; border-radius: 5px; padding: 2px; width: 40px;" type="submit">삭제</button>
           </form>
         {% else %}
           <span></span>
@@ -221,7 +200,7 @@
     </div>
 
     <div class="detail-files">
-      <div>
+      <div style="color: #484848;">
         <파일>
       </div>
       {% for file in article.file_set.all %}
@@ -229,7 +208,7 @@
         {% if request.user == article.user %}
           <form style="display: inline;" action="{% url 'articles:delete_file' article.pk file.pk %}" method="POST">
             {% csrf_token %}
-            <button style="background-color: #666464; color: #FFFFFF; border-style: none; border-radius: 5px; padding: 2px; width: 40px;" type="submit">삭제</button>
+            <button style="background-color: #DB5D83; color: #FFFFFF; border-style: none; border-radius: 5px; padding: 2px; width: 40px;" type="submit">삭제</button>
           </form>
         {% else %}
           <span></span>
@@ -241,7 +220,7 @@
     <div class="detail-buttons">
       <div>
         {% if request.user == article.user %}
-          <button data-article-pk={{article.pk}} id="delete-article-btn" data-bs-toggle="modal" data-bs-target="#delete-article" style="background-color: #666464; color: #FFFFFF; border-style: none; border-radius: 5px; width: 100px">삭제</button>
+          <button data-article-pk={{article.pk}} id="delete-article-btn" data-bs-toggle="modal" data-bs-target="#delete-article" style="background-color: #DB5D83; color: #FFFFFF; border-style: none; border-radius: 5px; width: 100px">삭제</button>
         {% else %}
           <span></span>
         {% endif %}
@@ -265,18 +244,21 @@
     </form>
 
     <div class="detail-comments">
-      <div>
+      <div style="color: #484848;">
         <댓글>
       </div>
       {% for comment in comments %}
         <span>{{ comment.user }} - {{ comment.content }}</span>
         {% if request.user == comment.user %}
-          <button data-article-pk={{article.pk}} data-comment-pk={{comment.pk}} id="delete-comment-btn" data-bs-toggle="modal" data-bs-target="#delete-comment" style="background-color: #666464; color: #FFFFFF; border-style: none; border-radius: 5px; padding: 2px; width: 40px" type="submit">삭제</button>
+          <form style="display: inline;" action="{% url 'articles:delete_comment' article.pk comment.pk %}" method="POST">
+            {% csrf_token %}
+            <button style="background-color: #DB5D83; color: #FFFFFF; border-style: none; border-radius: 5px; padding: 2px; width: 40px" type="submit">삭제</button>
+          </form>
         {% else %}
           <span></span>
         {% endif %}
         <br>
-        <span>{{comment.updated_at}}</span>
+        <span style="color: #484848;">{{comment.updated_at}}</span>
         <hr>
       {% endfor %}
     </div>
