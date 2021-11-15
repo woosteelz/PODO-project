@@ -1,207 +1,204 @@
 {% load static %}
-{% block style %}
-  <script>
-  function view(btn_value) {
-    if (btn_value == "삭제") {
-        document.hide_and_show_form.sss.value = "비활성";
-        const btnlist = document.querySelectorAll('#display_btn')
-        for ( const btn of btnlist) {
-          btn.style.display= 'block';
-        }
-    } else {
-        document.hide_and_show_form.sss.value = "삭제";
-        const btnlist = document.querySelectorAll('#display_btn')
-        for ( const btn of btnlist) {
-          btn.style.display= 'none';
-        }
-    }
+<script>
+function view(btn_value) {
+  if (btn_value == "삭제") {
+      document.hide_and_show_form.sss.value = "비활성";
+      const btnlist = document.querySelectorAll('#display_btn')
+      for ( const btn of btnlist) {
+        btn.style.display= 'block';
+      }
+  } else {
+      document.hide_and_show_form.sss.value = "삭제";
+      const btnlist = document.querySelectorAll('#display_btn')
+      for ( const btn of btnlist) {
+        btn.style.display= 'none';
+      }
+  }
 };
-  </script>
-  <style>
-#sss{
-  background:#FF0044;
-  color:#fff;
-  border:none;
-  position:relative;
-  height:37px;
-  font-size:1em;
-  padding:0 2em;
-  cursor:pointer;
-  transition:800ms ease all;
-  outline:none;
-  border-radius: 5px;
-}
-#sss:hover{
-  background:#fff;
-  color:#1AAB8A;
-}
-#sss:before,#sss:after{
-  content:'';
-  position:absolute;
-  top:0;
-  right:0;
-  height:2px;
-  width:0;
-  background: #1AAB8A;
-  transition:400ms ease all;
-}
-#sss:after{
-  right:inherit;
-  top:inherit;
-  left:0;
-  bottom:0;
-}
-#sss:hover:before,#sss:hover:after{
-  width:100%;
-  transition:800ms ease all;
-}
+</script>
+<style>
+  #sss{
+    background:#FF0044;
+    color:#fff;
+    border:none;
+    position:relative;
+    height:37px;
+    font-size:1em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+    border-radius: 5px;
+  }
+  #sss:hover{
+    background:#fff;
+    color:#1AAB8A;
+  }
+  #sss:before,#sss:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #1AAB8A;
+    transition:400ms ease all;
+  }
+  #sss:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  #sss:hover:before,#sss:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
 
 
 
 
-    .main_body {
-    display: flex;
-    justify-content: center;
-    padding-top: 50px;
-    }
+  .main_body {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  }
 
-    .left_body {
-        margin-right: 100px;
-        width: 500px;
+  .left_body {
+      margin-right: 100px;
+      width: 500px;
 
-        display: flex;
-        flex-direction: column;
-    }
+      display: flex;
+      flex-direction: column;
+  }
 
-    .right_body {
-        
-        width: 300px;
-        height: 1000px;
-        left: 72%;
-        position: fixed
-    }
+  .right_body {
+      
+      width: 300px;
+      height: 1000px;
+      left: 72%;
+      position: fixed
+  }
 
-    .feed_box {
-        background-color: white;
-        width: 480px;
-        margin: 10px;
-        min-height: auto;
-    }
+  .feed_box {
+      background-color: white;
+      width: 480px;
+      margin: 10px;
+      min-height: auto;
+  }
 
-    .feed_img{
-        width: 100%;
-        object-fit: contain;
-    }
+  .feed_img{
+      width: 100%;
+      object-fit: contain;
+  }
 
 
-    .profile_box {
-        width: 40px;
-        height: 40px;
-        border-radius: 70%;
-        overflow: hidden;
-    }
+  .profile_box {
+      width: 40px;
+      height: 40px;
+      border-radius: 70%;
+      overflow: hidden;
+  }
 
-    .profile_img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .flex_item {
-      justify-content: space-between;
-      background-color : #310B31;
-      padding: 0;
-    }
-
-    .nav_PODO {
-      margin-left: 20px;
-      text-decoration : none;
-      font-weight : bold;
-    }
-
-    .nav_icon {
-      margin-right: 20px;
-      text-decoration : none;
-      color : white;
-    }
-
-    .workspaces_ul {
-      display: inline-block ;
-      list-style-type: none;
-      padding: 0;
-  
-      width: 5%;
-      background-color: #543654;
-      position: absolute;
+  .profile_img {
+      width: 100%;
       height: 100%;
-      {% comment %} overflow: auto; {% endcomment %}
-      -ms-overflow-style: none;
-    } ::-webkit-scrollbar { display: none; }
+      object-fit: cover;
+  }
 
-    .create_workspace {
-      margin-top: 100px;
-      margin-left: 100px;
-    }
+  .flex_item {
+    justify-content: space-between;
+    background-color : #310B31;
+    padding: 0;
+  }
 
-    .workspaces_li a {
-      display: block;
-      color: #000;
-      padding: 8px 16px;
-      text-decoration: none;
-    }
+  .nav_PODO {
+    margin-left: 20px;
+    text-decoration : none;
+    font-weight : bold;
+  }
 
-    .workspaces_li a.active {
-      color: white;
-    }
+  .nav_icon {
+    margin-right: 20px;
+    text-decoration : none;
+    color : white;
+  }
 
-    .workspaces_li a:hover:not(.active) {
-      background-color: #000000;
-      color: white;
-    }
+  .workspaces_ul {
+    display: inline-block ;
+    list-style-type: none;
+    padding: 0;
 
-    .workspaces_modal { 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      display: none; 
-      background-color: rgba(0, 0, 0, 0.4); }
+    width: 5%;
+    background-color: #543654;
+    position: absolute;
+    height: 100%;
+    {% comment %} overflow: auto; {% endcomment %}
+    -ms-overflow-style: none;
+  } ::-webkit-scrollbar { display: none; }
 
-    .margin_create_workspace {
-      margin-bottom : 10%;
+  .create_workspace {
+    margin-top: 100px;
+    margin-left: 100px;
+  }
 
-    }
-    .margin_category {
-      margin-left :5%;
-      background-color : #D8E0EC;
-      text-align : center;
-      justify-content : center;
-      width: 10%;
-      display: inline-block ;
-      list-style-type: none;
-      padding: 0;
-      position: absolute;
-      height: 100%;
-      overflow: auto;
-    }
-    img { display: block; margin: 0px auto; }
+  .workspaces_li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
 
-    .jb {
-      border-radius: 15px 15px;
-    }
+  .workspaces_li a.active {
+    color: white;
+  }
 
-    .icons {
-      text-decoration : none;
-    }
-    .category_delete {
-      position: relative;
-      bottom: 0;
+  .workspaces_li a:hover:not(.active) {
+    background-color: #000000;
+    color: white;
+  }
 
-    }
-  </style>
-{% endblock style %}
+  .workspaces_modal { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    display: none; 
+    background-color: rgba(0, 0, 0, 0.4); }
 
+  .margin_create_workspace {
+    margin-bottom : 10%;
+
+  }
+  .margin_category {
+    margin-left :5%;
+    background-color : #D8E0EC;
+    text-align : center;
+    justify-content : center;
+    width: 10%;
+    display: inline-block ;
+    list-style-type: none;
+    padding: 0;
+    position: absolute;
+    height: 100%;
+    overflow: auto;
+  }
+  img { display: block; margin: 0px auto; }
+
+  .jb {
+    border-radius: 15px 15px;
+  }
+
+  .icons {
+    text-decoration : none;
+  }
+  .category_delete {
+    position: relative;
+    bottom: 0;
+
+  }
+</style>
 
 <nav class="flex_item navbar navbar-expand-lg navbar-light " style="width: 100%; height: 50px;" >
   <div class="flex_item">
@@ -210,8 +207,8 @@
   </div>
   {% if workspace_pk %}
   <form class="d-flex" action="{% url 'workspaces:search' workspace_pk %}" method="GET">
-    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="word" value="{{word}}">
-    <button class="btn btn-outline-success" type="submit" class="material-icons">search</button>
+    <input style="height:50%;"class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="word" value="{{word}}">
+    <button class="btn material-icons" type="submit" style="color: white;">search</button>
   </form>
   {% endif %}
   <div class="nav_icon">
@@ -234,8 +231,8 @@
               <img src="{% static '마스코트.png' %}" alt="프로필 이미지">
             {% endif %}
           </div>
-          <div style="border: 1px solid #9CA3AF; border-radius: 5px; width: 77%; display: flex; align-items: center; margin: 10px; color: #484848; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            이메일: {{ user.email }}
+          <div style="border: 1px solid #9CA3AF; border-radius: 5px; width: 77%; display: flex; align-items: center; margin: 10px; color: #484848; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;>
+            {{ user.email }}
           </div>
           <div style="border: 1px solid #9CA3AF; border-radius: 5px; width: 77%; display: flex; align-items: center; margin: 10px; color: #484848; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
             닉네임: {{ user.username }}
