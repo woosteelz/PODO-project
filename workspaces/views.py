@@ -19,7 +19,7 @@ def index(request):
     workspaces = []
     user = request.user
     for work in workspace:
-        if user.groups.filter(name= work.pk):
+        if user.groups.filter(name= work.id):
             workspaces.append(work)
     # --------------------------------------------
     workspace_form = WorkspaceForm()
@@ -44,7 +44,7 @@ def create_workspace(request):
             user = request.user
             print(user)
             workspace.save()
-            new_group = Group.objects.create(name= workspace.id)
+            new_group = Group.objects.create(name= workspace.pk)
             user.groups.add(new_group)
             return redirect('workspaces:index_category', workspace.pk)
     else:
@@ -111,8 +111,7 @@ def create_category(request, workspace_pk):
 def delete_category(request, workspace_id, category_id):
     workspace = get_object_or_404(Workspace, pk=workspace_id)
     category = get_object_or_404(Category, pk=category_id)
-    if request.user == category.user:
-        category.delete()
+    category.delete()
 
     return redirect('workspaces:index')
 

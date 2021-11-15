@@ -24,7 +24,7 @@ def index(request, workspace_pk):
     workspaces = []
     user = request.user
     for work in workspace_list:
-        if user.groups.filter(name= work.name):
+        if user.groups.filter(name= work.id):
             workspaces.append(work)
     workspace_form = WorkspaceForm()
     workspace_indivisual = get_object_or_404(Workspace, pk=workspace_pk)
@@ -46,11 +46,13 @@ def index(request, workspace_pk):
     }
     return render(request, 'schedules/index.html', context)
 
+
 def get_date(req_day):
     if req_day:
         year, month = (int(x) for x in req_day.split('-'))
         return datetime.date(year, month, day=1)
     return datetime.datetime.today()
+
 
 def left_month(request, workspace_pk):
     today = get_date(request.GET.get('month'))
