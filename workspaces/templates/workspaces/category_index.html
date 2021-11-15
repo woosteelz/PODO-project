@@ -4,7 +4,6 @@
 {% else %}
   <ul class="workspaces_ul margin_category">
     {% if not workspace_indivisual.category_set.all %}
-      <ul class="workspaces_ul margin_category"></ul>
       <br>
       <a> 카테고리를 </a>
       <br>
@@ -21,9 +20,15 @@
   <button type="button" style="width:65%" class="btn btn-primary make_create my-5" data-bs-toggle="modal" data-bs-target="#categorymodal">
     +
   </button>
+  <button class="btn btn-danger mt-auto" style="width: 65%">
+    삭제하기
+  </button>
 
   </ul>
 
+
+
+  
   <div class="modal fade" id="categorymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
