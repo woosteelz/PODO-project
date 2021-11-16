@@ -146,3 +146,17 @@
 
 
 {% endif %}
+
+{% block script %}
+<script>
+  if ("{{category}}") {
+    const categoryName = "{{ category.name }}"
+    console.log('야!')
+    console.log(categoryName)
+    const category_now = document.querySelector(`.category_${categoryName}`)
+    console.log(category_now)
+    category_now.style.color="#DB5D83";
+  }
+</script>
+{% endblock script %}
+
