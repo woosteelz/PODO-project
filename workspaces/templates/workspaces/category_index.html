@@ -63,12 +63,13 @@
   </ul>
 {% else %}
   <ul class="margin_category" id="margin_category">
+    <h4 style= "font-weight: Bold; margin-top: 20px;"> 카테고리 </h4>
     <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%;">
     <div>
       {% for category in workspace_indivisual.category_set.all %}
 
         <li class="workspaces_li">
-          <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
+          <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" style="width: 17vh; border-radius:5px;" class="mt-2 category_{{ category.name }}">{{ category.name }}</a>
           <div id="display_btnc" style="display: none;">
             <form action=" {% url 'workspaces:delete_category' workspace_indivisual.pk category.pk %}" method="POST">
               {% csrf_token %}
@@ -155,7 +156,7 @@
     console.log(categoryName)
     const category_now = document.querySelector(`.category_${categoryName}`)
     console.log(category_now)
-    category_now.style.color="#DB5D83";
+    category_now.style.backgroundColor="#FFFFFF";
   }
 </script>
 {% endblock script %}
