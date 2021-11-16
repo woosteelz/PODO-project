@@ -63,22 +63,27 @@
   </ul>
 {% else %}
   <ul class="margin_category" id="margin_category">
-    <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%; ">
+    <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%;">
     <div>
-    </div>
-    {% for category in workspace_indivisual.category_set.all %}
-      <li class="workspaces_li">
-        <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2 category_{{category.name}}">{{ category.name }}</a>
-        <div id="display_btnc" style="display: none;">
-          <form action=" {% url 'workspaces:delete_category' workspace_indivisual.pk category.pk %}" method="POST">
-            {% csrf_token %}
-            <button type="btn" style="color: red;" class="btn btn-sm">삭제하기</button>
-          </form>
+      {% for category in workspace_indivisual.category_set.all %}
+
+        <li class="workspaces_li">
+          <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
+          <div id="display_btnc" style="display: none;">
+            <form action=" {% url 'workspaces:delete_category' workspace_indivisual.pk category.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="btn" style="color: red;" class="btn btn-sm">삭제하기</button>
+            </form>
+          </li>
+      {% empty %}
+        <div>
+          <br>
+          <span>카테고리를</span>
+          <br>
+          <span>만들어보세요!</span>
         </div>
-      </li>
-    {% empty %}
-        <br>카테고리를<br>만들어보세요!<br>
-    {% endfor %}
+      {% endfor %}
+    </div>
     <div>
       <button type="button" style="color:white; width:100%; background-color: #915CAC;" class="btn  make_create my-2" data-bs-toggle="modal" data-bs-target="#categorymodal">
         생성하기
