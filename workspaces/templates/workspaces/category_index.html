@@ -66,13 +66,14 @@
     <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%; ">
     {% for category in workspace_indivisual.category_set.all %}
       <li class="workspaces_li">
-        <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
+        <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2 category_{{category.name}}">{{ category.name }}</a>
         <div id="display_btnc" style="display: none;">
           <form action=" {% url 'workspaces:delete_category' workspace_indivisual.pk category.pk %}" method="POST">
             {% csrf_token %}
             <button type="btn" style="color: red;" class="btn btn-sm">삭제하기</button>
           </form>
-        </li>
+        </div>
+      </li>
     {% empty %}
         <br>카테고리를<br>만들어보세요!<br>
     {% endfor %}

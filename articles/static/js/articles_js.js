@@ -1,6 +1,6 @@
 // 모달로 게시글 생성
 const myBtn = document.querySelectorAll('.myBtn')
-    console.log(myBtn)
+    // console.log(myBtn)
     myBtn.forEach((btn) => {
       btn.addEventListener('click', (e)=> {
         const boardPk = btn.dataset.boardPk
@@ -73,8 +73,8 @@ function dragDrop(e) {
   // console.log(movedBoardPk)
 
   const modifyUrl = `/articles/${movedArticlePk}/${movedBoardPk}/modify_article_board/`
-  console.log(draggableArticle)
-  console.log(modifyUrl)
+  // console.log(draggableArticle)
+  // console.log(modifyUrl)
   axios.get(modifyUrl)
     .then(res =>{
       setTimeout(function(){
@@ -95,7 +95,7 @@ all_status.forEach((status) => {
 const deleteArticleBtn = document.querySelector('#delete-article-btn')
 deleteArticleBtn.addEventListener('click', () => {
   const articlePk = deleteArticleBtn.dataset.articlePk
-  console.log(articlePk)
+  // console.log(articlePk)
     const finalDeleteArticle = document.querySelector('.article_delete_modal_form')
     finalDeleteArticle.addEventListener('submit', (e) => {
       e.preventDefault()
@@ -153,3 +153,6 @@ deleteArticleBtn.addEventListener('click', () => {
   //     })
   // })
 
+console.log(category.name)
+const category_now = document.querySelector(`.category_${category.name}`)
+category_now.style="red;"
