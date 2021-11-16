@@ -272,15 +272,15 @@ function view(btn_value) {
         <li class="workspaces_li">
         {% if work.image %}
         <a href=" {% url 'workspaces:index_category' work.pk %} "><img class="jb" src="{{ work.image_thumbnail.url }}" alt="이미지"></a>
-        <a style ="font-size: small;text-align : center; color:white">{{ work.name | slice:":3"}}</a> 
-        {% if work %}
-        <div id="display_btn" style="display: none;">
-          <form action=" {% url 'workspaces:delete_workspace' work.pk %}" method="POST">
-            {% csrf_token %}
-            <button type="btn" style="color: red;" class="btn btn-sm">삭제하기</button>
-          </form>
-        </div>
-        {% endif %}
+        <a style ="font-size: small;text-align : center; color:white">{{ work.name | slice:":3"}}</a>
+        {% if work.pk %}
+          <div id="display_btn" style="display: none;">
+            <form action=" {% url 'workspaces:delete_workspace' work.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="btn" style="color: red;" class="btn btn-sm">삭제하기</button>
+            </form>
+          </div>
+        {% endif %} 
         </li>
         {% endif %}
       {% endfor %}
