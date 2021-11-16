@@ -4,7 +4,7 @@ const myBtn = document.querySelectorAll('.myBtn')
     myBtn.forEach((btn) => {
       btn.addEventListener('click', (e)=> {
         const boardPk = btn.dataset.boardPk
-        console.log(boardPk)
+        // console.log(boardPk)
 
         const form = document.querySelector('.container-form')
         form.addEventListener('submit', (e) => {
@@ -152,7 +152,3 @@ deleteArticleBtn.addEventListener('click', () => {
   //       e.target.submit()
   //     })
   // })
-
-console.log(category.name)
-const category_now = document.querySelector(`.category_${category.name}`)
-category_now.style="red;"

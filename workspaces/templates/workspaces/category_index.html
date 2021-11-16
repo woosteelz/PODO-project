@@ -64,6 +64,8 @@
 {% else %}
   <ul class="margin_category" id="margin_category">
     <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%; ">
+    <div>
+    </div>
     {% for category in workspace_indivisual.category_set.all %}
       <li class="workspaces_li">
         <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2 category_{{category.name}}">{{ category.name }}</a>
@@ -139,3 +141,17 @@
 
 
 {% endif %}
+
+{% block script %}
+<script>
+  if ("{{category}}") {
+    const categoryName = "{{ category.name }}"
+    console.log('야!')
+    console.log(categoryName)
+    const category_now = document.querySelector(`.category_${categoryName}`)
+    console.log(category_now)
+    category_now.style.color="#DB5D83";
+  }
+</script>
+{% endblock script %}
+
