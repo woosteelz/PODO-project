@@ -58,21 +58,13 @@
 }
 </style>
 
-
-
 {% if not workspace_indivisual.pk %}
   <ul class="margin_category" id="margin_category">
   </ul>
 {% else %}
   <ul class="margin_category" id="margin_category">
     <div class="d-flex justify-content-between align-items-center flex-column" style="height: 100%; ">
-      {% if not workspace_indivisual.category_set.all %}
-        <br>
-        <a> 카테고리를 </a>
-        <a>만들어보세요!</a>
-      {% endif %}
     {% for category in workspace_indivisual.category_set.all %}
-
       <li class="workspaces_li">
         <a href="{% url 'articles:index_article' workspace_indivisual.pk category.pk %}" class="mt-2">{{ category.name }}</a>
         <div id="display_btnc" style="display: none;">
@@ -82,8 +74,9 @@
           </form>
         </li>
     {% empty %}
+        <br>카테고리를<br>만들어보세요!<br>
     {% endfor %}
-    <div style="margin-top: 350%;">
+    <div>
       <button type="button" style="color:white; width:100%; background-color: #915CAC;" class="btn  make_create my-2" data-bs-toggle="modal" data-bs-target="#categorymodal">
         생성하기
       </button>

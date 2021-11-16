@@ -30,9 +30,6 @@ def index(request):
     return render(request, 'workspaces/index.html', context)
 
 
-
-
-
 @login_required
 @require_http_methods(['GET', 'POST'])
 def create_workspace(request):
@@ -140,7 +137,7 @@ def search(request, workspace_pk):
     workspaces = []
     user = request.user
     for work in workspace:
-        if user.groups.filter(name= work.name):
+        if user.groups.filter(name=work.id):
             workspaces.append(work)
     category_form = CategoryForm()
     category = Category.objects.all()

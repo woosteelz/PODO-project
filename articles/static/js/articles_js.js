@@ -1,7 +1,3 @@
-const edit_area = document.querySelector(".note-editable")
-console.log(edit_area)
-
-
 // 모달로 게시글 생성
 const myBtn = document.querySelectorAll('.myBtn')
     console.log(myBtn)
@@ -156,5 +152,4 @@ deleteArticleBtn.addEventListener('click', () => {
   //       e.target.submit()
   //     })
   // })
-}
 
